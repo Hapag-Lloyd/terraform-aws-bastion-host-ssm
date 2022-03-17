@@ -1,0 +1,109 @@
+---
+branches:
+  - main
+
+tagFormat: "${version}"
+
+preset: 'conventionalcommits'
+
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - "@semantic-release/changelog"
+  - "@semantic-release/git"
+  - "@semantic-release/github"
+
+verifyConditions:
+  - '@semantic-release/git'
+  - '@semantic-release/github'
+  - '@semantic-release/changelog'
+
+analyzeCommits:
+  - path: "@semantic-release/commit-analyzer"
+    releaseRules:
+      - breaking: true
+        release: major
+      - type: build
+        release: false
+      - type: chore
+        scope: deps
+        release: patch
+      - type: ci
+        release: false
+      - type: docs
+        release: patch
+      - type: feat
+        release: minor
+      - type: fix
+        release: patch
+      - type: perf
+        release: patch
+      - type: refactor
+        release: patch
+      - type: revert
+        release: patch
+      - type: style
+        release: false
+      - type: test
+        release: false
+
+generateNotes:
+  - path: "@semantic-release/release-notes-generator"
+    writerOpts:
+      groupBy: "type"
+      commitGroupsSort:
+        - "feat"
+        - "perf"
+        - "fix"
+      commitsSort: "header"
+    linkCompare: true
+    linkReferences: true
+    types:
+      - type: 'build'
+        section: '🦊 CI/CD'
+        hidden: false
+      - type: 'chore'
+        section: 'Other'
+        hidden: false
+      - type: 'ci'
+        section: '🦊 CI/CD'
+        hidden: false
+      - type: 'docs'
+        section: '📔 Docs'
+        hidden: false
+      - type: 'feat'
+        section: '🚀 Features'
+        hidden: false
+      - type: 'fix'
+        section: '🛠 Fixes'
+        hidden: false
+      - type: 'perf'
+        section: '⏩ Performance'
+        hidden: false
+      - type: 'refactor'
+        section: ':scissors: Refactor'
+        hidden: false
+      - type: 'revert'
+        section: '🙅‍♂️ Reverts'
+        hidden: false
+      - type: 'style'
+        section: '💈 Style'
+        hidden: false
+      - type: 'test'
+        section: '🧪 Tests'
+        hidden: false
+
+prepare:
+  - path: "@semantic-release/git"
+  - path: "@semantic-release/changelog"
+    changelogFile: "CHANGELOG.md"
+
+publish:
+  - path: "@semantic-release/github"
+    assets:
+      - path: "CHANGELOG.md"
+        label: "Changelog"
+
+success:
+
+fail:
