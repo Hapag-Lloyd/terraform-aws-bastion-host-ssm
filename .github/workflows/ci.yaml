@@ -1,0 +1,39 @@
+name: CI Pull Request
+
+on:
+  pull_request:
+
+jobs:
+  verify_format:
+    name: Verify formatting
+    strategy:
+      matrix:
+        terraform: [1.1.7]
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:${{ matrix.terraform }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: terraform init -get -backend=false -input=false
+      - run: terraform fmt -recursive -check -write=false
+
+  verify_examples:
+    name: Verify examples
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform: [1.0.0, latest]
+        example:
+          [
+              "simple"
+          ]
+    defaults:
+      run:
+        working-directory: examples/${{ matrix.example }}
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:${{ matrix.terraform }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: terraform init -get -backend=false -input=false
+      - run: terraform validate
