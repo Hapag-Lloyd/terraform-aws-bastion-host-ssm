@@ -1,0 +1,22 @@
+{
+  "name": "terraform-aws-bastion-host-ssm",
+  "version": "1.0.0",
+  "description": "# Module Documentation <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK --> ## Requirements",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues"
+  },
+  "homepage": "https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm#readme"
+}
