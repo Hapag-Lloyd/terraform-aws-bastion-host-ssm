@@ -1,10 +1,9 @@
 name: Release
 
 on:
-  pull_request:
-#  push:
-#    branches:
-#      - main
+  push:
+    branches:
+      - main
       
 jobs:
   release:
@@ -18,5 +17,3 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npx semantic-release
-        with:
-          dryRun: true
