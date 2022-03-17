@@ -1,9 +1,10 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+#  push:
+#    branches:
+#      - main
       
 jobs:
   release:
@@ -17,6 +18,5 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
+        with:
+          dryRun: true
