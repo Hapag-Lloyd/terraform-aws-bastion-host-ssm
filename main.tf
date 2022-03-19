@@ -1,8 +1,11 @@
+data "aws_region" "this" {
+}
+
 # find the latest Amazon Linux AMI and create a copy to be sure that is it present
 data "aws_ami" "latest_amazon_linux" {
   most_recent = true
 
-  owners      = ["amazon"]
+  owners = ["amazon"]
 
   filter {
     name   = "name"
@@ -11,13 +14,13 @@ data "aws_ami" "latest_amazon_linux" {
 }
 
 resource "aws_ami_copy" "latest_amazon_linux" {
-  name              = var.resource_prefix
-  description       = "Copy of ${data.aws_ami.latest_amazon_linux.name}"
+  name        = var.resource_prefix
+  description = "Copy of ${data.aws_ami.latest_amazon_linux.name}"
 
   source_ami_id     = data.aws_ami.latest_amazon_linux.id
-  source_ami_region = data.caller.region
+  source_ami_region = data.aws_region.this.name
 
-  encrypted         = true
+  encrypted = true
 
   tags = var.tags
 }
@@ -32,41 +35,41 @@ resource "aws_security_group" "this" {
 
 # allow outgoing traffic to the user defined ports
 resource "aws_security_group_rule" "egress_open_ports" {
-  count             = length(local.clean_open_port_list)
+  count = length(local.clean_egress_open_tcp_ports)
 
-  security_group_id = aws_security_group.sg_bastion.id
+  security_group_id = aws_security_group.this.id
   type              = "egress"
 
-  from_port         = local.clean_open_port_list[count.index]
-  to_port           = local.clean_open_port_list[count.index]
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  from_port   = local.clean_egress_open_tcp_ports[count.index]
+  to_port     = local.clean_egress_open_tcp_ports[count.index]
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
 # need for SSM connection
 resource "aws_security_group_rule" "egress_ssm" {
-  security_group_id = aws_security_group.sg_bastion.id
+  security_group_id = aws_security_group.this.id
   type              = "egress"
   description       = "allow HTTPS traffic"
 
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "~> 3.0"
 
-  role_name               = var.resource_prefix
+  role_name        = var.resource_prefix
   role_description = "Instance profile for the bastion host to be able to connect to the machine"
-  role_path = var.iam_role_path
+  role_path        = var.iam_role_path
 
   create_role             = true
   create_instance_profile = true
   # MFA makes no sense here. It's used for EC2 instances.
-  role_requires_mfa       = false
+  role_requires_mfa = false
 
   trusted_role_services = ["ec2.amazonaws.com"]
   custom_role_policy_arns = [
