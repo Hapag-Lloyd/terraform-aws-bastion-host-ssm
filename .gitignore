@@ -1,4 +1,5 @@
 .terraform/
 .idea/
+node_modules/
 
 .terraform.lock.hcl
