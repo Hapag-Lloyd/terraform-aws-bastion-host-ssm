@@ -60,7 +60,7 @@ resource "aws_security_group_rule" "egress_ssm" {
 
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "~> 3.0"
+  version = "4.14.0"
 
   role_name        = var.resource_prefix
   role_description = "Instance profile for the bastion host to be able to connect to the machine"
@@ -78,4 +78,64 @@ module "instance_profile_role" {
   ]
 
   tags = var.tags
+}
+
+resource "aws_launch_configuration" "this" {
+  name_prefix = var.resource_prefix
+
+  image_id      = aws_ami_copy.latest_amazon_linux.id
+  instance_type = var.instance_type
+
+  iam_instance_profile = module.instance_profile_role.iam_role_name
+  security_groups      = [aws_security_group.this.id]
+
+  root_block_device {
+    volume_size = var.root_volume_size
+    volume_type = "gp3"
+
+    encrypted             = true
+    delete_on_termination = true
+  }
+
+  # use IMDSv2 to avoid warnings in Security Hub
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+    # if Docker container are used the hop limit should be at least 2
+    http_put_response_hop_limit = 2
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_autoscaling_group" "this" {
+  name = var.resource_prefix
+
+  vpc_zone_identifier = var.subnet_ids
+
+  min_size     = 1
+  max_size     = 1
+  force_delete = false
+
+  health_check_type         = "EC2"
+  health_check_grace_period = 120
+
+  termination_policies = ["OldestInstance"]
+  launch_configuration = aws_launch_configuration.this.id
+
+  dynamic "tag" {
+    for_each = local.asg_tags
+
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
