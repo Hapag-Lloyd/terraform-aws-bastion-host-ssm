@@ -6,7 +6,7 @@ The implemented connection method allows port forwarding for one port only. Mult
 can be realized by the user by creating multiple connections.
 
 ## Features
-- (planned) use autoscaling groups to replace dead instances
+- use autoscaling groups to replace dead instances
 - (planned) have a schedule to shutdown the instance at night
 - (planned) use spot instances to save some money
 - (planned) provide IAM roles for easy access
@@ -61,10 +61,10 @@ can be realized by the user by creating multiple connections.
 | <a name="input_egress_open_tcp_ports"></a> [egress\_open\_tcp\_ports](#input\_egress\_open\_tcp\_ports) | The list of TCP ports to open for outgoing traffic. | `list(number)` | n/a | yes |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | Role path for the created bastion instance profile. | `string` | `"/"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type of the bastion | `string` | `"t3.nano"` | no |
-| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix used for all resources to make them unique. | `string` | n/a | yes |
+| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix used for all resources to make them unique. | `string` | `"bastion"` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | Size of the root volume in GB | `number` | `8` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The subnets to place the bastion in. | `list(string)` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | A list of tags to add to all resources. | `map(string)` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | A list of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The bastion host resides in this VPC. | `string` | n/a | yes |
 
 ## Outputs

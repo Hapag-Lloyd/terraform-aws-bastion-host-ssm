@@ -44,9 +44,13 @@ variable "subnet_ids" {
 variable "resource_prefix" {
   type        = string
   description = "The prefix used for all resources to make them unique."
+
+  default = "bastion"
 }
 
 variable "tags" {
   type        = map(string)
   description = "A list of tags to add to all resources."
+
+  default = {}
 }
