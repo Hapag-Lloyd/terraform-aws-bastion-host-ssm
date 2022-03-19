@@ -39,10 +39,12 @@ resource "aws_security_group_rule" "egress_open_ports" {
 
   security_group_id = aws_security_group.this.id
   type              = "egress"
+  description       = "User defined rule to open the port"
 
-  from_port   = local.clean_egress_open_tcp_ports[count.index]
-  to_port     = local.clean_egress_open_tcp_ports[count.index]
-  protocol    = "tcp"
+  from_port = local.clean_egress_open_tcp_ports[count.index]
+  to_port   = local.clean_egress_open_tcp_ports[count.index]
+  protocol  = "tcp"
+  # tfsec:ignore:aws-vpc-no-public-egress-sgr
   cidr_blocks = ["0.0.0.0/0"]
 }
 
@@ -52,9 +54,10 @@ resource "aws_security_group_rule" "egress_ssm" {
   type              = "egress"
   description       = "allow HTTPS traffic"
 
-  from_port   = 443
-  to_port     = 443
-  protocol    = "tcp"
+  from_port = 443
+  to_port   = 443
+  protocol  = "tcp"
+  # tfsec:ignore:aws-vpc-no-public-egress-sgr
   cidr_blocks = ["0.0.0.0/0"]
 }
 
