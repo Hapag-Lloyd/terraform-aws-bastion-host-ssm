@@ -1,6 +1,7 @@
 ---
 branches:
   - main
+  - release-dry-run
 
 tagFormat: "${version}"
 
