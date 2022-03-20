@@ -1,3 +1,13 @@
+variable "schedule" {
+  type = object({
+    start = string
+    stop  = string
+  })
+  description = "Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression."
+
+  default = null
+}
+
 variable "iam_role_path" {
   type        = string
   description = "Role path for the created bastion instance profile."

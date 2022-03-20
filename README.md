@@ -1,16 +1,35 @@
 # terraform-aws-bastion-host-ssm
 This Terraform module installs a bastion host accessible via SSM only. The underlying EC2 instance
-has no ports opened.
+has no ports opened. All data is encrypted and a `resource_prefix` can be specified to integrate into
+your naming schema.
 
 The implemented connection method allows port forwarding for one port only. Multiple port forwardings
-can be realized by the user by creating multiple connections.
+can be realized by the user by creating multiple connections to the bastion host.
+
+Check the `examples` directory for the module usage.
 
 ## Features
 - use autoscaling groups to replace dead instances
-- (planned) have a schedule to shutdown the instance at night
+- have a schedule to shutdown the instance at night
 - (planned) use spot instances to save some money
 - (planned) provide IAM roles for easy access
 - (planned) provide a script to connect to the bastion from your local machine
+
+### Schedules
+Schedules allow to start and shutdown the instance at certain times. If your work hours are from 9 till 5 UTC, add
+
+```hcl
+module "bastion" {
+  ...
+  schedule {
+    start = "0 9 * * MON-FRI"
+    stop = "0 17 * * MON-FRI"
+  }
+}
+```
+
+The bastion host will automatically start at 9 UTC and shuts down at 17 UTC every day. Depending on the `instance_type` you will save
+more or less money.
 
 ## A Bastion Host
 - allows access to the infrastructure which is not exposed to the internet
@@ -46,6 +65,8 @@ can be realized by the user by creating multiple connections.
 |------|------|
 | [aws_ami_copy.latest_amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ami_copy) | resource |
 | [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
+| [aws_autoscaling_schedule.down](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
+| [aws_autoscaling_schedule.up](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
 | [aws_launch_configuration.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration) | resource |
 | [aws_security_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group_rule.egress_open_ports](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
@@ -63,6 +84,7 @@ can be realized by the user by creating multiple connections.
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type of the bastion | `string` | `"t3.nano"` | no |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix used for all resources to make them unique. | `string` | `"bastion"` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | Size of the root volume in GB | `number` | `8` | no |
+| <a name="input_schedule"></a> [schedule](#input\_schedule) | Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression. | <pre>object({<br>    start = string<br>    stop  = string<br>  })</pre> | `null` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The subnets to place the bastion in. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A list of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The bastion host resides in this VPC. | `string` | n/a | yes |
