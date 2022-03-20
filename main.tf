@@ -142,3 +142,29 @@ resource "aws_autoscaling_group" "this" {
     create_before_destroy = true
   }
 }
+
+resource "aws_autoscaling_schedule" "up" {
+  count = var.schedule == null ? 0 : 1
+
+  scheduled_action_name = "${var.resource_prefix}-start"
+  recurrence            = var.schedule["start"]
+  time_zone             = var.schedule["time_zone"]
+
+  min_size               = 1
+  max_size               = 1
+  desired_capacity       = 1
+  autoscaling_group_name = aws_autoscaling_group.this.name
+}
+
+resource "aws_autoscaling_schedule" "down" {
+  count = var.schedule == null ? 0 : 1
+
+  scheduled_action_name = "${var.resource_prefix}-stop"
+  recurrence            = var.schedule["stop"]
+  time_zone             = var.schedule["time_zone"]
+
+  min_size               = 0
+  max_size               = 0
+  desired_capacity       = 0
+  autoscaling_group_name = aws_autoscaling_group.this.name
+}
