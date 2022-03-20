@@ -14,6 +14,11 @@ repos:
       - id: mixed-line-ending
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.6.0
+    hooks:
+      - id: prettier
+        files: \.(json|yaml|yml)$ # do not process markdown. Conflicts with the terraform_docs hook
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.17
     hooks:
@@ -29,8 +34,3 @@ repos:
       - id: terraform_fmt
         args:
           - "--args=-recursive"
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.6.0
-    hooks:
-      - id: prettier
-        files: \.(json|md|yaml|yml)$

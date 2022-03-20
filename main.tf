@@ -14,7 +14,7 @@ data "aws_ami" "latest_amazon_linux" {
 }
 
 resource "aws_ami_copy" "latest_amazon_linux" {
-  name        = var.resource_prefix
+  name        = var.resource_names["prefix"]
   description = "Copy of ${data.aws_ami.latest_amazon_linux.name}"
 
   source_ami_id     = data.aws_ami.latest_amazon_linux.id
@@ -26,7 +26,7 @@ resource "aws_ami_copy" "latest_amazon_linux" {
 }
 
 resource "aws_security_group" "this" {
-  name        = var.resource_prefix
+  name        = var.resource_names["prefix"]
   description = "Securing the bastion host"
   vpc_id      = var.vpc_id
 
@@ -65,7 +65,7 @@ module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "4.14.0"
 
-  role_name        = var.resource_prefix
+  role_name        = var.resource_names["prefix"]
   role_description = "Instance profile for the bastion host to be able to connect to the machine"
   role_path        = var.iam_role_path
 
@@ -84,7 +84,7 @@ module "instance_profile_role" {
 }
 
 resource "aws_launch_configuration" "this" {
-  name_prefix = var.resource_prefix
+  name_prefix = var.resource_names["prefix"]
 
   image_id      = aws_ami_copy.latest_amazon_linux.id
   instance_type = var.instance_type
@@ -114,7 +114,7 @@ resource "aws_launch_configuration" "this" {
 }
 
 resource "aws_autoscaling_group" "this" {
-  name = var.resource_prefix
+  name = var.resource_names["prefix"]
 
   vpc_zone_identifier = var.subnet_ids
 
@@ -146,7 +146,7 @@ resource "aws_autoscaling_group" "this" {
 resource "aws_autoscaling_schedule" "up" {
   count = var.schedule == null ? 0 : 1
 
-  scheduled_action_name = "${var.resource_prefix}-start"
+  scheduled_action_name = "${local.resource_prefix_with_separator}start"
   recurrence            = var.schedule["start"]
   time_zone             = var.schedule["time_zone"]
 
@@ -159,7 +159,7 @@ resource "aws_autoscaling_schedule" "up" {
 resource "aws_autoscaling_schedule" "down" {
   count = var.schedule == null ? 0 : 1
 
-  scheduled_action_name = "${var.resource_prefix}-stop"
+  scheduled_action_name = "${local.resource_prefix_with_separator}stop"
   recurrence            = var.schedule["stop"]
   time_zone             = var.schedule["time_zone"]
 
