@@ -10,7 +10,10 @@ module "bastion_host" {
   instance_type    = "t3.nano"
   root_volume_size = 8
 
-  resource_prefix = "deve-bastion"
+  resource_names = {
+    prefix    = "bastion"
+    separator = "-"
+  }
 
   egress_open_tcp_ports = [3306, 5432]
 

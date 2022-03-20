@@ -4,14 +4,14 @@ variable "schedule" {
     stop      = string
     time_zone = string
   })
-  description = "Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the `time_zone`."
+  description = "Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the 'time_zone'."
 
   default = null
 }
 
 variable "iam_role_path" {
   type        = string
-  description = "Role path for the created bastion instance profile."
+  description = "Role path for the created bastion instance profile. Must end with '/'"
 
   default = "/"
 }
@@ -52,11 +52,17 @@ variable "subnet_ids" {
   description = "The subnets to place the bastion in."
 }
 
-variable "resource_prefix" {
-  type        = string
-  description = "The prefix used for all resources to make them unique. Should usually end with a separator like '_' or '-'."
+variable "resource_names" {
+  type = object({
+    prefix    = string
+    separator = string
+  })
+  description = "Settings for generating resource names. Set the prefix and the separator according to your company style guide."
 
-  default = "bastion-"
+  default = {
+    "prefix" : "bastion"
+    "separator" : "-"
+  }
 }
 
 variable "tags" {
