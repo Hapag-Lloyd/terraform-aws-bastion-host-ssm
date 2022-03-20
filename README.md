@@ -1,4 +1,5 @@
 # terraform-aws-bastion-host-ssm
+
 This Terraform module installs a bastion host accessible via SSM only. The underlying EC2 instance
 has no ports opened. All data is encrypted and a `resource_prefix` can be specified to integrate into
 your naming schema.
@@ -9,6 +10,7 @@ can be realized by the user by creating multiple connections to the bastion host
 Check the `examples` directory for the module usage.
 
 ## Features
+
 - use autoscaling groups to replace dead instances
 - have a schedule to shutdown the instance at night
 - (planned) use spot instances to save some money
@@ -16,6 +18,7 @@ Check the `examples` directory for the module usage.
 - (planned) provide a script to connect to the bastion from your local machine
 
 ### Schedules
+
 Schedules allow to start and shutdown the instance at certain times. If your work hours are from 9 till 5 UTC, add
 
 ```hcl
@@ -34,6 +37,7 @@ The bastion host will automatically start at 9 UTC and shuts down at 17 UTC ever
 more or less money.
 
 ## A Bastion Host
+
 - allows access to the infrastructure which is not exposed to the internet
 - designed to withstand attacks
 - also known as jump host
@@ -41,6 +45,7 @@ more or less money.
 [Wikipedia](https://en.wikipedia.org/wiki/Bastion_host)
 
 # Module Documentation
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -84,7 +89,7 @@ more or less money.
 | <a name="input_egress_open_tcp_ports"></a> [egress\_open\_tcp\_ports](#input\_egress\_open\_tcp\_ports) | The list of TCP ports to open for outgoing traffic. | `list(number)` | n/a | yes |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | Role path for the created bastion instance profile. | `string` | `"/"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type of the bastion | `string` | `"t3.nano"` | no |
-| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix used for all resources to make them unique. | `string` | `"bastion"` | no |
+| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix used for all resources to make them unique. Should usually end with a separator like '\_' or '-'. | `string` | `"bastion-"` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | Size of the root volume in GB | `number` | `8` | no |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the `time_zone`. | <pre>object({<br>    start     = string<br>    stop      = string<br>    time_zone = string<br>  })</pre> | `null` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The subnets to place the bastion in. | `list(string)` | n/a | yes |

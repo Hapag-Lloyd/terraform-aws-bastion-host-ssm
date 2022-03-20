@@ -146,7 +146,7 @@ resource "aws_autoscaling_group" "this" {
 resource "aws_autoscaling_schedule" "up" {
   count = var.schedule == null ? 0 : 1
 
-  scheduled_action_name = "${var.resource_prefix}-start"
+  scheduled_action_name = "${var.resource_prefix}start"
   recurrence            = var.schedule["start"]
   time_zone             = var.schedule["time_zone"]
 
@@ -159,7 +159,7 @@ resource "aws_autoscaling_schedule" "up" {
 resource "aws_autoscaling_schedule" "down" {
   count = var.schedule == null ? 0 : 1
 
-  scheduled_action_name = "${var.resource_prefix}-stop"
+  scheduled_action_name = "${var.resource_prefix}stop"
   recurrence            = var.schedule["stop"]
   time_zone             = var.schedule["time_zone"]
 

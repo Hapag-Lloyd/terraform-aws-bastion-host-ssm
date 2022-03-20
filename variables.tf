@@ -54,9 +54,9 @@ variable "subnet_ids" {
 
 variable "resource_prefix" {
   type        = string
-  description = "The prefix used for all resources to make them unique."
+  description = "The prefix used for all resources to make them unique. Should usually end with a separator like '_' or '-'."
 
-  default = "bastion"
+  default = "bastion-"
 }
 
 variable "tags" {
