@@ -1,9 +1,10 @@
 variable "schedule" {
   type = object({
-    start = string
-    stop  = string
+    start     = string
+    stop      = string
+    time_zone = string
   })
-  description = "Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression."
+  description = "Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the `time_zone`."
 
   default = null
 }

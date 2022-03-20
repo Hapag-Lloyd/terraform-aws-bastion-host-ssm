@@ -4,7 +4,7 @@ module "bastion_host" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  iam_role_path            = "/instances"
+  iam_role_path            = "/instances/"
   bastion_access_tag_value = "developers"
 
   instance_type    = "t3.nano"
@@ -17,6 +17,8 @@ module "bastion_host" {
   schedule = {
     start = "0 9 * * MON-FRI"
     stop  = "0 17 * * MON-FRI"
+
+    time_zone = "Europe/Berlin"
   }
 
   tags = { "env" : "deve" }

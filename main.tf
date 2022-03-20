@@ -148,6 +148,7 @@ resource "aws_autoscaling_schedule" "up" {
 
   scheduled_action_name = "${var.resource_prefix}-start"
   recurrence            = var.schedule["start"]
+  time_zone             = var.schedule["time_zone"]
 
   min_size               = 1
   max_size               = 1
@@ -160,6 +161,7 @@ resource "aws_autoscaling_schedule" "down" {
 
   scheduled_action_name = "${var.resource_prefix}-stop"
   recurrence            = var.schedule["stop"]
+  time_zone             = var.schedule["time_zone"]
 
   min_size               = 0
   max_size               = 0

@@ -24,6 +24,8 @@ module "bastion" {
   schedule {
     start = "0 9 * * MON-FRI"
     stop = "0 17 * * MON-FRI"
+
+    time_zone = "Europe/Berlin"
   }
 }
 ```
@@ -45,7 +47,7 @@ more or less money.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.34.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.53.0 |
 
 ## Providers
 
@@ -84,7 +86,7 @@ more or less money.
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type of the bastion | `string` | `"t3.nano"` | no |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix used for all resources to make them unique. | `string` | `"bastion"` | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | Size of the root volume in GB | `number` | `8` | no |
-| <a name="input_schedule"></a> [schedule](#input\_schedule) | Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression. | <pre>object({<br>    start = string<br>    stop  = string<br>  })</pre> | `null` | no |
+| <a name="input_schedule"></a> [schedule](#input\_schedule) | Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the `time_zone`. | <pre>object({<br>    start     = string<br>    stop      = string<br>    time_zone = string<br>  })</pre> | `null` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The subnets to place the bastion in. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A list of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The bastion host resides in this VPC. | `string` | n/a | yes |
