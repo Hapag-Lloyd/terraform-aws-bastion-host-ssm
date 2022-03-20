@@ -1,14 +1,19 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v4.1.0
     hooks:
-      - id: check-byte-order-marker
+      - id: fix-byte-order-marker
+      - id: check-added-large-files
+        args:
+          - "--maxkb=20"
       - id: check-case-conflict
       - id: check-yaml
       - id: check-json
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: mixed-line-ending
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.17
     hooks:
@@ -17,8 +22,15 @@ repos:
           - "--module"
           - "--config=.tflint.hcl"
       - id: terraform-validate
-      - id: terraform-fmt
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.64.0
     hooks:
       - id: terraform_docs
+      - id: terraform_fmt
+        args:
+          - "--args=-recursive"
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.6.0
+    hooks:
+      - id: prettier
+        files: \.(json|md|yaml|yml)$
