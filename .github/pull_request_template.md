@@ -17,7 +17,7 @@ Did you check the change in your environment?
 
 # Checklist
 
-My code follows the style guidelines of this project
+- [ ] My code follows the style guidelines of the project
 - [ ] I have performed a self-review of my own code
 - [ ] I have made corresponding changes to the documentation
 - [ ] I have used pre-commit hook to update the Terraform documentation
