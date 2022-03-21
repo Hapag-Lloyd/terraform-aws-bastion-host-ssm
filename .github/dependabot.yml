@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: "terraform"
+    directory: "/examples/simple"
+    schedule:
+      interval: "daily"
+    commit_message:
+      prefix: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "/examples/full"
+    schedule:
+      interval: "weekly"
+    commit_message:
+      prefix: "chore"
+  - package-ecosystem: "terraform"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit_message:
+      prefix: "chore"
+
+  - package-ecosystem: "npm"
+    directory: "/.release"
+    schedule:
+      interval: "weekly"
+      
+  - package-ecosystem: "actions"
+    directory: "/.github/workflows"
+    schedule:
+      interval: "weekly"
+    commit_message:
+      prefix: "chore"
