@@ -140,7 +140,7 @@ echo
 # create the temporary SSH key
 TEMP_DIRECTORY=$(mktemp -d)
 
-echo -e 'y\n' | ssh-keygen -t rsa -f ${TEMP_DIRECTORY}/bastion_key -N '' >/dev/null 2>&1
+echo -e 'y\n' | ssh-keygen -t rsa -f "${TEMP_DIRECTORY}/bastion_key" -N '' >/dev/null 2>&1
 ssh_public_key=$(cat "${TEMP_DIRECTORY}/bastion_key.pub")
 
 
@@ -156,12 +156,12 @@ export AWS_SESSION_TOKEN=$(echo ${temp_credentials} | jq -r .Credentials.Session
 BASTION_HOST_NAME="${environment}-bastion-bastion"
 json=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${BASTION_HOST_NAME}")
 
-instance_id=$(echo "${json}"" | jq -r .Reservations[0].Instances[0].InstanceId)
+instance_id=$(echo "${json}" | jq -r .Reservations[0].Instances[0].InstanceId)
 az=$(echo "${json}" | jq -r .Reservations[0].Instances[0].Placement.AvailabilityZone)
 
 
 # send public key: you have to established the connection within the next 60 seconds. Otherwise the key is automatically removed by AWS.
-aws ec2-instance-connect send-ssh-public-key --instance-id $instance_id --availability-zone $az --instance-os-user ec2-user --ssh-public-key "$ssh_public_key"
+aws ec2-instance-connect send-ssh-public-key --instance-id "${instance_id}" --availability-zone "${az}" --instance-os-user ec2-user --ssh-public-key "${ssh_public_key}"
 
 echo "Connection becomes ready in a couple of seconds ..."
 
