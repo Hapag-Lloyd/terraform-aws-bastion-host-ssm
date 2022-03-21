@@ -11,6 +11,7 @@
 # Requirements:
 #   - Keepass installed (https://keepass.info/download.html)
 #   - KPScript plugin installed (https://keepass.info/extensions/v2/kpscript/KPScript-2.50.zip)
+#   - KPScript plugin must be available in the PATH
 #
 
 KEEPASS_FILE="/path/to/keepass/database.kdbx"
