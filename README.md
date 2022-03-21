@@ -16,7 +16,7 @@ Check the `examples` directory for the module usage.
 - Keepass support for AWS credentials
 - (planned) use spot instances to save some money
 - (planned) provide IAM roles for easy access
-- (planned) provide a script to connect to the bastion from your local machine
+- provide a script to connect to the bastion from your local machine
 
 ### Keepass Support For IAM User Credentials
 
@@ -44,6 +44,15 @@ module "bastion" {
 
 The bastion host will automatically start at 9 UTC and shuts down at 17 UTC every day. Depending on the `instance_type` you will save
 more or less money.
+
+## Connect To The Bastion Host
+
+   1. Export the AWS credentials for the user able to connect to the bastion host.
+   2. Execute `scripts/connect_bastion.sh`. Make sure to add the port forwarding and change the role ARN and bastion instance name.
+   3. Access the forwarded service through the local port.
+
+Direct access to the bastion host is not granted but the specified port is forwarded. This
+way you can access the database, Redis cluster, ...
 
 ## A Bastion Host
 

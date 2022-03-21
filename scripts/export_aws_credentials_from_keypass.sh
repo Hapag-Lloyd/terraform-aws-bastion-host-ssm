@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # Reads the access key and secret access key for the Bastion user from Keepass.
