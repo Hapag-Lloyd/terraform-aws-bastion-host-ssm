@@ -1,23 +1,13 @@
 version: 2
 updates:
   - package-ecosystem: "terraform"
-    directory: "/examples/simple"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "weekly"
-  - package-ecosystem: "terraform"
-    directory: "/examples/full"
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "chore"
-  - package-ecosystem: "terraform"
     directory: "/"
     schedule:
       interval: "daily"
     commit-message:
       prefix: "chore"
+    ignore:
+      - dependency-name: "hashicorp/aws"
 
   - package-ecosystem: "npm"
     directory: "/.release"
