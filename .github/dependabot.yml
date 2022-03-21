@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "chore"
+      prefix: "chore(deps)"
     ignore:
       - dependency-name: "hashicorp/aws"
 
@@ -14,11 +14,11 @@ updates:
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "chore"
+      prefix: "ci"
       
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "chore"
+      prefix: "ci"
