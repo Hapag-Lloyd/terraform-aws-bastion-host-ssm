@@ -47,12 +47,31 @@ more or less money.
 
 ## Connect To The Bastion Host
 
+The Session Manager Plugin is needed to connect via SSM to the bastion host. Download it at https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
+
+### AWS-Gate
+AWS-Gate is available at https://github.com/xen0l/aws-gate
+
+### AWS CLI
+```bash
+echo -e 'y\n' | ssh-keygen -t rsa -f bastion_key -N '' >/dev/null 2>&1
+ssh_public_key=$(cat bastion_key.pub)
+
+aws ec2-instance-connect send-ssh-public-key --instance-id "${instance_id}" --availability-zone "${az}" --instance-os-user ec2-user --ssh-public-key "${ssh_public_key}"
+
+ssh "ec2-user@${instance_id}" -i bastion_key -N -L "12345:my.cloud.http:80" -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p"
+
+curl http://localhost:12345/
+```
+
+### AWS CLI With Menu
+
    1. Export the AWS credentials for the user able to connect to the bastion host.
    2. Execute `scripts/connect_bastion.sh`. Make sure to add the port forwarding and change the role ARN and bastion instance name.
    3. Access the forwarded service through the local port.
 
 Direct access to the bastion host is not granted but the specified port is forwarded. This
-way you can access the database, Redis cluster, ...
+way you can access the database, Redis cluster, ... directly from your localhost.
 
 ## A Bastion Host
 
