@@ -130,7 +130,7 @@ PS3='Service to connect to: '
 options=($services)
 select opt in "${options[@]}"
 do
-  service=$(`tr -dc '[[:print:]]' <<< "$opt")
+  service=$(tr -dc '[[:print:]]' <<< "$opt")
   port_forwarding=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}" --arg service "${service}" '.[$product] | .[$environment].services[] | select(.name==$service).forwarding')
   break
 done
@@ -147,7 +147,7 @@ ssh_public_key=$(cat "${TEMP_DIRECTORY}/bastion_key.pub")
 # find the bastion in the cloud: instance-id and availability zone
 BASTION_USER_ROLE="arn:aws:iam::${aws_account_id}:role/find-bastion"
 
-temp_credentials=$(`aws sts assume-role --role-arn "${BASTION_USER_ROLE_ARN}" --role-session-name find-bastion --output json)
+temp_credentials=$(aws sts assume-role --role-arn "${BASTION_USER_ROLE_ARN}" --role-session-name find-bastion --output json)
 export AWS_ACCESS_KEY_ID=$(echo ${temp_credentials} | jq -r .Credentials.AccessKeyId)
 export AWS_SECRET_ACCESS_KEY=$(echo ${temp_credentials} | jq -r .Credentials.SecretAccessKey)
 export AWS_SESSION_TOKEN=$(echo ${temp_credentials} | jq -r .Credentials.SessionToken)
@@ -167,4 +167,4 @@ echo "Connection becomes ready in a couple of seconds ..."
 
 
 # connect via SSH and establish the port forwarding
-ssh ec2-user@${instance_id} -i ${TEMP_DIRECTORY}/bastion_key -N -L "${port_forwarding}" -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p"
+ssh "ec2-user@${instance_id}" -i "${TEMP_DIRECTORY}/bastion_key" -N -L "${port_forwarding}" -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p"
