@@ -107,7 +107,7 @@ PS3='Product to connect to: '
 options=("$products")
 select opt in "${options[@]}"
 do
-  product=$(tr -dc '[[:print:]]' <<< "$opt")
+  product=$(tr -dc '[:print:]' <<< "$opt")
   break
 done
 echo
@@ -118,7 +118,7 @@ PS3='Environment to connect to: '
 options=("$environments")
 select opt in "${options[@]}"
 do
-  environment=$(tr -dc '[[:print:]]' <<< "$opt")
+  environment=$(tr -dc '[:print:]' <<< "$opt")
   aws_account_id=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}"  '.[$product] | .[$environment].aws_account_id')
   break
 done
@@ -130,7 +130,7 @@ PS3='Service to connect to: '
 options=("$services")
 select opt in "${options[@]}"
 do
-  service=$(tr -dc '[[:print:]]' <<< "$opt")
+  service=$(tr -dc '[:print:]' <<< "$opt")
   port_forwarding=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}" --arg service "${service}" '.[$product] | .[$environment].services[] | select(.name==$service).forwarding')
   break
 done
