@@ -17,12 +17,12 @@ KEEPASS_FILE="/path/to/keepass/database.kdbx"
 BASTION_USER_TITLE="Bastion User"
 
 # get AWS credentials for user who is allowed to connect to the bastion
-read -sp 'Keepass Password: ' keepass_password
+read -rsp 'Keepass Password: ' keepass_password
 
-access_key=`KPScript.exe -c:GetEntryString "${KEEPASS_FILE}" -Field:UserName -ref-Title:${BASTION_USER_TITLE} -FailIfNoEntry -pw:$keepass_password | head -n1`
+access_key=$(KPScript.exe -c:GetEntryString "${KEEPASS_FILE}" -Field:UserName -ref-Title:"${BASTION_USER_TITLE}" -FailIfNoEntry -pw:"${keepass_password}" | head -n1)
 export AWS_ACCESS_KEY_ID=${access_key}
 
-secret_access_key=`KPScript.exe -c:GetEntryString "${KEEPASS_FILE}" -Field:Password -ref-Title:${BASTION_USER_TITLE} -FailIfNoEntry -pw:$keepass_password | head -n1`
+secret_access_key=$(KPScript.exe -c:GetEntryString "${KEEPASS_FILE}" -Field:Password -ref-Title:"${BASTION_USER_TITLE}" -FailIfNoEntry -pw:"${keepass_password}" | head -n1)
 export AWS_SECRET_ACCESS_KEY=${secret_access_key}
 
 export AWS_SESSION_TOKEN=""
