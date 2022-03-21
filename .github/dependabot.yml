@@ -4,29 +4,31 @@ updates:
     directory: "/examples/simple"
     schedule:
       interval: "daily"
-    commit_message:
+    commit-message:
       prefix: "weekly"
   - package-ecosystem: "terraform"
     directory: "/examples/full"
     schedule:
       interval: "weekly"
-    commit_message:
+    commit-message:
       prefix: "chore"
   - package-ecosystem: "terraform"
     directory: "/"
     schedule:
       interval: "daily"
-    commit_message:
+    commit-message:
       prefix: "chore"
 
   - package-ecosystem: "npm"
     directory: "/.release"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "chore"
       
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
       interval: "weekly"
-    commit_message:
+    commit-message:
       prefix: "chore"
