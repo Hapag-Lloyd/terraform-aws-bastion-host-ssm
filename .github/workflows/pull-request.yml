@@ -4,6 +4,14 @@ on:
   pull_request:
 
 jobs:
+  shellcheck:
+    name: Check shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@1.1.0
+
   verify_format:
     name: Verify formatting
     strategy:
@@ -23,10 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         terraform: [1.0.0, latest]
-        example:
-          [
-              "simple", "full"
-          ]
+        example: ["simple", "full"]
     defaults:
       run:
         working-directory: examples/${{ matrix.example }}

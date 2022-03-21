@@ -13,9 +13,18 @@ Check the `examples` directory for the module usage.
 
 - use autoscaling groups to replace dead instances
 - have a schedule to shutdown the instance at night
+- Keepass support for AWS credentials
 - (planned) use spot instances to save some money
 - (planned) provide IAM roles for easy access
 - (planned) provide a script to connect to the bastion from your local machine
+
+### Keepass Support For IAM User Credentials
+
+In case you are not using SSO or similar techniques you have to store the credentials for the user able to
+connect to the bastion host somewhere. We provide a little helper script to handle this scenario in a secure way.
+
+Create a [Keepass](https://keepass.info/download.html) database and add the [KPScript plugin](https://keepass.info/extensions/v2/kpscript/KPScript-2.50.zip).
+The `scripts/export_aws_credentials_from_keypass.sh` will read and export the credentials from the Keepass database.
 
 ### Schedules
 
