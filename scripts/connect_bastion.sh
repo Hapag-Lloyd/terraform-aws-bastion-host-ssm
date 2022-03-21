@@ -104,7 +104,7 @@ service_json='{
 products=$(echo "${service_json}" | jq -r 'keys[]')
 
 PS3='Product to connect to: '
-options=($products)
+options=("$products")
 select opt in "${options[@]}"
 do
   product=$(tr -dc '[[:print:]]' <<< "$opt")
@@ -115,7 +115,7 @@ echo
 environments=$(echo "${service_json}" | jq -r --arg product "${product}" '.[$product] | keys[]')
 
 PS3='Environment to connect to: '
-options=($environments)
+options=("$environments")
 select opt in "${options[@]}"
 do
   environment=$(tr -dc '[[:print:]]' <<< "$opt")
@@ -127,7 +127,7 @@ echo
 services=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}"  '.[$product] | .[$environment].services[].name')
 
 PS3='Service to connect to: '
-options=($services)
+options=("$services")
 select opt in "${options[@]}"
 do
   service=$(tr -dc '[[:print:]]' <<< "$opt")
@@ -145,12 +145,15 @@ ssh_public_key=$(cat "${TEMP_DIRECTORY}/bastion_key.pub")
 
 
 # find the bastion in the cloud: instance-id and availability zone
-BASTION_USER_ROLE="arn:aws:iam::${aws_account_id}:role/find-bastion"
+BASTION_USER_ROLE_ARN="arn:aws:iam::${aws_account_id}:role/find-bastion"
 
 temp_credentials=$(aws sts assume-role --role-arn "${BASTION_USER_ROLE_ARN}" --role-session-name find-bastion --output json)
-export AWS_ACCESS_KEY_ID=$(echo ${temp_credentials} | jq -r .Credentials.AccessKeyId)
-export AWS_SECRET_ACCESS_KEY=$(echo ${temp_credentials} | jq -r .Credentials.SecretAccessKey)
-export AWS_SESSION_TOKEN=$(echo ${temp_credentials} | jq -r .Credentials.SessionToken)
+AWS_ACCESS_KEY_ID=$(echo "${temp_credentials}" | jq -r .Credentials.AccessKeyId)
+export AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY=$(echo "${temp_credentials}" | jq -r .Credentials.SecretAccessKey)
+export AWS_SECRET_ACCESS_KEY
+AWS_SESSION_TOKEN=$(echo "${temp_credentials}" | jq -r .Credentials.SessionToken)
+export AWS_SESSION_TOKEN
 
 # make sure to match your naming schema here to be able to find the bastion host
 BASTION_HOST_NAME="${environment}-bastion-bastion"
