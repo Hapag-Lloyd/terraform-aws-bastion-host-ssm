@@ -101,63 +101,63 @@ service_json='{
    }
 }'
 
-products=`echo $service_json | jq -r 'keys[]'`
+products=$(echo "${service_json}" | jq -r 'keys[]')
 
 PS3='Product to connect to: '
 options=($products)
 select opt in "${options[@]}"
 do
-  product=`tr -dc '[[:print:]]' <<< "$opt"`
+  product=$(tr -dc '[[:print:]]' <<< "$opt")
   break
 done
 echo
 
-environments=`echo $service_json | jq -r --arg product "$product" '.[$product] | keys[]'`
+environments=$(echo "${service_json}" | jq -r --arg product "${product}" '.[$product] | keys[]')
 
 PS3='Environment to connect to: '
 options=($environments)
 select opt in "${options[@]}"
 do
-  environment=`tr -dc '[[:print:]]' <<< "$opt"`
-  aws_account_id=`echo $service_json | jq -r --arg product "$product" --arg environment "$environment"  '.[$product] | .[$environment].aws_account_id'`
+  environment=$(tr -dc '[[:print:]]' <<< "$opt")
+  aws_account_id=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}"  '.[$product] | .[$environment].aws_account_id')
   break
 done
 echo
 
-services=`echo $service_json | jq -r --arg product "$product" --arg environment "$environment"  '.[$product] | .[$environment].services[].name'`
+services=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}"  '.[$product] | .[$environment].services[].name')
 
 PS3='Service to connect to: '
 options=($services)
 select opt in "${options[@]}"
 do
-  service=`tr -dc '[[:print:]]' <<< "$opt"`
-  port_forwarding=`echo $service_json | jq -r --arg product $product --arg environment $environment --arg service $service '.[$product] | .[$environment].services[] | select(.name==$service).forwarding'`
+  service=$(`tr -dc '[[:print:]]' <<< "$opt")
+  port_forwarding=$(echo "${service_json}" | jq -r --arg product "${product}" --arg environment "${environment}" --arg service "${service}" '.[$product] | .[$environment].services[] | select(.name==$service).forwarding')
   break
 done
 echo
 
 
 # create the temporary SSH key
-TEMP_DIRECTORY=`mktemp -d`
+TEMP_DIRECTORY=$(mktemp -d)
 
 echo -e 'y\n' | ssh-keygen -t rsa -f ${TEMP_DIRECTORY}/bastion_key -N '' >/dev/null 2>&1
-ssh_public_key=`cat ${TEMP_DIRECTORY}/bastion_key.pub`
+ssh_public_key=$(cat "${TEMP_DIRECTORY}/bastion_key.pub")
 
 
 # find the bastion in the cloud: instance-id and availability zone
 BASTION_USER_ROLE="arn:aws:iam::${aws_account_id}:role/find-bastion"
 
-temp_credentials=`aws sts assume-role --role-arn "${BASTION_USER_ROLE_ARN}" --role-session-name find-bastion --output json`
-export AWS_ACCESS_KEY_ID=`echo ${temp_credentials} | jq -r .Credentials.AccessKeyId`
-export AWS_SECRET_ACCESS_KEY=`echo ${temp_credentials} | jq -r .Credentials.SecretAccessKey`
-export AWS_SESSION_TOKEN=`echo ${temp_credentials} | jq -r .Credentials.SessionToken`
+temp_credentials=$(`aws sts assume-role --role-arn "${BASTION_USER_ROLE_ARN}" --role-session-name find-bastion --output json)
+export AWS_ACCESS_KEY_ID=$(echo ${temp_credentials} | jq -r .Credentials.AccessKeyId)
+export AWS_SECRET_ACCESS_KEY=$(echo ${temp_credentials} | jq -r .Credentials.SecretAccessKey)
+export AWS_SESSION_TOKEN=$(echo ${temp_credentials} | jq -r .Credentials.SessionToken)
 
 # make sure to match your naming schema here to be able to find the bastion host
 BASTION_HOST_NAME="${environment}-bastion-bastion"
-json=`aws ec2 describe-instances --filters "Name=tag:Name,Values=${BASTION_HOST_NAME}"`
+json=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${BASTION_HOST_NAME}")
 
-instance_id=`echo $json | jq -r .Reservations[0].Instances[0].InstanceId`
-az=`echo $json | jq -r .Reservations[0].Instances[0].Placement.AvailabilityZone`
+instance_id=$(echo "${json}"" | jq -r .Reservations[0].Instances[0].InstanceId)
+az=$(echo "${json}" | jq -r .Reservations[0].Instances[0].Placement.AvailabilityZone)
 
 
 # send public key: you have to established the connection within the next 60 seconds. Otherwise the key is automatically removed by AWS.
