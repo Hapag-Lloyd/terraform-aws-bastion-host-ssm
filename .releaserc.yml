@@ -48,6 +48,10 @@ analyzeCommits:
       - type: test
         release: false
 
+generateNotes:
+  - path: "@semantic-release/release-notes-generator"
+    preset: "covnentionalcommits"
+
 prepare:
   - path: "@semantic-release/git"
   - path: "@semantic-release/changelog"
