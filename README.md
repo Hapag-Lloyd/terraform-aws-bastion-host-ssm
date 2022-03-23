@@ -110,7 +110,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.6.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.5.0 |
 
 ## Modules
 
