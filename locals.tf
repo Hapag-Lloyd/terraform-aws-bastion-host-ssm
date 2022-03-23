@@ -6,7 +6,7 @@ locals {
   asg_tags = merge(
     var.tags,
     {
-      "Name1"          = var.resource_names["prefix"]
+      "Name"           = var.resource_names["prefix"]
       "bastion-access" = var.bastion_access_tag_value
   })
 }
