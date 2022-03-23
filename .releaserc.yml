@@ -54,6 +54,10 @@ generateNotes:
     writerOpts:
       groupBy: "type"
       commitsSort: "header"
+      commitGroupsSort:
+        - "feat"
+        - "docs"
+        - "ci"
     linkCompare: true
     linkReferences: true
     types:
