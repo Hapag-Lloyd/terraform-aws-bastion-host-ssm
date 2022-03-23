@@ -50,6 +50,7 @@ analyzeCommits:
 
 generateNotes:
   - path: "@semantic-release/release-notes-generator"
+    preset: "conventionalcommits"
     writerOpts:
       groupBy: "type"
       commitsSort: "header"
