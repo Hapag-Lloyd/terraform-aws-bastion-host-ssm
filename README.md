@@ -9,6 +9,21 @@ can be realized by the user by creating multiple connections to the bastion host
 
 Check the `examples` directory for the module usage.
 
+## Cost Estimation (1.5.0)
+
+```
+ Name                                                   Monthly Qty  Unit     Monthly Cost
+
+ module.bastion_host.aws_autoscaling_group.this
+ └─ module.bastion_host.aws_launch_configuration.this
+    ├─ Instance usage (Linux/UNIX, on-demand, t3.nano)          730  hours           $4.38
+    ├─ EC2 detailed monitoring                                    7  metrics         $2.10
+    └─ root_block_device
+       └─ Storage (general purpose SSD, gp3)                      8  GB              $0.76
+
+ OVERALL TOTAL                                                                       $7.24
+```
+
 ## Features
 
 - use autoscaling groups to replace dead instances
