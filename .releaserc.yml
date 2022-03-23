@@ -50,7 +50,7 @@ analyzeCommits:
 
 generateNotes:
   - path: "@semantic-release/release-notes-generator"
-    preset: "covnentionalcommits"
+    preset: "conventionalcommits"
 
 prepare:
   - path: "@semantic-release/git"
