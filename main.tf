@@ -65,7 +65,7 @@ module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "4.15.1"
 
-  role_name        = var.resource_names["prefix"]
+  role_name        = "${var.resource_names["prefix"]}${var.resource_names.separator}profile"
   role_description = "Instance profile for the bastion host to be able to connect to the machine"
   role_path        = var.iam_role_path
 

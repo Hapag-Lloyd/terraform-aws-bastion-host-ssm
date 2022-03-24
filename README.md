@@ -69,6 +69,16 @@ AWS-Gate is available at https://github.com/xen0l/aws-gate
 
 ### AWS CLI
 ```bash
+instance_id="my-bastion-instance-id"
+az="az-of-the-bastion"
+
+export AWS_ACCESS_KEY_ID="xxxxx"
+export AWS_SECRET_ACCESS_KEY="yyyyy"
+export AWS_SESSION_TOKEN=""
+
+aws sts assume-role --role-arn the-bastion-role-arn --role-session-profile bastion
+echo "export the credentials from above!"
+
 echo -e 'y\n' | ssh-keygen -t rsa -f bastion_key -N '' >/dev/null 2>&1
 ssh_public_key=$(cat bastion_key.pub)
 

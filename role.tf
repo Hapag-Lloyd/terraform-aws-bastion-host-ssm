@@ -40,26 +40,21 @@ data "aws_iam_policy_document" "access_bastion" {
     resources = [
       "*"
     ]
-
-    condition {
-      test     = "ForAnyValue:StringEqualsIfExists"
-      values   = [var.bastion_access_tag_value]
-      variable = "aws:ResourceTag/Access"
-    }
   }
 
   statement {
-    sid    = "Ec2SendPublicSSHKey"
+    sid    = "SSHBastion"
     effect = "Allow"
     actions = [
-      "ec2-instance-connect:SendSSHPublicKey"
+      "ec2-instance-connect:SendSSHPublicKey",
+      "ssm:StartSession"
     ]
     resources = ["*"]
 
     condition {
       test     = "ForAnyValue:StringEqualsIfExists"
       values   = [var.bastion_access_tag_value]
-      variable = "aws:ResourceTag/Access"
+      variable = "aws:ResourceTag/bastion-access"
     }
   }
 
