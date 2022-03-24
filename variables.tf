@@ -1,3 +1,25 @@
+variable "vpc_id" {
+  type        = string
+  description = "The bastion host resides in this VPC."
+}
+
+variable "subnet_ids" {
+  type        = list(string)
+  description = "The subnets to place the bastion in."
+}
+
+variable "iam_role_path" {
+  type        = string
+  description = "Role path for the created bastion instance profile. Must end with '/'"
+
+  default = "/"
+}
+
+variable "iam_user_arn" {
+  type        = string
+  description = "ARN of the user who is allowed to assume the role giving access to the bastion host."
+}
+
 variable "schedule" {
   type = object({
     start     = string
@@ -7,13 +29,6 @@ variable "schedule" {
   description = "Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the 'time_zone'."
 
   default = null
-}
-
-variable "iam_role_path" {
-  type        = string
-  description = "Role path for the created bastion instance profile. Must end with '/'"
-
-  default = "/"
 }
 
 variable "bastion_access_tag_value" {
@@ -42,15 +57,6 @@ variable "egress_open_tcp_ports" {
   description = "The list of TCP ports to open for outgoing traffic."
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "The bastion host resides in this VPC."
-}
-
-variable "subnet_ids" {
-  type        = list(string)
-  description = "The subnets to place the bastion in."
-}
 
 variable "resource_names" {
   type = object({

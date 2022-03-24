@@ -4,7 +4,9 @@ module "bastion_host" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  iam_role_path            = "/instances/"
+  iam_role_path = "/instances/"
+  iam_user_arn  = module.bastion_user.iam_user_arn
+
   bastion_access_tag_value = "developers"
 
   instance_type    = "t3.nano"
@@ -42,4 +44,15 @@ module "vpc" {
   private_subnets = ["10.214.1.0/24", "10.214.2.0/24", "10.214.3.0/24"]
 
   map_public_ip_on_launch = false
+}
+
+module "bastion_user" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-user"
+  version = "4.15.1"
+
+  name = "bastion"
+
+  password_reset_required       = false
+  create_iam_user_login_profile = false
+  force_destroy                 = true
 }
