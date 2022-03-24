@@ -42,6 +42,8 @@ data "aws_iam_policy_document" "access_bastion" {
     ]
   }
 
+  # not critical as we use a condition and thus allowing a very limited number of resources only
+  # tfsec:ignore:aws-iam-no-policy-wildcards
   statement {
     sid    = "SSHBastion"
     effect = "Allow"
@@ -80,6 +82,8 @@ data "aws_iam_policy_document" "access_bastion" {
     ]
   }
 
+  # terminate session is not critical
+  # tfsec:ignore:aws-iam-no-policy-wildcards
   statement {
     sid    = "SsmTerminateSession"
     effect = "Allow"

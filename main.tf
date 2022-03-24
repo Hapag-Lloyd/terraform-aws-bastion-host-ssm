@@ -57,6 +57,7 @@ resource "aws_security_group_rule" "egress_ssm" {
   from_port = 443
   to_port   = 443
   protocol  = "tcp"
+  # bastion host should be able to connect to all HTTPS sites
   # tfsec:ignore:aws-vpc-no-public-egress-sgr
   cidr_blocks = ["0.0.0.0/0"]
 }
