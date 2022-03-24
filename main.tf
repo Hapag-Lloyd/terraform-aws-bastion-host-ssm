@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "egress_ssm" {
 
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "4.14.0"
+  version = "4.15.1"
 
   role_name        = var.resource_names["prefix"]
   role_description = "Instance profile for the bastion host to be able to connect to the machine"
