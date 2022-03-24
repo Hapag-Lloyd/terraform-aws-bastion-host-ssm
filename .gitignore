@@ -1,5 +1,6 @@
 .terraform/
 .idea/
+.infracost/
 node_modules/
 
 .terraform.lock.hcl

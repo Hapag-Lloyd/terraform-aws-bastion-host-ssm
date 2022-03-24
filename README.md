@@ -30,7 +30,7 @@ Check the `examples` directory for the module usage.
 - have a schedule to shutdown the instance at night
 - Keepass support for AWS credentials
 - (planned) use spot instances to save some money
-- (planned) provide IAM roles for easy access
+- provide IAM role for easy access
 - provide a script to connect to the bastion from your local machine
 
 ### Keepass Support For IAM User Credentials
@@ -43,7 +43,7 @@ The `scripts/export_aws_credentials_from_keypass.sh` will read and export the cr
 
 ### Schedules
 
-Schedules allow to start and shutdown the instance at certain times. If your work hours are from 9 till 5 UTC, add
+Schedules allow to start and shutdown the instance at certain times. If your work hours are from 9 till 5 in Berlin, add
 
 ```hcl
 module "bastion" {
@@ -57,8 +57,8 @@ module "bastion" {
 }
 ```
 
-The bastion host will automatically start at 9 UTC and shuts down at 17 UTC every day. Depending on the `instance_type` you will save
-more or less money.
+The bastion host will automatically start at 9 and shuts down at 17 every day (Berlin time). Depending on the `instance_type` you will save
+more or less money. Do not forget to adjust the timezone.
 
 ## Connect To The Bastion Host
 
@@ -116,7 +116,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 4.14.0 |
+| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 4.15.1 |
 
 ## Resources
 
@@ -126,11 +126,15 @@ way you can access the database, Redis cluster, ... directly from your localhost
 | [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
 | [aws_autoscaling_schedule.down](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
 | [aws_autoscaling_schedule.up](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
+| [aws_iam_policy.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_role.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_launch_configuration.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration) | resource |
 | [aws_security_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group_rule.egress_open_ports](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.egress_ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_ami.latest_amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_iam_policy_document.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_region.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
@@ -140,6 +144,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 | <a name="input_bastion_access_tag_value"></a> [bastion\_access\_tag\_value](#input\_bastion\_access\_tag\_value) | Value added as tag 'bastion-access' of the launched EC2 instance to be used to restrict access to the machine vie IAM. | `string` | `"developer"` | no |
 | <a name="input_egress_open_tcp_ports"></a> [egress\_open\_tcp\_ports](#input\_egress\_open\_tcp\_ports) | The list of TCP ports to open for outgoing traffic. | `list(number)` | n/a | yes |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | Role path for the created bastion instance profile. Must end with '/' | `string` | `"/"` | no |
+| <a name="input_iam_user_arn"></a> [iam\_user\_arn](#input\_iam\_user\_arn) | ARN of the user who is allowed to assume the role giving access to the bastion host. | `string` | n/a | yes |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type of the bastion | `string` | `"t3.nano"` | no |
 | <a name="input_resource_names"></a> [resource\_names](#input\_resource\_names) | Settings for generating resource names. Set the prefix and the separator according to your company style guide. | <pre>object({<br>    prefix    = string<br>    separator = string<br>  })</pre> | <pre>{<br>  "prefix": "bastion",<br>  "separator": "-"<br>}</pre> | no |
 | <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | Size of the root volume in GB | `number` | `8` | no |
