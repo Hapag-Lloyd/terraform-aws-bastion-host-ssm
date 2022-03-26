@@ -20,7 +20,8 @@ resource "aws_ami_copy" "latest_amazon_linux" {
   source_ami_id     = data.aws_ami.latest_amazon_linux.id
   source_ami_region = data.aws_region.this.name
 
-  encrypted = true
+  encrypted  = true
+  kms_key_id = var.kms_key_id
 
   tags = var.tags
 }

@@ -31,6 +31,13 @@ variable "schedule" {
   default = null
 }
 
+variable "kms_key_id" {
+  type        = string
+  description = "The ID of the KMS key used to encrypt the resources."
+
+  default = null
+}
+
 variable "bastion_access_tag_value" {
   type        = string
   description = "Value added as tag 'bastion-access' of the launched EC2 instance to be used to restrict access to the machine vie IAM."
