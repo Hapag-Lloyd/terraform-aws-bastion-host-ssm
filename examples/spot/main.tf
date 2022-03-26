@@ -11,16 +11,11 @@ module "bastion_host" {
     root_volume_size  = 8
     enable_monitoring = false
 
-    enable_spot = false
+    enable_spot = true
   }
 
-  resource_names = {
-    prefix    = "x-bastion"
-    separator = "-"
-  }
-
-  vpc_id     = "vpc-074e65ead9562b449"
-  subnet_ids = ["subnet-027a1bd83096fc772", "subnet-06421c0d85479a548", "subnet-070d97f015402e473"]
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 }
 
 data "aws_availability_zones" "available" {
