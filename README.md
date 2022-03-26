@@ -57,8 +57,11 @@ module "bastion" {
 }
 ```
 
-The bastion host will automatically start at 9 and shuts down at 17 every day (Berlin time). Depending on the `instance_type` you will save
+The bastion host will automatically start at 9 and shuts down at 17 from monday to friday (Berlin time). Depending on the `instance_type` you will save
 more or less money. Do not forget to adjust the timezone.
+
+In case you have to start a bastin host outside the working hours use the launch template provided by the module and launch the
+new instance from the AWS CLI or Console. Don't forget to shut it down if you are done.
 
 ## Connect To The Bastion Host
 
@@ -140,6 +143,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 | [aws_iam_role.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_launch_configuration.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration) | resource |
+| [aws_launch_template.manual_start](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
 | [aws_security_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group_rule.egress_open_ports](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.egress_ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
