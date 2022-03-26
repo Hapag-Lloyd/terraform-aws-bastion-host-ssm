@@ -60,15 +60,21 @@ variable "resource_names" {
 variable "instance" {
   type = object({
     type              = string # EC2 instance type
+    desired_capacity  = number # number of EC2 instances to run
     root_volume_size  = number # in GB
     enable_monitoring = bool
+
+    enable_spot = bool
   })
   description = "Defines the basic parameters for the EC2 instance used as Bastion host"
 
   default = {
     type              = "t3.nano"
+    desired_capacity  = 1
     root_volume_size  = 8
     enable_monitoring = false
+
+    enable_spot = false
   }
 }
 
