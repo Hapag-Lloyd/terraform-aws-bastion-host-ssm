@@ -1,38 +1,21 @@
 module "bastion_host" {
   source = "../../"
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  egress_open_tcp_ports = [3306, 5432]
 
-  iam_role_path = "/instances/"
-  iam_user_arn  = module.bastion_user.iam_user_arn
-
-  bastion_access_tag_value = "developers"
+  iam_user_arn = module.bastion_user.iam_user_arn
 
   instance = {
     type              = "t3.nano"
-    desired_capacity  = 1
+    desired_capacity  = 3
     root_volume_size  = 8
     enable_monitoring = false
 
-    enable_spot = false
+    enable_spot = true
   }
 
-  resource_names = {
-    prefix    = "bastion"
-    separator = "-"
-  }
-
-  egress_open_tcp_ports = [3306, 5432]
-
-  schedule = {
-    start = "0 9 * * MON-FRI"
-    stop  = "0 17 * * MON-FRI"
-
-    time_zone = "Europe/Berlin"
-  }
-
-  tags = { "env" : "deve" }
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 }
 
 data "aws_availability_zones" "available" {
