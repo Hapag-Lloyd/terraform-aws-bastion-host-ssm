@@ -9,19 +9,18 @@ can be realized by the user by creating multiple connections to the bastion host
 
 Check the `examples` directory for the module usage.
 
-## Cost Estimation (1.5.0)
+## Cost Estimation (1.7.0)
 
 ```
- Name                                                   Monthly Qty  Unit     Monthly Cost
+ Name                                                   Monthly Qty  Unit   Monthly Cost
 
  module.bastion_host.aws_autoscaling_group.this
  └─ module.bastion_host.aws_launch_configuration.this
-    ├─ Instance usage (Linux/UNIX, on-demand, t3.nano)          730  hours           $4.38
-    ├─ EC2 detailed monitoring                                    7  metrics         $2.10
+    ├─ Instance usage (Linux/UNIX, on-demand, t3.nano)          730  hours         $4.38
     └─ root_block_device
-       └─ Storage (general purpose SSD, gp3)                      8  GB              $0.76
+       └─ Storage (general purpose SSD, gp3)                      8  GB            $0.76
 
- OVERALL TOTAL                                                                       $7.24
+ OVERALL TOTAL                                                                     $5.14
 ```
 
 ## Features
@@ -159,9 +158,8 @@ way you can access the database, Redis cluster, ... directly from your localhost
 | <a name="input_egress_open_tcp_ports"></a> [egress\_open\_tcp\_ports](#input\_egress\_open\_tcp\_ports) | The list of TCP ports to open for outgoing traffic. | `list(number)` | n/a | yes |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | Role path for the created bastion instance profile. Must end with '/' | `string` | `"/"` | no |
 | <a name="input_iam_user_arn"></a> [iam\_user\_arn](#input\_iam\_user\_arn) | ARN of the user who is allowed to assume the role giving access to the bastion host. | `string` | n/a | yes |
-| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type of the bastion | `string` | `"t3.nano"` | no |
+| <a name="input_instance"></a> [instance](#input\_instance) | Defines the basic parameters for the EC2 instance used as Bastion host | <pre>object({<br>    type              = string # EC2 instance type<br>    root_volume_size  = number # in GB<br>    enable_monitoring = bool<br>  })</pre> | <pre>{<br>  "enable_monitoring": false,<br>  "root_volume_size": 8,<br>  "type": "t3.nano"<br>}</pre> | no |
 | <a name="input_resource_names"></a> [resource\_names](#input\_resource\_names) | Settings for generating resource names. Set the prefix and the separator according to your company style guide. | <pre>object({<br>    prefix    = string<br>    separator = string<br>  })</pre> | <pre>{<br>  "prefix": "bastion",<br>  "separator": "-"<br>}</pre> | no |
-| <a name="input_root_volume_size"></a> [root\_volume\_size](#input\_root\_volume\_size) | Size of the root volume in GB | `number` | `8` | no |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | Defines when to start and stop the instances. Use 'start' and 'stop' with a cron expression and add the 'time\_zone'. | <pre>object({<br>    start     = string<br>    stop      = string<br>    time_zone = string<br>  })</pre> | `null` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The subnets to place the bastion in. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A list of tags to add to all resources. | `map(string)` | `{}` | no |

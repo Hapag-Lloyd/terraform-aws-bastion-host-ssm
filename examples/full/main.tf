@@ -9,8 +9,11 @@ module "bastion_host" {
 
   bastion_access_tag_value = "developers"
 
-  instance_type    = "t3.nano"
-  root_volume_size = 8
+  instance = {
+    type              = "t3.nano"
+    root_volume_size  = 8
+    enable_monitoring = false
+  }
 
   resource_names = {
     prefix    = "bastion"
