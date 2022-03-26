@@ -7,6 +7,8 @@ module "bastion_host" {
   iam_role_path = "/instances/"
   iam_user_arn  = module.bastion_user.iam_user_arn
 
+  kms_key_id = module.kms_key.key_id
+
   bastion_access_tag_value = "developers"
 
   instance = {
@@ -37,6 +39,19 @@ module "bastion_host" {
 
 data "aws_availability_zones" "available" {
   state = "available"
+}
+
+module "kms_key" {
+  source  = "cloudposse/kms-key/aws"
+  version = "0.12.1"
+
+  namespace               = "eg"
+  stage                   = "test"
+  name                    = "chamber"
+  description             = "KMS key for chamber"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+  alias                   = "alias/parameter_store_key"
 }
 
 module "vpc" {
