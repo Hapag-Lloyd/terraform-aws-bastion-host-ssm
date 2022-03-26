@@ -88,13 +88,13 @@ resource "aws_launch_configuration" "this" {
   name_prefix = var.resource_names["prefix"]
 
   image_id      = aws_ami_copy.latest_amazon_linux.id
-  instance_type = var.instance_type
+  instance_type = var.instance.type
 
   iam_instance_profile = module.instance_profile_role.iam_role_name
   security_groups      = [aws_security_group.this.id]
 
   root_block_device {
-    volume_size = var.root_volume_size
+    volume_size = var.instance.root_volume_size
     volume_type = "gp3"
 
     encrypted             = true
@@ -109,6 +109,8 @@ resource "aws_launch_configuration" "this" {
     http_put_response_hop_limit = 2
   }
 
+  enable_monitoring = var.instance.enable_monitoring
+
   lifecycle {
     create_before_destroy = true
   }
@@ -119,7 +121,7 @@ resource "aws_launch_template" "manual_start" {
   description = "Launches a bastion host"
 
   image_id      = aws_ami_copy.latest_amazon_linux.id
-  instance_type = var.instance_type
+  instance_type = var.instance.type
 
   vpc_security_group_ids = [aws_security_group.this.id]
 

@@ -38,20 +38,6 @@ variable "bastion_access_tag_value" {
   default = "developer"
 }
 
-variable "instance_type" {
-  type        = string
-  description = "EC2 instance type of the bastion"
-
-  default = "t3.nano"
-}
-
-variable "root_volume_size" {
-  type        = number
-  description = "Size of the root volume in GB"
-
-  default = 8
-}
-
 variable "egress_open_tcp_ports" {
   type        = list(number)
   description = "The list of TCP ports to open for outgoing traffic."
@@ -68,6 +54,21 @@ variable "resource_names" {
   default = {
     "prefix" : "bastion"
     "separator" : "-"
+  }
+}
+
+variable "instance" {
+  type = object({
+    type              = string # EC2 instance type
+    root_volume_size  = number # in GB
+    enable_monitoring = bool
+  })
+  description = "Defines the basic parameters for the EC2 instance used as Bastion host"
+
+  default = {
+    type              = "t3.nano"
+    root_volume_size  = 8
+    enable_monitoring = false
   }
 }
 
