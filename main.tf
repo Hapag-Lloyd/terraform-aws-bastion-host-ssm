@@ -114,6 +114,35 @@ resource "aws_launch_configuration" "this" {
   }
 }
 
+resource "aws_launch_template" "manual_start" {
+  name        = var.resource_names.prefix
+  description = "Launches a bastion host"
+
+  image_id      = aws_ami_copy.latest_amazon_linux.id
+  instance_type = var.instance_type
+
+  vpc_security_group_ids = [aws_security_group.this.id]
+
+  update_default_version = true
+
+  iam_instance_profile {
+    name = module.instance_profile_role.iam_role_name
+  }
+
+  monitoring {
+    # no monitoring for manual instances
+    enabled = false
+  }
+
+  # use IMDSv2 to avoid warnings in Security Hub
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+    # if Docker container are used the hop limit should be at least 2
+    http_put_response_hop_limit = 2
+  }
+}
+
 resource "aws_autoscaling_group" "this" {
   name = var.resource_names["prefix"]
 
