@@ -9,18 +9,18 @@ can be realized by the user by creating multiple connections to the bastion host
 
 Check the `examples` directory for the module usage.
 
-## Cost Estimation (1.7.0)
+## Cost Estimation (1.9.1)
 
 ```
  Name                                                   Monthly Qty  Unit   Monthly Cost
 
- module.bastion_host.aws_autoscaling_group.this
- └─ module.bastion_host.aws_launch_configuration.this
-    ├─ Instance usage (Linux/UNIX, on-demand, t3.nano)          730  hours         $4.38
+ module.bastion_host.aws_autoscaling_group.on_spot[0]
+ └─ module.bastion_host.aws_launch_template.manual_start
+    └─ Instance usage (Linux/UNIX, spot, t3.nano)               1,460  hours         $2.63
     └─ root_block_device
-       └─ Storage (general purpose SSD, gp3)                      8  GB            $0.76
+       └─ Storage (general purpose SSD, gp3)                       16  GB            $1.52
 
- OVERALL TOTAL                                                                     $5.14
+ OVERALL TOTAL                                                                       $4.15
 ```
 
 ## Features
