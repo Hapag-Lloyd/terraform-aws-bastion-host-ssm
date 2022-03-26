@@ -28,7 +28,7 @@ Check the `examples` directory for the module usage.
 - use autoscaling groups to replace dead instances
 - have a schedule to shutdown the instance at night
 - Keepass support for AWS credentials
-- (planned) use spot instances to save some money
+- use spot instances to save some money
 - provide IAM role for easy access
 - provide a script to connect to the bastion from your local machine
 
