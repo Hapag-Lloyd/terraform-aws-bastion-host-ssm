@@ -62,6 +62,52 @@ more or less money. Do not forget to adjust the timezone.
 In case you have to start a bastin host outside the working hours use the launch template provided by the module and launch the
 new instance from the AWS CLI or Console. Don't forget to shut it down if you are done.
 
+### Encryption
+
+In case you are using spot instances don't forget to allow `AWSServiceRoleForAutoScaling` to access your keys.
+
+```hcl
+data "aws_iam_policy_document" "key_policy" {
+    ...
+    
+    statement {
+    sid    = "Allow spot instances use of the customer managed key"
+    effect = "Allow"
+
+    principals {
+      identifiers = ["arn:aws:iam::${var.aws_account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
+      type        = "AWS"
+    }
+
+    actions = ["kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "Allow attachment of persistent resources"
+    effect = "Allow"
+
+    principals {
+      identifiers = ["arn:aws:iam::${var.aws_account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
+      type        = "AWS"
+    }
+
+    actions   = ["kms:CreateGrant"]
+    resources = ["*"]
+    condition {
+      test     = "Bool"
+      variable = "kms:GrantIsForAWSResource"
+      values   = ["true"]
+    }
+  }
+}
+```
+
 ## Connect To The Bastion Host
 
 The Session Manager Plugin is needed to connect via SSM to the bastion host. Download it at https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
