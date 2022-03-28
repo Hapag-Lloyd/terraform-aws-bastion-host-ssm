@@ -129,6 +129,8 @@ resource "aws_launch_template" "manual_start" {
   update_default_version = true
 
   network_interfaces {
+    device_index = 0
+    
     associate_public_ip_address = false
     security_groups             = [aws_security_group.this.id]
     subnet_id                   = var.subnet_ids[0]
