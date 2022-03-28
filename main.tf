@@ -128,13 +128,6 @@ resource "aws_launch_template" "manual_start" {
 
   update_default_version = true
 
-  network_interfaces {
-    associate_public_ip_address = false
-    security_groups             = [aws_security_group.this.id]
-    subnet_id                   = var.subnet_ids[0]
-    delete_on_termination       = true
-  }
-
   iam_instance_profile {
     name = module.instance_profile_role.iam_role_name
   }
