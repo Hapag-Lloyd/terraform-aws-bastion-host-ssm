@@ -128,7 +128,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 4.15.1 |
+| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 4.17.0 |
 
 ## Resources
 
