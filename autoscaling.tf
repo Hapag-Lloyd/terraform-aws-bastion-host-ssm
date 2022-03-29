@@ -1,7 +1,7 @@
 resource "aws_autoscaling_group" "on_demand" {
   count = var.instance.enable_spot ? 0 : 1
 
-  name = var.resource_names["prefix"]
+  name_prefix = "${var.resource_names["prefix"]}${var.resource_names["separator"]}"
 
   vpc_zone_identifier = var.subnet_ids
 
