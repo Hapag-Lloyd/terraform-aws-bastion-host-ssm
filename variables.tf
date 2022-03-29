@@ -15,9 +15,9 @@ variable "iam_role_path" {
   default = "/"
 }
 
-variable "iam_user_arn" {
-  type        = string
-  description = "ARN of the user who is allowed to assume the role giving access to the bastion host."
+variable "iam_user_arns" {
+  type        = list(string)
+  description = "ARNs of the user who are allowed to assume the role giving access to the bastion host."
 }
 
 variable "schedule" {
