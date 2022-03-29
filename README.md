@@ -69,7 +69,7 @@ In case you are using spot instances don't forget to allow `AWSServiceRoleForAut
 ```hcl
 data "aws_iam_policy_document" "key_policy" {
     ...
-    
+
     statement {
     sid    = "Allow spot instances use of the customer managed key"
     effect = "Allow"
@@ -206,7 +206,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 | <a name="input_bastion_access_tag_value"></a> [bastion\_access\_tag\_value](#input\_bastion\_access\_tag\_value) | Value added as tag 'bastion-access' of the launched EC2 instance to be used to restrict access to the machine vie IAM. | `string` | `"developer"` | no |
 | <a name="input_egress_open_tcp_ports"></a> [egress\_open\_tcp\_ports](#input\_egress\_open\_tcp\_ports) | The list of TCP ports to open for outgoing traffic. | `list(number)` | n/a | yes |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | Role path for the created bastion instance profile. Must end with '/' | `string` | `"/"` | no |
-| <a name="input_iam_user_arn"></a> [iam\_user\_arn](#input\_iam\_user\_arn) | ARN of the user who is allowed to assume the role giving access to the bastion host. | `string` | n/a | yes |
+| <a name="input_iam_user_arns"></a> [iam\_user\_arns](#input\_iam\_user\_arns) | ARNs of the user who are allowed to assume the role giving access to the bastion host. | `list(string)` | n/a | yes |
 | <a name="input_instance"></a> [instance](#input\_instance) | Defines the basic parameters for the EC2 instance used as Bastion host | <pre>object({<br>    type              = string # EC2 instance type<br>    desired_capacity  = number # number of EC2 instances to run<br>    root_volume_size  = number # in GB<br>    enable_monitoring = bool<br><br>    enable_spot = bool<br>  })</pre> | <pre>{<br>  "desired_capacity": 1,<br>  "enable_monitoring": false,<br>  "enable_spot": false,<br>  "root_volume_size": 8,<br>  "type": "t3.nano"<br>}</pre> | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The ID of the KMS key used to encrypt the resources. | `string` | `null` | no |
 | <a name="input_resource_names"></a> [resource\_names](#input\_resource\_names) | Settings for generating resource names. Set the prefix and the separator according to your company style guide. | <pre>object({<br>    prefix    = string<br>    separator = string<br>  })</pre> | <pre>{<br>  "prefix": "bastion",<br>  "separator": "-"<br>}</pre> | no |

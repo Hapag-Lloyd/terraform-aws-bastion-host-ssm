@@ -5,7 +5,7 @@ module "bastion_host" {
   subnet_ids = module.vpc.private_subnets
 
   iam_role_path = "/instances/"
-  iam_user_arn  = module.bastion_user.iam_user_arn
+  iam_user_arns = [module.bastion_user.iam_user_arn]
 
   kms_key_id = module.kms_key.key_id
 
