@@ -19,7 +19,7 @@
 
 export AWS_DEFAULT_REGION="eu-central-1"
 
-CWD=$(dirname $0)
+CWD=$(dirname "$0")
 BASTION_SERVICES_FILE="$CWD/bastion_services.json"
 
 
@@ -75,7 +75,7 @@ AWS_SESSION_TOKEN=$(echo "${temp_credentials}" | jq -r .Credentials.SessionToken
 export AWS_SESSION_TOKEN
 
 # find all running Bastion hosts
-instances=$(aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" "Name=tag:Name,Values=${bastion_host_name}" --region ${region} | jq '[.Reservations[].Instances[] | {instanceId: .InstanceId, availabilityZone: .Placement.AvailabilityZone}]')
+instances=$(aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" "Name=tag:Name,Values=${bastion_host_name}" --region "${region}" | jq '[.Reservations[].Instances[] | {instanceId: .InstanceId, availabilityZone: .Placement.AvailabilityZone}]')
 total_instances=$(echo "$instances" | jq -r '. | length')
 selected_instance=$(( RANDOM % total_instances ))
 
