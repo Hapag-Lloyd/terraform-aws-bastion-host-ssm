@@ -13,14 +13,10 @@ jobs:
         uses: ludeeus/action-shellcheck@1.1.0
 
   verify-json:
+    name: Run JSON Lint
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Validate JSON
-        uses: docker://orrosenblatt/validate-json-action:0.1.0
-        env:
-          INPUT_SCHEMA: /scripts/bastion_services.schema.json
-          INPUT_JSONS: /scripts/bastion_services.json
+    steps: 
+      - run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
           
   verify_format:
     name: Verify formatting
