@@ -1,0 +1,71 @@
+{
+  "product-a": {
+    "comment": "REMOVE ME! Fancy product-a which lives in separate accounts for dev, qa and prod",
+    "deve": {
+      "comment": "The services array lists all service available for product-a in development",
+      "aws_account_id": 1234,
+      "bastion-host-name": "The `Name` tag of the bastion host",
+      "connection-role-name": "The name of the role used to connect to the Bastion host. This role is assumed.",
+      "services": [
+        {
+          "name": "service-a_10000",
+          "forwarding": "10000:some.service.in.the.cloud.com:3306",
+          "region": "eu-central-1",
+          "comment": "Port 10000 is connected to the fancy MySql database"
+        },
+        {
+          "name": "service-b_10001",
+          "forwarding": "10001:some.other.service.in.the.cloud.com:5432",
+          "region": "eu-central-1",
+          "comment": "Port 10001 is connected to the fancy PostgreSql database"
+        }
+      ]
+    },
+    "qa": {
+      "comment": "The services array lists all service available for product-a in qa",
+      "aws_account_id": 1235,
+      "bastion-host-name": "The `Name` tag of the bastion host",
+      "connection-role-name": "The name of the role used to connect to the Bastion host. This role is assumed.",
+      "services": [
+        {
+          "name": "service-a_10100",
+          "forwarding": "10100:some.service.in.the.cloud.com:3306",
+          "region": "eu-central-1",
+          "comment": "Port 10100 is connected to the fancy MySql database"
+        },
+        {
+          "name": "service-b_10101",
+          "forwarding": "10001:some.other.service.in.the.cloud.com:5432",
+          "region": "eu-central-1",
+          "comment": "Port 10101 is connected to the fancy PostgreSql database"
+        }
+      ]
+    },
+    "prod": {
+      "comment": "The services array lists all service available for product-a in prod",
+      "aws_account_id": 1236,
+      "bastion-host-name": "The `Name` tag of the bastion host",
+      "connection-role-name": "The name of the role used to connect to the Bastion host. This role is assumed.",
+      "services": [
+        {
+          "name": "service-a_10200",
+          "forwarding": "10200:some.service.in.the.cloud.com:3306",
+          "region": "eu-central-1",
+          "comment": "Port 10200 is connected to the fancy MySql database"
+        },
+        {
+          "name": "service-b_10201",
+          "forwarding": "10201:some.other.service.in.the.cloud.com:5432",
+          "region": "eu-central-1",
+          "comment": "Port 10201 is connected to the fancy PostgreSql database"
+        }
+      ]
+    }
+  },
+  "product-b": {
+    "comment": "same structure as above"
+  },
+  "product-c": {
+    "comment": "same structure as above"
+  }
+}
