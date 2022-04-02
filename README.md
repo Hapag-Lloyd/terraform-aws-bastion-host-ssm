@@ -1,3 +1,5 @@
+[![Terraform registry](https://img.shields.io/github/v/release/Hapag-Lloyd/terraform-aws-bastion-host-ssm?label=Terraform%20Registry)](https://registry.terraform.io/modules/Hapag-Lloyd/bastion-host-ssm/aws/) [![Actions](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/workflows/Verify/badge.svg)](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/actions)
+
 # terraform-aws-bastion-host-ssm
 
 This Terraform module installs a bastion host accessible via SSM only. The underlying EC2 instance
