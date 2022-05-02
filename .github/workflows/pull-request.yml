@@ -12,6 +12,12 @@ jobs:
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@1.1.0
 
+  verify-json:
+    name: Run JSON Lint
+    runs-on: ubuntu-latest
+    steps: 
+      - run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
+          
   verify_format:
     name: Verify formatting
     strategy:
