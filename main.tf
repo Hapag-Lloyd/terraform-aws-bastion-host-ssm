@@ -144,4 +144,12 @@ resource "aws_launch_template" "manual_start" {
     # if Docker container are used the hop limit should be at least 2
     http_put_response_hop_limit = 2
   }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = local.bastion_runtime_tags
+  }
+
+  tags = var.tags
 }

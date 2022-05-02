@@ -17,7 +17,7 @@ resource "aws_autoscaling_group" "on_demand" {
   launch_configuration = aws_launch_configuration.this.id
 
   dynamic "tag" {
-    for_each = local.asg_tags
+    for_each = local.bastion_runtime_tags
 
     content {
       key                 = tag.key
@@ -65,7 +65,7 @@ resource "aws_autoscaling_group" "on_spot" {
   }
 
   dynamic "tag" {
-    for_each = local.asg_tags
+    for_each = local.bastion_runtime_tags
 
     content {
       key                 = tag.key
