@@ -7,7 +7,7 @@ module "bastion_host" {
   iam_role_path = "/instances/"
   iam_user_arns = [module.bastion_user.iam_user_arn]
 
-  kms_key_id = module.kms_key.key_id
+  kms_key_arn = module.kms_key.key_arn
 
   bastion_access_tag_value = "developers"
 

@@ -31,9 +31,9 @@ variable "schedule" {
   default = null
 }
 
-variable "kms_key_id" {
+variable "kms_key_arn" {
   type        = string
-  description = "The ID of the KMS key used to encrypt the resources."
+  description = "The ARN of the KMS key used to encrypt the resources."
 
   default = null
 }
