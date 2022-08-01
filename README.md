@@ -11,10 +11,10 @@ can be realized by the user by creating multiple connections to the bastion host
 
 Check the `examples` directory for the module usage.
 
-## Cost Estimation (1.9.1)
+## Cost Estimation (for version 1.9.1)
 
 ```
- Name                                                   Monthly Qty  Unit   Monthly Cost
+ Name                                                     Monthly Qty  Unit   Monthly Cost
 
  module.bastion_host.aws_autoscaling_group.on_spot[0]
  └─ module.bastion_host.aws_launch_template.manual_start
@@ -48,7 +48,7 @@ Schedules allow to start and shutdown the instance at certain times. If your wor
 
 ```hcl
 module "bastion" {
-  ...
+  # ...
   schedule {
     start = "0 9 * * MON-FRI"
     stop = "0 17 * * MON-FRI"
@@ -70,7 +70,7 @@ In case you are using spot instances don't forget to allow `AWSServiceRoleForAut
 
 ```hcl
 data "aws_iam_policy_document" "key_policy" {
-    ...
+    # ...
 
     statement {
     sid    = "Allow spot instances use of the customer managed key"
