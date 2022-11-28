@@ -8,7 +8,7 @@ jobs:
     name: Check shell scripts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@1.1.0
 
@@ -27,7 +27,7 @@ jobs:
     container:
       image: hashicorp/terraform:${{ matrix.terraform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: terraform init -get -backend=false -input=false
       - run: terraform fmt -recursive -check -write=false
 
@@ -45,6 +45,6 @@ jobs:
     container:
       image: hashicorp/terraform:${{ matrix.terraform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: terraform init -get -backend=false -input=false
       - run: terraform validate
