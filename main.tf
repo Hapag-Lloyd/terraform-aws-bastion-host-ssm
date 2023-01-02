@@ -96,7 +96,7 @@ resource "aws_launch_configuration" "this" {
   image_id      = aws_ami_copy.latest_amazon_linux.id
   instance_type = var.instance.type
 
-  iam_instance_profile = module.instance_profile_role.iam_role_name
+  iam_instance_profile = local.bastion_instance_profile_name
   security_groups      = [aws_security_group.this.id]
 
   root_block_device {
@@ -134,7 +134,7 @@ resource "aws_launch_template" "manual_start" {
   update_default_version = true
 
   iam_instance_profile {
-    name = var.instance["profile_name"] != "" ? var.instance["profile_name"] : module.instance_profile_role[0].iam_role_name
+    name = local.bastion_instance_profile_name
   }
 
   monitoring {

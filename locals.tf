@@ -12,4 +12,6 @@ locals {
 
   bastion_host_name       = var.resource_names["prefix"]
   bastion_access_tag_name = "bastion-access"
+
+  bastion_instance_profile_name = var.instance["profile_name"] != "" ? var.instance["profile_name"] : module.instance_profile_role[0].iam_role_name
 }
