@@ -1,11 +1,14 @@
 data "aws_region" "this" {
 }
 
+data "aws_caller_identity" "this" {
+}
+
 # find the latest Amazon Linux AMI and create a copy to be sure that it is present
 data "aws_ami" "latest_amazon_linux" {
   most_recent = true
 
-  owners = ["amazon"]
+  owners = ["amazon", data.aws_caller_identity.this.id]
 
   filter {
     name   = "name"
