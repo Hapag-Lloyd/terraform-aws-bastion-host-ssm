@@ -1,7 +1,7 @@
 data "aws_region" "this" {
 }
 
-# find the latest Amazon Linux AMI and create a copy to be sure that is it present
+# find the latest Amazon Linux AMI and create a copy to be sure that it is present
 data "aws_ami" "latest_amazon_linux" {
   most_recent = true
 
@@ -9,7 +9,7 @@ data "aws_ami" "latest_amazon_linux" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+    values = [var.ami_name_filter]
   }
 }
 
