@@ -18,6 +18,8 @@ module "bastion_host" {
     enable_monitoring = false
 
     enable_spot = false
+
+    profile_name = "AmazonSSMRoleForInstancesQuickSetup"
   }
 
   resource_names = {
@@ -33,6 +35,8 @@ module "bastion_host" {
 
     time_zone = "Europe/Berlin"
   }
+
+  ami_name_filter = "amzn2-ami-hvm-*-x86_64-ebs"
 
   tags = { "env" : "deve" }
 }
