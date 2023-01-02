@@ -1,6 +1,7 @@
-[![Terraform registry](https://img.shields.io/github/v/release/Hapag-Lloyd/terraform-aws-bastion-host-ssm?label=Terraform%20Registry)](https://registry.terraform.io/modules/Hapag-Lloyd/bastion-host-ssm/aws/) [![Actions](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/workflows/Release/badge.svg)](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/actions)
-
 # terraform-aws-bastion-host-ssm
+
+[![Terraform registry](https://img.shields.io/github/v/release/Hapag-Lloyd/terraform-aws-bastion-host-ssm?label=Terraform%20Registry)](https://registry.terraform.io/modules/Hapag-Lloyd/bastion-host-ssm/aws/)
+[![Actions](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/workflows/Release/badge.svg)](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/actions)
 
 This Terraform module installs a bastion host accessible via SSM only. The underlying EC2 instance
 has no ports opened. All data is encrypted and a `resource_prefix` can be specified to integrate into
@@ -13,7 +14,7 @@ Check the `examples` directory for the module usage.
 
 ## Cost Estimation (for version 1.9.1)
 
-```
+```text
  Name                                                     Monthly Qty  Unit   Monthly Cost
 
  module.bastion_host.aws_autoscaling_group.on_spot[0]
@@ -58,8 +59,8 @@ module "bastion" {
 }
 ```
 
-The bastion host will automatically start at 9 and shuts down at 17 from monday to friday (Berlin time). Depending on the `instance_type` you will save
-more or less money. Do not forget to adjust the timezone.
+The bastion host will automatically start at 9 and shuts down at 17 from monday to friday (Berlin time). Depending on
+the `instance_type` you will save more or less money. Do not forget to adjust the timezone.
 
 In case you have to start a bastin host outside the working hours use the launch template provided by the module and launch the
 new instance from the AWS CLI or Console. Don't forget to shut it down if you are done.
@@ -112,12 +113,15 @@ data "aws_iam_policy_document" "key_policy" {
 
 ## Connect To The Bastion Host
 
-The Session Manager Plugin is needed to connect via SSM to the bastion host. Download it at https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
+The [Session Manager Plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+is needed to connect via SSM to the bastion host.
 
 ### AWS-Gate
-AWS-Gate is available at https://github.com/xen0l/aws-gate
+
+[AWS-Gate](https://github.com/xen0l/aws-gate).
 
 ### AWS CLI
+
 ```bash
 instance_id="my-bastion-instance-id"
 az="az-of-the-bastion"
@@ -132,9 +136,12 @@ echo "export the credentials from above!"
 echo -e 'y\n' | ssh-keygen -t rsa -f bastion_key -N '' >/dev/null 2>&1
 ssh_public_key=$(cat bastion_key.pub)
 
-aws ec2-instance-connect send-ssh-public-key --instance-id "${instance_id}" --availability-zone "${az}" --instance-os-user ec2-user --ssh-public-key "${ssh_public_key}"
+aws ec2-instance-connect send-ssh-public-key --instance-id "${instance_id}" --availability-zone "${az}" \
+      --instance-os-user ec2-user --ssh-public-key "${ssh_public_key}"
 
-ssh "ec2-user@${instance_id}" -i bastion_key -N -L "12345:my.cloud.http:80" -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p"
+ssh "ec2-user@${instance_id}" -i bastion_key -N -L "12345:my.cloud.http:80" -o "UserKnownHostsFile=/dev/null" \
+    -o "StrictHostKeyChecking=no" -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession \
+      --parameters portNumber=%p"
 
 curl http://localhost:12345/
 ```
