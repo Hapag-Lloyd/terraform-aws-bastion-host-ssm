@@ -4,7 +4,7 @@ on:
   pull_request:
     branches-ignore:
       - 'release-please--branches--*'
-x
+
 jobs:
   shellcheck:
     name: Check shell scripts
