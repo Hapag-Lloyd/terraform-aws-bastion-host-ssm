@@ -6,7 +6,8 @@ on:
       - opened
       - edited
       - synchronize
-
+    branches-ignore:
+      - 'release-please--branches--**
 jobs:
   main:
     name: Validate PR title
