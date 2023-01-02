@@ -10,14 +10,14 @@ variable "subnet_ids" {
 
 variable "iam_role_path" {
   type        = string
-  description = "Role path for the created bastion instance profile. Must end with '/'"
+  description = "Role path for the created bastion instance profile. Must end with '/'. Not used if instance[\"profile_name\"] is set."
 
   default = "/"
 }
 
 variable "iam_user_arns" {
   type        = list(string)
-  description = "ARNs of the user who are allowed to assume the role giving access to the bastion host."
+  description = "ARNs of the user who are allowed to assume the role giving access to the bastion host. Not used if instance[\"profile_name\"] is set.""
 }
 
 variable "schedule" {
