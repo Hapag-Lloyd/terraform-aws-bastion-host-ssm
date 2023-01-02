@@ -7,7 +7,8 @@ We appreciate your thought to contribute to open source. :heart: We want to make
 - Submit a fix
 - Propose new features
 
-We use [Github Flow](https://guides.github.com/introduction/flow/index.html), so all code changes happen through pull requests. We actively welcome your pull requests:
+We use [Github Flow](https://guides.github.com/introduction/flow/index.html), so all code changes happen through pull
+requests. We actively welcome your pull requests:
 
 1. Fork the repo and create your branch from `main`.
 2. If you've added code, check one of the examples.
@@ -16,8 +17,8 @@ We use [Github Flow](https://guides.github.com/introduction/flow/index.html), so
 
 ## Terraform version
 
-We support Terraform version 1 and above. All checks within the pipeline are usually done with the newest version. If you need different versions of Terraform installed,
-check [tfenv](https://github.com/tfutils/tfenv).
+We support Terraform version 1 and above. All checks within the pipeline are usually done with the newest version.
+If you need different versions of Terraform installed, check [tfenv](https://github.com/tfutils/tfenv).
 
 ## Coding Style
 
@@ -25,7 +26,8 @@ We use the [Terraform Style conventions](https://www.terraform.io/docs/configura
 
 ## Documentation
 
-We use [pre-commit](https://pre-commit.com/) to update the Terraform inputs and outputs in the documentation via [terraform-docs](https://github.com/terraform-docs/terraform-docs). Ensure you have installed those components
+We use [pre-commit](https://pre-commit.com/) to update the Terraform inputs and outputs in the documentation via
+[terraform-docs](https://github.com/terraform-docs/terraform-docs). Ensure you have installed those components
 and to update the documentation of the module before raising the PR.
 
 ## Testing

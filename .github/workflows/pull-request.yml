@@ -26,6 +26,15 @@ jobs:
           mkdir .git
           actionlint -color
 
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate Markdown file
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint -c .markdownlint.yml -i CHANGELOG.md "**/*.md"
+
   verify-json:
     name: Run JSON Lint
     runs-on: ubuntu-latest
