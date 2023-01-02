@@ -16,4 +16,3 @@ jobs:
           include-v-in-tag: false
           signoff: "Matthias Kay <matthias.kay@hlag.com>"
           bootstrap-sha: "5213931527b84359dbfe1725e803af318082443f"
-          release-as: 2.0.17
