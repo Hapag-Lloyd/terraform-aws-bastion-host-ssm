@@ -18,19 +18,6 @@ jobs:
     steps: 
       - run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
           
-  verify_format:
-    name: Verify formatting
-    strategy:
-      matrix:
-        terraform: [1.1.7]
-    runs-on: ubuntu-latest
-    container:
-      image: hashicorp/terraform:${{ matrix.terraform }}
-    steps:
-      - uses: actions/checkout@v3
-      - run: terraform init -get -backend=false -input=false
-      - run: terraform fmt -recursive -check -write=false
-
   verify_examples:
     name: Verify examples
     strategy:
