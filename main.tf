@@ -70,7 +70,7 @@ module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "5.9.2"
 
-  count = var.instance["profile_name"] > "" ? 1 : 0
+  count = var.instance["profile_name"] != "" ? 1 : 0
 
   role_name        = "${var.resource_names["prefix"]}${var.resource_names.separator}profile"
   role_description = "Instance profile for the bastion host to be able to connect to the machine"
@@ -134,7 +134,7 @@ resource "aws_launch_template" "manual_start" {
   update_default_version = true
 
   iam_instance_profile {
-    name = var.instance["profile_name"] > "" ? var.instance["profile_name"] : module.instance_profile_role[0].iam_role_name
+    name = var.instance["profile_name"] != "" ? var.instance["profile_name"] : module.instance_profile_role[0].iam_role_name
   }
 
   monitoring {
