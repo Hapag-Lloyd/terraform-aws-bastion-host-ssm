@@ -7,20 +7,13 @@ on:
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "lts/*"
-      - name: Install dependencies
-        run: npm --prefix .release/ ci
       - name: Release
-        run: npx --prefix .release/ semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GH_TOKEN }}
+        uses: google-github-actions/release-please-action@v3.7.1
+        with:
+          release-type: terraform-module
+          include-v-in-tag: false
+          signoff: "Matthias Kay <matthias.kay@hlag.com>"
+          bootstrap-sha: "5213931527b84359dbfe1725e803af318082443f"
+          release-as: 2.0.17
