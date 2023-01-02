@@ -158,6 +158,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 
 # Module Documentation
 
+<!-- markdownlint-disable -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -223,3 +224,4 @@ way you can access the database, Redis cluster, ... directly from your localhost
 |------|-------------|
 | <a name="output_security_group_id"></a> [security\_group\_id](#output\_security\_group\_id) | ID of the security group assigned to the bastion host. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- markdownlint-enable -->
