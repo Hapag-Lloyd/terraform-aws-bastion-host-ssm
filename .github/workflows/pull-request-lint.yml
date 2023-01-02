@@ -32,8 +32,11 @@ jobs:
             style
             test
           # Configure which scopes are allowed.
+          # deps - dependency updates
+          # main - for release-please (scope used for releases)
           scopes: |
             deps
+            main
           # Configure that a scope must always be provided.
           requireScope: false
           # Configure additional validation for the subject based on a regex.
