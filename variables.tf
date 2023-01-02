@@ -72,7 +72,10 @@ variable "instance" {
     enable_monitoring = bool
 
     enable_spot = bool
+
+    profile_name = string
   })
+
   description = "Defines the basic parameters for the EC2 instance used as Bastion host"
 
   default = {
@@ -82,6 +85,8 @@ variable "instance" {
     enable_monitoring = false
 
     enable_spot = false
+
+    profile_name = ""
   }
 }
 
