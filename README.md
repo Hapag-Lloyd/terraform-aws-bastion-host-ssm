@@ -164,7 +164,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 [Wikipedia](https://en.wikipedia.org/wiki/Bastion_host)
 
 <!-- the following placeholder is filled by terraform-docs and the generated headings have level 2. -->
-<!-- markdownlint-disable-single-title/single-h1 -->
+<!-- markdownlint-disable MD025 -->
 # Module Documentation
 
 <!-- markdownlint-disable -->
