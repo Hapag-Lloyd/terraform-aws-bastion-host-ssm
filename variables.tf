@@ -17,7 +17,7 @@ variable "iam_role_path" {
 
 variable "iam_user_arns" {
   type        = list(string)
-  description = "ARNs of the user who are allowed to assume the role giving access to the bastion host. Not used if instance[\"profile_name\"] is set.""
+  description = "ARNs of the user who are allowed to assume the role giving access to the bastion host. Not used if instance[\"profile_name\"] is set."
 }
 
 variable "schedule" {
