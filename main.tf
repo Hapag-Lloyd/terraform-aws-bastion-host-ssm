@@ -68,7 +68,7 @@ resource "aws_security_group_rule" "egress_ssm" {
 
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "5.9.2"
+  version = "5.10.0"
 
   count = var.instance["profile_name"] != "" ? 1 : 0
 
