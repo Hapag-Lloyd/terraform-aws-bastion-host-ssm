@@ -1,5 +1,5 @@
 # terraform-aws-bastion-host-ssm
-
+test
 [![Terraform registry](https://img.shields.io/github/v/release/Hapag-Lloyd/terraform-aws-bastion-host-ssm?label=Terraform%20Registry)](https://registry.terraform.io/modules/Hapag-Lloyd/bastion-host-ssm/aws/)
 [![Actions](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/workflows/Release/badge.svg)](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/actions)
 
