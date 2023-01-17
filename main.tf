@@ -111,8 +111,7 @@ resource "aws_launch_configuration" "this" {
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
-    # if Docker container are used the hop limit should be at least 2
-    http_put_response_hop_limit = 2
+    http_put_response_hop_limit = 1
   }
 
   enable_monitoring = var.instance.enable_monitoring
@@ -146,8 +145,7 @@ resource "aws_launch_template" "manual_start" {
   metadata_options {
     http_endpoint = "enabled"
     http_tokens   = "required"
-    # if Docker container are used the hop limit should be at least 2
-    http_put_response_hop_limit = 2
+    http_put_response_hop_limit = 1
   }
 
   tag_specifications {
