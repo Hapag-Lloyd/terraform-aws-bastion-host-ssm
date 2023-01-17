@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.2.1...2.2.2) (2023-01-17)
+
+
+### Bug Fixes
+
+* set token hop_limit to 1 ([#134](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/134)) ([9b94074](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/9b940747f7d0c036c9c37965cea5e046a07a7a8d))
+
 ## [2.2.1](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.2.0...2.2.1) (2023-01-10)
 
 
