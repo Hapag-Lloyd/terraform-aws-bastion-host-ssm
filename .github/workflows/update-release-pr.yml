@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release
-        uses: google-github-actions/release-please-action@v3.7.2
+        uses: google-github-actions/release-please-action@v3.7.3
         with:
           release-type: terraform-module
           include-v-in-tag: false
