@@ -74,6 +74,23 @@ data "aws_iam_policy_document" "key_policy" {
     # ...
 
     statement {
+    sid    = "AdminKMSManagement"
+    effect = "Allow"
+
+    principals {
+      identifiers = [
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+      ]
+      type = "AWS"
+    }
+
+    actions = [
+      "kms:*"
+    ]
+    resources = ["*"]
+    }
+
+    statement {
     sid    = "Allow spot instances use of the customer managed key"
     effect = "Allow"
 
