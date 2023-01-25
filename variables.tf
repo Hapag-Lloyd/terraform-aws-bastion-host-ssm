@@ -90,6 +90,22 @@ variable "instance" {
   }
 }
 
+variable "instances_distribution" {
+  type = object({
+    on_demand_base_capacity                  = number # absolute minimum amount of on_demand instances
+    on_demand_percentage_above_base_capacity = number # percentage split between on-demand and Spot instances
+    spot_allocation_strategy                 = string
+  })
+
+  description = "Defines the parameters for mixed instances policy auto scaling"
+
+  default = {
+    on_demand_base_capacity                  = 0
+    on_demand_percentage_above_base_capacity = 0
+    spot_allocation_strategy                 = "lowest-price"
+  }
+}
+
 variable "tags" {
   type        = map(string)
   description = "A list of tags to add to all resources."
