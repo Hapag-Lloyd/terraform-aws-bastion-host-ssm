@@ -4,7 +4,7 @@ module "bastion_host" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  iam_role_path = "/instances/"
+  iam_role_path = "/${local.resource_prefix}/"
   iam_user_arns = [module.bastion_user.iam_user_arn]
 
   kms_key_arn = module.kms_key.key_arn
@@ -23,7 +23,7 @@ module "bastion_host" {
   }
 
   resource_names = {
-    prefix    = "bastion"
+    prefix    = local.resource_prefix
     separator = "-"
   }
 
@@ -38,11 +38,7 @@ module "bastion_host" {
 
   ami_name_filter = "amzn2-ami-hvm-*-x86_64-ebs"
 
-  tags = { "env" : "deve" }
-}
-
-data "aws_availability_zones" "available" {
-  state = "available"
+  tags = { "env" : "oss" }
 }
 
 module "kms_key" {
@@ -51,31 +47,18 @@ module "kms_key" {
 
   namespace               = "eg"
   stage                   = "test"
-  name                    = "chamber"
-  description             = "KMS key for chamber"
+  name                    = "${local.resource_prefix}-chamber"
+  description             = "KMS key for bastion host"
   deletion_window_in_days = 10
   enable_key_rotation     = true
   alias                   = "alias/parameter_store_key"
-}
-
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "2.70"
-
-  name = "my-vpc"
-  cidr = "10.214.0.0/16"
-
-  azs             = data.aws_availability_zones.available.names
-  private_subnets = ["10.214.1.0/24", "10.214.2.0/24", "10.214.3.0/24"]
-
-  map_public_ip_on_launch = false
 }
 
 module "bastion_user" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
   version = "4.15.1"
 
-  name = "bastion"
+  name = "${local.resource_prefix}-bastion"
 
   password_reset_required       = false
   create_iam_user_login_profile = false
