@@ -21,7 +21,7 @@ jobs:
           RANDOM=$(date +%s)
           
           maintainer=${maintainers[ $RANDOM % ${#maintainers[@]} ]}
-          echo "maintainer=$maintainer" >> $GITHUB_OUTPUT
+          echo "maintainer=$maintainer" >> "$GITHUB_OUTPUT"
       - uses: actions/github-script@v6
         with:
           script: |
