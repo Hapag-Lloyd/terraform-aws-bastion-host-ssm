@@ -109,8 +109,8 @@ resource "aws_launch_configuration" "this" {
 
   # use IMDSv2 to avoid warnings in Security Hub
   metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
     http_put_response_hop_limit = 1
   }
 
@@ -143,8 +143,8 @@ resource "aws_launch_template" "manual_start" {
 
   # use IMDSv2 to avoid warnings in Security Hub
   metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
     http_put_response_hop_limit = 1
   }
 
