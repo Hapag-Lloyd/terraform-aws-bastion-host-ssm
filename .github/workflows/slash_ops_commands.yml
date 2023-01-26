@@ -27,7 +27,7 @@ jobs:
           script: |
             // adds a comment to the PR (there is the issue API, which works work PRs too)
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: context.payload.client_payload.github.payload.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'Hey there @${{ steps.vars.outputs.maintainer }}, could you please help @${{ github.event.client_payload.github.payload.comment.user.login }} out?'
