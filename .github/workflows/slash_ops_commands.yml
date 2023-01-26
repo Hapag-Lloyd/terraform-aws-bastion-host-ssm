@@ -1,0 +1,34 @@
+---
+name: Execute ChatOps command
+
+on:
+  repository_dispatch:
+    types: 
+      - help-command
+
+jobs:
+  help-command:
+    name: "ChatOps: Help"
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Choose maintainer
+        id: vars
+        run: |
+          maintainers=("kayman-mk")
+          
+          RANDOM=$(date +%s)
+          
+          maintainer=${maintainers[ $RANDOM % ${#maintainers[@]} ]}
+          echo "maintainer=$maintainer" >> "$GITHUB_OUTPUT"
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            // adds a comment to the PR (there is the issue API, which works work PRs too)
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Hey there @${{ steps.vars.outputs.maintainer }}, could you please help @${{ github.event.client_payload.github.payload.comment.user.login }} out?'
+            })
