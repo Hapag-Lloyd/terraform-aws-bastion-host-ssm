@@ -4,11 +4,13 @@ name: Execute ChatOps command
 on:
   repository_dispatch:
     types: 
+      - finish-command
       - help-command
 
 jobs:
   help-command:
     name: "ChatOps: Help"
+    if: github.event.action == 'help-command'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -32,3 +34,32 @@ jobs:
               repo: context.repo.repo,
               body: 'Hey there @${{ steps.vars.outputs.maintainer }}, could you please help @${{ github.event.client_payload.github.payload.comment.user.login }} out?'
             })
+
+  finish-command:
+    name: "ChatOps: Finish"
+    if: github.event.action == 'finish-command'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          ref: 'xxx' # TODO determine correct branch name here/Test with forks!
+
+      - name: Generate Terraform docs
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          find-dir: .
+          git-commit-message: "docs: update Terraform docs"
+          git-push: true
+
+      - uses: hashicorp/setup-terraform@v2.0.3
+
+      - name: Terraform format
+        id: fmt
+        run: terraform fmt -write=true -recursive
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: format Terraform code"
