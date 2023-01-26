@@ -41,12 +41,16 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
         with:
-          ref: 'xxx' # TODO determine correct branch name here/Test with forks!
-
+          ref: "refs/pull/${{ github.event.client_payload.slash_command.args.named.pull_request_number }}/head"
+      - run: |
+          git fetch origin "pull/${{ github.event.client_payload.slash_command.args.named.pull_request_number }}/head:${{ github.event.client_payload.slash_command.args.named.branch_name }}"
+          git checkout ${{ github.event.client_payload.slash_command.args.named.branch_name }}
+          git push -u origin ${{ github.event.client_payload.slash_command.args.named.branch_name }}
       - name: Generate Terraform docs
         uses: terraform-docs/gh-actions@v1.0.0
         with:
@@ -56,10 +60,23 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2.0.3
 
-      - name: Terraform format
+      - name: Terraform fmt
         id: fmt
         run: terraform fmt -write=true -recursive
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore: format Terraform code"
+
+      - name: Failure notice
+        uses: actions/github-script@v6
+        if: ${{ failure() }}
+        with:
+          script: |
+            // adds a comment to the PR (there is the issue API, which works work PRs too)
+            github.rest.issues.createComment({
+              issue_number: context.payload.client_payload.github.payload.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'The `/finish` action failed. Please check the action protocol!'
+            })
