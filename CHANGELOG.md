@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.2.2...2.3.0) (2023-01-31)
+
+
+### Features
+
+* allow mixture of on-demand and spot instances ([#140](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/140)) ([6df557a](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/6df557ac14a2602254c19d83393d87116a99765e))
+
+
+### Bug Fixes
+
+* **deps:** bump terraform-aws-modules/iam/aws from 5.10.0 to 5.11.1 ([#138](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/138)) ([4083f95](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/4083f9551e2f3de519bdea50fd04bb66a1f07562))
+
 ## [2.2.2](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.2.1...2.2.2) (2023-01-17)
 
 
