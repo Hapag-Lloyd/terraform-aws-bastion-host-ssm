@@ -14,6 +14,12 @@ module "bastion_host" {
     enable_spot = true
   }
 
+  instances_distribution = {
+    on_demand_base_capacity                  = 1
+    on_demand_percentage_above_base_capacity = 0
+    spot_allocation_strategy                 = "lowest-price"
+  }
+
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 

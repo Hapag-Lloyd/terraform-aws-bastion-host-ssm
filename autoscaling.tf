@@ -50,10 +50,13 @@ resource "aws_autoscaling_group" "on_spot" {
 
   termination_policies = ["OldestInstance"]
 
+  capacity_rebalance = true # https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-capacity-rebalancing.html
+
   mixed_instances_policy {
     instances_distribution {
-      on_demand_percentage_above_base_capacity = 0
-      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = var.instances_distribution.on_demand_percentage_above_base_capacity
+      on_demand_base_capacity                  = var.instances_distribution.on_demand_base_capacity
+      spot_allocation_strategy                 = var.instances_distribution.spot_allocation_strategy
     }
 
     launch_template {
