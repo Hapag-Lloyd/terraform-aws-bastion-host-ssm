@@ -1,4 +1,4 @@
-resource "aws_iam_role" "lambda" {
+resource "aws_iam_role" "lambda_switch_off" {
   name                  = "${var.resource_names.prefix}${var.resource_names.separator}panic-button-off"
   description           = "Role for executing the bastion panic button switch off"
   path                  = "/"
@@ -22,6 +22,30 @@ data "aws_iam_policy_document" "lambda_assume_role" {
   }
 }
 
+data "aws_iam_policy_document" "lambda_switch_off" {
+  statement {
+    sid = "KillBastionHosts"
+    actions = [
+      "ec2:DescribeInstances",
+      "ec2:StopInstances"
+    ]
+    resources = ["*"]
+    effect    = "Allow"
+  }
+}
+
+resource "aws_iam_policy" "lambda_switch_off" {
+  name   = "${var.resource_names.prefix}${var.resource_names.separator}switch-off"
+  policy = data.aws_iam_policy_document.lambda_switch_off.json
+
+  tags = var.tags
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_switch_off" {
+  role       = aws_iam_role.lambda_switch_off.name
+  policy_arn = aws_iam_policy.lambda_switch_off.arn
+}
+
 data "archive_file" "panic_button_lambda_switch_off" {
   type        = "zip"
   source_file = local.panic_button_switch_off_lambda_source
@@ -38,7 +62,7 @@ resource "aws_lambda_function" "panic_button_switch_off" {
   memory_size      = 128
   package_type     = "Zip"
   publish          = true
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda_switch_off.arn
   runtime          = "python3.8"
   timeout          = 30
 
@@ -46,6 +70,10 @@ resource "aws_lambda_function" "panic_button_switch_off" {
     variables = {
       BASTION_HOST_NAME = local.bastion_host_name
     }
+  }
+
+  tracing_config {
+    mode = "Passthrough"
   }
 
   tags = var.tags
