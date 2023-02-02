@@ -30,7 +30,12 @@ data "aws_iam_policy_document" "lambda_switch_off" {
       "ec2:StopInstances"
     ]
     resources = ["*"]
-    effect    = "Allow"
+    condition {
+      test     = "StringEquals"
+      values   = [local.bastion_host_name]
+      variable = "aws:ResourceTag/Name"
+    }
+    effect = "Allow"
   }
 }
 
