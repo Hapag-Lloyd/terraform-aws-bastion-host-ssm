@@ -54,14 +54,14 @@ resource "aws_iam_role_policy_attachment" "lambda_switch_off" {
 data "archive_file" "panic_button_lambda_switch_off" {
   type        = "zip"
   source_file = local.panic_button_switch_off_lambda_source
-  output_path = "builds/lambda_function_${local.panic_button_switch_off_lambda_source_sha256}.zip"
+  output_path = "builds/${local.panic_button_switch_off_lambda_source_file_name}.zip"
 }
 
 resource "aws_lambda_function" "panic_button_switch_off" {
   architectures    = ["arm64"]
   description      = "Terminates all bastion hosts forever"
   filename         = data.archive_file.panic_button_lambda_switch_off.output_path
-  source_code_hash = data.archive_file.panic_button_lambda_switch_off.output_base64sha256
+  source_code_hash = filebase64sha256(data.archive_file.panic_button_lambda_switch_off.output_path)
   function_name    = "${var.resource_names.prefix}${var.resource_names.separator}switch-off"
   handler          = "panic_button_switch_off.handler"
   memory_size      = 128
