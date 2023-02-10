@@ -1,0 +1,63 @@
+---
+name: Terraform
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform: [1.0.0, latest]
+        directories: [".", "examples/cost", "examples/simple", "examples/full"]
+    defaults:
+      run:
+        working-directory: ${{ matrix.directories }}
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+
+      - run: terraform -version
+
+      - run: terraform init -input=false -backend=false
+
+      - run: terraform validate
+
+  tflint:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/terraform-linters/tflint:v0.44.1@sha256:d7a49b9287c5d47566e664431ccfb2d7769bb8dc3bf544fa0145e6ba1479d153
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - uses: actions/cache@v3.2.5
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: tflint-${{ hashFiles('.config/tflint.hcl') }}
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
+          role-session-name: tflint
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Show version
+        run: tflint --config=.config/tflint.hcl --version
+
+      - name: Init TFLint
+        run: tflint --config=.config/tflint.hcl --init
+
+      - name: Run TFLint
+        run: tflint --config=.config/tflint.hcl -f compact
