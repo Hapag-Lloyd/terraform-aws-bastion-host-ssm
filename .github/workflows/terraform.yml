@@ -1,0 +1,69 @@
+---
+name: Terraform
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform: [1.0.0, latest]
+        directories: [".", "examples/cost", "examples/simple", "examples/full"]
+    defaults:
+      run:
+        working-directory: ${{ matrix.directories }}
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+
+      - run: terraform -version
+
+      - run: terraform init -input=false -backend=false
+
+      - run: terraform validate
+
+  tflint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+
+      - uses: actions/cache@v3.2.5
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: tflint-${{ hashFiles('.config/tflint.hcl') }}
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
+          role-session-name: tflint
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: install tflint
+        run: |
+          # renovate: datasource=github-tags depName=terraform-linters/tflint
+          tflint_version="0.44.1"
+          
+          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/v${tflint_version}/tflint_linux_amd64.zip
+          unzip tflint.zip
+
+      - name: Show version
+        run: ./tflint --config=.config/tflint.hcl --version
+
+      - name: Init TFLint
+        run: ./tflint --config=.config/tflint.hcl --init
+
+      - name: Run TFLint
+        run: ./tflint --config=.config/tflint.hcl -f compact
