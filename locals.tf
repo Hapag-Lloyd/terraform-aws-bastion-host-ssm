@@ -6,8 +6,8 @@ locals {
   bastion_runtime_tags = merge(
     var.tags,
     {
-      "Name"                             = local.bastion_host_name
-      "${local.bastion_access_tag_name}" = var.bastion_access_tag_value
+      "Name"                        = local.bastion_host_name
+      local.bastion_access_tag_name = var.bastion_access_tag_value
   })
 
   bastion_host_name       = var.resource_names["prefix"]
