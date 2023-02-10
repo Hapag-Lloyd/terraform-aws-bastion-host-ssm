@@ -35,8 +35,6 @@ jobs:
 
   tflint:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/terraform-linters/tflint:v0.44.1@sha256:d7a49b9287c5d47566e664431ccfb2d7769bb8dc3bf544fa0145e6ba1479d153
     steps:
       - uses: actions/checkout@v3.3.0
 
@@ -53,11 +51,19 @@ jobs:
           role-session-name: tflint
           aws-region: ${{ vars.AWS_REGION }}
 
+      - name: install tflint
+        run: |
+          # renovate: datasource=github-tags depName=terraform-linters/tflint
+          tflint_version="0.44.1"
+          
+          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/v${tflint_version}/tflint_linux_amd64.zip
+          unzip tflint.zip
+
       - name: Show version
-        run: tflint --config=.config/tflint.hcl --version
+        run: ./tflint --config=.config/tflint.hcl --version
 
       - name: Init TFLint
-        run: tflint --config=.config/tflint.hcl --init
+        run: ./tflint --config=.config/tflint.hcl --init
 
       - name: Run TFLint
-        run: tflint --config=.config/tflint.hcl -f compact
+        run: ./tflint --config=.config/tflint.hcl -f compact
