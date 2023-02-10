@@ -114,6 +114,7 @@ variable "tags" {
 }
 
 variable "ami_name_filter" {
+  type        =  string
   description = "The search filter string for the bastion AMI."
   default     = "amzn2-ami-hvm-*-x86_64-ebs"
 }
