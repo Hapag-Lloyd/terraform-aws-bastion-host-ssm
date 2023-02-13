@@ -24,7 +24,7 @@ jobs:
           
           maintainer=${maintainers[ $RANDOM % ${#maintainers[@]} ]}
           echo "maintainer=$maintainer" >> "$GITHUB_OUTPUT"
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6
         with:
           script: |
             // adds a comment to the PR (there is the issue API, which works work PRs too)
@@ -44,7 +44,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           ref: "refs/pull/${{ github.event.client_payload.slash_command.args.named.pull_request_number }}/head"
       - run: |
@@ -52,24 +52,24 @@ jobs:
           git checkout ${{ github.event.client_payload.slash_command.args.named.branch_name }}
           git push -u origin ${{ github.event.client_payload.slash_command.args.named.branch_name }}
       - name: Generate Terraform docs
-        uses: terraform-docs/gh-actions@v1.0.0
+        uses: terraform-docs/gh-actions@f6d59f89a280fa0a3febf55ef68f146784b20ba0 # v1.0.0
         with:
           find-dir: .
           git-commit-message: "docs: update Terraform docs"
           git-push: true
 
-      - uses: hashicorp/setup-terraform@v2.0.3
+      - uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2.0.3
 
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -write=true -recursive
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
         with:
           commit_message: "chore: format Terraform code"
 
       - name: Failure notice
-        uses: actions/github-script@v6
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6
         if: ${{ failure() }}
         with:
           script: |
