@@ -18,10 +18,10 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
       - name: Run tfsec
-        uses: tfsec/tfsec-sarif-action@v0.1.4
+        uses: tfsec/tfsec-sarif-action@21ded20e8ca120cd9d3d6ab04ef746477542a608 # v0.1.4
         with:
           sarif_file: tfsec.sarif
 
