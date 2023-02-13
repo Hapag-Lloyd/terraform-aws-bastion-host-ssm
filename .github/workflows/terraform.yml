@@ -21,9 +21,9 @@ jobs:
       run:
         working-directory: ${{ matrix.directories }}
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
-      - uses: hashicorp/setup-terraform@v2.0.3
+      - uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2.0.3
         with:
           terraform_version: ${{ matrix.terraform }}
 
@@ -36,27 +36,27 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
 
-      - uses: actions/cache@v3.2.5
+      - uses: actions/cache@6998d139ddd3e68c71e9e398d8e40b71a2f39812 # v3.2.5
         name: Cache plugin dir
         with:
           path: ~/.tflint.d/plugins
           key: tflint-${{ hashFiles('.config/tflint.hcl') }}
 
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1.7.0
+        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838 # v1.7.0
         with:
           role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
           role-session-name: tflint
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: install tflint
         run: |
           # renovate: datasource=github-tags depName=terraform-linters/tflint
-          tflint_version="0.44.1"
+          tflint_version="v0.45.0"
           
-          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/v${tflint_version}/tflint_linux_amd64.zip
+          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/${tflint_version}/tflint_linux_amd64.zip
           unzip tflint.zip
 
       - name: Show version

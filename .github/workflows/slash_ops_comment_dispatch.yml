@@ -10,7 +10,7 @@ jobs:
   slash-command-dispatch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6
         id: vars
         with:
           script: |
@@ -23,7 +23,7 @@ jobs:
             core.setOutput("branch_name", result.data.head.ref); 
             core.setOutput("pull_request_number", context.payload.issue.number);
       - name: Slash Command Dispatch
-        uses: peter-evans/slash-command-dispatch@v3
+        uses: peter-evans/slash-command-dispatch@a28ee6cd74d5200f99e247ebc7b365c03ae0ef3c # v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-type: pull-request
