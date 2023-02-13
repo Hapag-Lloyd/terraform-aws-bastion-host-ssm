@@ -24,7 +24,7 @@ jobs:
           
           maintainer=${maintainers[ $RANDOM % ${#maintainers[@]} ]}
           echo "maintainer=$maintainer" >> "$GITHUB_OUTPUT"
-      - uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6
+      - uses: actions/github-script@98814c53be79b1d30f795b907e553d8679345975 # v6
         with:
           script: |
             // adds a comment to the PR (there is the issue API, which works work PRs too)
@@ -69,7 +69,7 @@ jobs:
           commit_message: "chore: format Terraform code"
 
       - name: Failure notice
-        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6
+        uses: actions/github-script@98814c53be79b1d30f795b907e553d8679345975 # v6
         if: ${{ failure() }}
         with:
           script: |
