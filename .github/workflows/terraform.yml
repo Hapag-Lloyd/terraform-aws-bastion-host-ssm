@@ -49,14 +49,14 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
           role-session-name: tflint
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: install tflint
         run: |
           # renovate: datasource=github-tags depName=terraform-linters/tflint
           tflint_version="v0.45.0"
           
-          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/v${tflint_version}/tflint_linux_amd64.zip
+          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/${tflint_version}/tflint_linux_amd64.zip
           unzip tflint.zip
 
       - name: Show version
