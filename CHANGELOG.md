@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.3.0...2.4.0) (2023-02-16)
+
+
+### Features
+
+* add panic switch (on/off) ([#148](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/148)) ([a9b709d](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/a9b709d3a0e09cd4d4b1c97d52fe9a924b2a14ce))
+
 ## [2.3.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.2.2...2.3.0) (2023-01-31)
 
 
