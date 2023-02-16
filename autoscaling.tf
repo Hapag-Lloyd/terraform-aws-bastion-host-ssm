@@ -82,8 +82,8 @@ resource "aws_autoscaling_group" "on_spot" {
   }
 }
 
-resource "aws_autoscaling_schedule" "on_demand_up" {
-  count = var.schedule != null && !var.instance.enable_spot ? 1 : 0
+resource "aws_autoscaling_schedule" "up" {
+  count = var.schedule != null ? 1 : 0
 
   scheduled_action_name = "${local.resource_prefix_with_separator}start"
   recurrence            = var.schedule["start"]
@@ -92,10 +92,10 @@ resource "aws_autoscaling_schedule" "on_demand_up" {
   min_size               = 1
   max_size               = var.instance.desired_capacity
   desired_capacity       = var.instance.desired_capacity
-  autoscaling_group_name = aws_autoscaling_group.on_demand[0].name
+  autoscaling_group_name = local.auto_scaling_group.name
 }
 
-resource "aws_autoscaling_schedule" "on_demand_down" {
+resource "aws_autoscaling_schedule" "down" {
   count = var.schedule != null && !var.instance.enable_spot ? 1 : 0
 
   scheduled_action_name = "${local.resource_prefix_with_separator}stop"
@@ -105,31 +105,5 @@ resource "aws_autoscaling_schedule" "on_demand_down" {
   min_size               = 0
   max_size               = 0
   desired_capacity       = 0
-  autoscaling_group_name = aws_autoscaling_group.on_demand[0].name
-}
-
-resource "aws_autoscaling_schedule" "on_spot_up" {
-  count = var.schedule != null && var.instance.enable_spot ? 1 : 0
-
-  scheduled_action_name = "${local.resource_prefix_with_separator}start"
-  recurrence            = var.schedule["start"]
-  time_zone             = var.schedule["time_zone"]
-
-  min_size               = 1
-  max_size               = var.instance.desired_capacity
-  desired_capacity       = var.instance.desired_capacity
-  autoscaling_group_name = aws_autoscaling_group.on_spot[0].name
-}
-
-resource "aws_autoscaling_schedule" "on_spot_down" {
-  count = var.schedule != null && var.instance.enable_spot ? 1 : 0
-
-  scheduled_action_name = "${local.resource_prefix_with_separator}stop"
-  recurrence            = var.schedule["stop"]
-  time_zone             = var.schedule["time_zone"]
-
-  min_size               = 0
-  max_size               = 0
-  desired_capacity       = 0
-  autoscaling_group_name = aws_autoscaling_group.on_spot[0].name
+  autoscaling_group_name = local.auto_scaling_group.name
 }
