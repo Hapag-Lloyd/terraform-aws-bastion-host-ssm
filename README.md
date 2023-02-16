@@ -12,18 +12,38 @@ can be realized by the user by creating multiple connections to the bastion host
 
 Check the `examples` directory for the module usage.
 
-## Cost Estimation (for version 1.9.1)
+## Cost Estimation (for version 2.4.0)
 
 ```text
- Name                                                     Monthly Qty  Unit   Monthly Cost
-
- module.bastion_host.aws_autoscaling_group.on_spot[0]
+Name                                                                    Monthly Qty  Unit                   Monthly Cost
+module.bastion_host.aws_autoscaling_group.on_spot[0]
  └─ module.bastion_host.aws_launch_template.manual_start
-    └─ Instance usage (Linux/UNIX, spot, t3.nano)               1,460  hours         $2.63
-    └─ root_block_device
-       └─ Storage (general purpose SSD, gp3)                       16  GB            $1.52
+    ├─ Instance usage (Linux/UNIX, on-demand, t3.nano)                          730  hours                         $4.38
+      └─ root_block_device
+         └─ Storage (general purpose SSD, gp3)                                   16  GB                            $1.52
+    └─ Instance usage (Linux/UNIX, spot, t3.nano)                               730  hours                         $1.31
+      └─ root_block_device
+         └─ Storage (general purpose SSD, gp3)                                   16  GB                            $1.52
 
- OVERALL TOTAL                                                                       $4.15
+ module.bastion_host.aws_cloudwatch_log_group.panic_button_off
+ ├─ Data ingested                                               Monthly cost depends on usage: $0.63 per GB
+ ├─ Archival Storage                                            Monthly cost depends on usage: $0.0324 per GB
+ └─ Insights queries data scanned                               Monthly cost depends on usage: $0.0063 per GB
+
+ module.bastion_host.aws_cloudwatch_log_group.panic_button_on
+ ├─ Data ingested                                               Monthly cost depends on usage: $0.63 per GB
+ ├─ Archival Storage                                            Monthly cost depends on usage: $0.0324 per GB
+ └─ Insights queries data scanned                               Monthly cost depends on usage: $0.0063 per GB
+
+ module.bastion_host.aws_lambda_function.panic_button_off
+ ├─ Requests                                                    Monthly cost depends on usage: $0.20 per 1M requests
+ └─ Duration                                                    Monthly cost depends on usage: $0.0000166667 per GB-seconds
+
+ module.bastion_host.aws_lambda_function.panic_button_on
+ ├─ Requests                                                    Monthly cost depends on usage: $0.20 per 1M requests
+ └─ Duration                                                    Monthly cost depends on usage: $0.0000166667 per GB-seconds
+ 
+ OVERALL TOTAL                                                                                                     $8.73
 ```
 
 ## Features
