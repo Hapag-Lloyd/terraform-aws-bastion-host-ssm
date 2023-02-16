@@ -15,28 +15,38 @@ def handler(event, context):
     # find the EC2 instances and kill them
     kill_running_bastion_hosts(os.environ['BASTION_HOST_NAME'])
 
+    logger.info("Bastion host(s) switched off")
 
-def disable_asg(autoscalingGroupName):
-    asg = boto3.resource('autoscaling')
+def disable_asg(autoscaling_group_name):
+    asg = boto3.client('autoscaling')
 
     try:
-        asg.update_auto_scaling_group(AutoScalingGroupName=autoscalingGroupName, MinSize=0, MaxSize=0,
+        asg.update_auto_scaling_group(AutoScalingGroupName=autoscaling_group_name, MinSize=0, MaxSize=0,
                                       DesiredCapacity=0)
     except ClientError as e:
-        logger.error('Failed to update the ASG %s', autoscalingGroupName, exc_info=e)
+        logger.error('Failed to update the ASG %s', autoscaling_group_name, exc_info=e)
 
         raise
 
 
 def kill_running_bastion_hosts(name):
-    ec2 = boto3.resource('ec2')
+    ec2 = boto3.client('ec2')
 
     try:
         instances = ec2.describe_instances(Filters=[{'Name': 'tag:Name', 'Values': [f'{name}']},
                                                     {'Name': 'instance-state-name', 'Values': ['pending', 'running']}])
-        instance_ids = [instance.InstanceId for instance in instances.Reservations.Instances]
 
-        ec2.stop_instances(InstanceIds=instance_ids)
+        if 'Reservations' in instances:
+            instance_ids = []
+
+            for r in instances['Reservations']:
+                for i in r['Instances']:
+                    instance_ids.append(i['InstanceId'])
+
+            if instance_ids:
+                ec2.stop_instances(InstanceIds=instance_ids)
+
+                logger.info("Bastion killed: %s", instance_ids)
     except ClientError as e:
         logger.error('Failed to kill the bastion EC2 instance(s): %s', name, exc_info=e)
 
