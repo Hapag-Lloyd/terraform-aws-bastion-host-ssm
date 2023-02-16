@@ -36,6 +36,8 @@ data "aws_iam_policy_document" "panic_button_off" {
     actions = [
       "ec2:StopInstances"
     ]
+    # we do not know the instances as they are created dynamically. But we use a condition to allow valid ones only
+    # tfsec:ignore:aws-iam-no-policy-wildcards
     resources = ["*"]
     condition {
       test     = "StringEquals"
@@ -117,6 +119,8 @@ resource "aws_lambda_function" "panic_button_off" {
 resource "aws_cloudwatch_log_group" "panic_button_off" {
   name              = "/aws/lambda/${local.panic_button_switch_off_lambda_name}"
   retention_in_days = 3
+
+  kms_key_id = var.kms_key_arn
 
   tags = var.tags
 }
