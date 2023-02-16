@@ -34,6 +34,15 @@ Check the `examples` directory for the module usage.
 - use spot instances to save some money
 - provide IAM role for easy access
 - provide a script to connect to the bastion from your local machine
+- panic switch to enable the bastions or disable them immediately
+
+### Panic Switch
+
+Two lambda functions are provided. One to enable the bastion host, e.g. if you have to work at night and the bastion
+hosts are deactivated. The second lambda function disables the bastion host immediately no matter what.
+
+As both functions are destructive (they modify the autoscaling group), you have to re-apply this module as soon as
+possible to restore the auto scaling setting (especially the schedules).
 
 ### Keepass Support For IAM User Credentials
 
