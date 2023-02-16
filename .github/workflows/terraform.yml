@@ -1,0 +1,69 @@
+---
+name: Terraform
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform: [1.0.0, latest]
+        directories: [".", "examples/cost", "examples/simple", "examples/full"]
+    defaults:
+      run:
+        working-directory: ${{ matrix.directories }}
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2.0.3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+
+      - run: terraform -version
+
+      - run: terraform init -input=false -backend=false
+
+      - run: terraform validate
+
+  tflint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - uses: actions/cache@6998d139ddd3e68c71e9e398d8e40b71a2f39812 # v3.2.5
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: tflint-${{ hashFiles('.config/tflint.hcl') }}
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838 # v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
+          role-session-name: tflint
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: install tflint
+        run: |
+          # renovate: datasource=github-tags depName=terraform-linters/tflint
+          tflint_version="v0.45.0"
+          
+          curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/${tflint_version}/tflint_linux_amd64.zip
+          unzip tflint.zip
+
+      - name: Show version
+        run: ./tflint --config=.config/tflint.hcl --version
+
+      - name: Init TFLint
+        run: ./tflint --config=.config/tflint.hcl --init
+
+      - name: Run TFLint
+        run: ./tflint --config=.config/tflint.hcl -f compact

@@ -13,7 +13,7 @@ module "bastion_host" {
 
     enable_spot = true
 
-    profile_name = "AmazonSSMRoleForInstancesQuickSetup"
+    profile_name = ""
   }
 
   instances_distribution = {
