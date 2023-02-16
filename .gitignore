@@ -6,3 +6,5 @@ venv/
 
 .terraform.lock.hcl
 *.tfstate*
+
+builds/

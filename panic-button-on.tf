@@ -23,32 +23,16 @@ data "aws_iam_policy_document" "panic_button_on_assume_role" {
 
 data "aws_iam_policy_document" "panic_button_on" {
   statement {
-    sid = "ListInstances"
-    actions = [
-      "ec2:DescribeInstances"
-    ]
-    resources = ["*"]
-    effect = "Allow"
-  }
-
-  statement {
-    sid = "KillBastionHosts"
-    actions = [
-      "ec2:StopInstances"
-    ]
-    resources = ["*"]
-    condition {
-      test     = "StringEquals"
-      values   = [local.bastion_host_name]
-      variable = "aws:ResourceTag/Name"
-    }
-    effect = "Allow"
-  }
-
-  statement {
     sid="UpdateASG"
-    actions = ["autoscaling:UpdateAutoScalingGroup"]
-    resources = [var.instance.enable_spot ? aws_autoscaling_group.on_spot[0].arn : aws_autoscaling_group.on_demand[0].arn]
+    actions = ["autoscaling:UpdateAutoScalingGroup", "autoscaling:DeleteScheduledAction"]
+    resources = [local.auto_scaling_group.arn]
+    effect = "Allow"
+  }
+
+  statement {
+    sid="DescribeASG"
+    actions = ["autoscaling:DescribeScheduledActions"]
+    resources = ["*"]
     effect = "Allow"
   }
 }
@@ -78,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "panic_button_on_x_ray" {
 data "archive_file" "panic_button_on_package" {
   type        = "zip"
   source_file = local.panic_button_switch_on_lambda_source
-  output_path = "${path.root}/builds/${local.panic_button_switch_on_lambda_source}.zip"
+  output_path = "${path.root}/builds/${local.panic_button_switch_on_lambda_source_file_name}.zip"
 }
 
 resource "aws_lambda_function" "panic_button_on" {
@@ -98,9 +82,9 @@ resource "aws_lambda_function" "panic_button_on" {
   environment {
     variables = {
       AUTO_SCALING_GROUP_NAME = local.auto_scaling_group.name
-      AUTO_SCALING_MIN_SIZE = local.auto_scaling_group.min_size
-      AUTO_SCALING_MAX_SIZE = local.auto_scaling_group.max_size
-      AUTO_SCALING_DESIRED_CAPACITY = local.auto_scaling_group.desired_capacity
+      AUTO_SCALING_GROUP_MIN_SIZE = local.auto_scaling_group.min_size
+      AUTO_SCALING_GROUP_MAX_SIZE = local.auto_scaling_group.max_size
+      AUTO_SCALING_GROUP_DESIRED_CAPACITY = local.auto_scaling_group.desired_capacity
 
       LOG_LEVEL = "info"
     }

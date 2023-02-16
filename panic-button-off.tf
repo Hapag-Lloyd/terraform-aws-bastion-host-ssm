@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "panic_button_off" {
   statement {
     sid="UpdateASG"
     actions = ["autoscaling:UpdateAutoScalingGroup"]
-    resources = [var.instance.enable_spot ? aws_autoscaling_group.on_spot[0].arn : aws_autoscaling_group.on_demand[0].arn]
+    resources = [local.auto_scaling_group.arn]
     effect = "Allow"
   }
 }
@@ -78,7 +78,7 @@ resource "aws_iam_role_policy_attachment" "panic_button_off_x_ray" {
 data "archive_file" "panic_button_off_package" {
   type        = "zip"
   source_file = local.panic_button_switch_off_lambda_source
-  output_path = "${path.root}/builds/${local.panic_button_switch_off_lambda_source}.zip"
+  output_path = "${path.root}/builds/${local.panic_button_switch_off_lambda_source_file_name}.zip"
 }
 
 resource "aws_lambda_function" "panic_button_off" {
