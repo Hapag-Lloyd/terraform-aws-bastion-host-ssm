@@ -73,7 +73,10 @@ resource "aws_lambda_function" "panic_button_switch_off" {
 
   environment {
     variables = {
+      AUTO_SCALING_GROUP_NAME = var.instance.enable_spot ? aws_autoscaling_group.on_demand[0].name : aws_autoscaling_group.on_demand[0].name
       BASTION_HOST_NAME = local.bastion_host_name
+
+      LOG_LEVEL = "info"
     }
   }
 

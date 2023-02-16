@@ -2,6 +2,7 @@
 .idea/
 .infracost/
 node_modules/
+venv/
 
 .terraform.lock.hcl
 *.tfstate*
