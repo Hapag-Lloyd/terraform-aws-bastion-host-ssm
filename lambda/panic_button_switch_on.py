@@ -3,10 +3,8 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=os.environ.get('LOG_LEVEL', 'info'))
-
 logger = logging.getLogger(__name__)
-
+logger.setLevel(os.environ.get('LOG_LEVEL', 'info').upper())
 
 def handler(event, context):
     asg = boto3.client('autoscaling')
