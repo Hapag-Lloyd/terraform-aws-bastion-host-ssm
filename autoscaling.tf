@@ -96,7 +96,7 @@ resource "aws_autoscaling_schedule" "up" {
 }
 
 resource "aws_autoscaling_schedule" "down" {
-  count = var.schedule != null && !var.instance.enable_spot ? 1 : 0
+  count = var.schedule != null ? 1 : 0
 
   scheduled_action_name = "${local.resource_prefix_with_separator}stop"
   recurrence            = var.schedule["stop"]
