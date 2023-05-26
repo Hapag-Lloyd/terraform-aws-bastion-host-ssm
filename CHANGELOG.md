@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.4.0...2.4.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* scale spot instances down if a schedule exists ([#170](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/170)) ([f9b9d5b](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/f9b9d5bd4341913692610389fa47abdcf0d9e6cd))
+
 ## [2.4.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.3.0...2.4.0) (2023-02-16)
 
 
