@@ -15,7 +15,7 @@ jobs:
       
       - run: |
           git checkout -b kayma/update-ami-version
-          git push -u
+          git push --set-upstream origin kayma/update-ami-version
           
           sed -i '1s/^/search for the new AMI id manually /' main.tf
 
