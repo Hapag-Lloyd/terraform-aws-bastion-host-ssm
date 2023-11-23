@@ -47,9 +47,9 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838 # v1.7.0
         with:
-          role-to-assume: ${{ secrets.AWS_TFLINT_ROLE_ARN }}
+          role-to-assume: ${{ secrets.TFLINT_ROLE_ARN }}
           role-session-name: tflint
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.TFLINT_AWS_REGION }}
 
       - name: install tflint
         run: |
