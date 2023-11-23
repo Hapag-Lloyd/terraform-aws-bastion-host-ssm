@@ -1,4 +1,4 @@
-data "aws_region" "this" {
+search for the new AMI id manually data "aws_region" "this" {
 }
 
 data "aws_caller_identity" "this" {
