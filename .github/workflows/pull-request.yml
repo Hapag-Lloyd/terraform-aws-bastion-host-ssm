@@ -10,7 +10,7 @@ jobs:
     name: Check shell scripts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
 
@@ -20,7 +20,7 @@ jobs:
       image: rhysd/actionlint:1.6.23
       options: --cpus 1 --user root
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Validate Github workflows
         run: |
           mkdir .git
@@ -29,7 +29,7 @@ jobs:
   lint-markdown:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Validate Markdown file
         run: |
           npm install -g markdownlint-cli
