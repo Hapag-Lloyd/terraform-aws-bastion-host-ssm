@@ -70,10 +70,8 @@ variable "instance" {
     desired_capacity  = number # number of EC2 instances to run
     root_volume_size  = number # in GB
     enable_monitoring = bool
-
-    enable_spot = bool
-
-    profile_name = string
+    enable_spot       = bool
+    profile_name      = string
   })
 
   description = "Defines the basic parameters for the EC2 instance used as Bastion host"
@@ -83,10 +81,8 @@ variable "instance" {
     desired_capacity  = 1
     root_volume_size  = 8
     enable_monitoring = false
-
-    enable_spot = false
-
-    profile_name = ""
+    enable_spot       = false
+    profile_name      = ""
   }
 }
 
@@ -114,7 +110,13 @@ variable "tags" {
 }
 
 variable "ami_name_filter" {
-  type        =  string
-  description = "The search filter string for the bastion AMI."
+  type        = string
+  description = "(Deprecated; set var.ami_id instead; will be removed in v3.0.0) The search filter string for the bastion AMI."
   default     = "amzn2-ami-hvm-*-x86_64-ebs"
+}
+
+variable "ami_id" {
+  type        = string
+  description = "The AMI ID to use for the bastion host. If not set, the latest AMI matching the ami_name_filter will be used."
+  default     = null
 }

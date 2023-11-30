@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "panic_button_off" {
       "ec2:DescribeInstances"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 
   statement {
@@ -48,10 +48,10 @@ data "aws_iam_policy_document" "panic_button_off" {
   }
 
   statement {
-    sid="UpdateASG"
-    actions = ["autoscaling:UpdateAutoScalingGroup"]
+    sid       = "UpdateASG"
+    actions   = ["autoscaling:UpdateAutoScalingGroup"]
     resources = [local.auto_scaling_group.arn]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -93,14 +93,14 @@ resource "aws_lambda_function" "panic_button_off" {
   timeout          = 30
   memory_size      = 256
   #package_type     = "Zip"
-  publish          = true
-  role             = aws_iam_role.panic_button_off_execution.arn
-  runtime          = "python3.9"
+  publish = true
+  role    = aws_iam_role.panic_button_off_execution.arn
+  runtime = "python3.9"
 
   environment {
     variables = {
       AUTO_SCALING_GROUP_NAME = local.auto_scaling_group.name
-      BASTION_HOST_NAME = local.bastion_host_name
+      BASTION_HOST_NAME       = local.bastion_host_name
 
       LOG_LEVEL = "info"
     }
