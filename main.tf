@@ -5,7 +5,8 @@ data "aws_caller_identity" "this" {
 }
 
 # find the latest Amazon Linux AMI and create a copy to be sure that it is present
-data "aws_ami" "latest_amazon_linux" {
+# to be removed with the next major update (3.0.0)
+data "aws_ami" "deprecated_latest_amazon_linux" {
   most_recent = true
 
   owners = ["amazon", data.aws_caller_identity.this.id]
@@ -18,10 +19,10 @@ data "aws_ami" "latest_amazon_linux" {
 
 resource "aws_ami_copy" "latest_amazon_linux" {
   name        = var.resource_names["prefix"]
-  description = "Copy of ${data.aws_ami.latest_amazon_linux.name}"
+  description = "Copy of ${data.aws_ami.deprecated_latest_amazon_linux.name}"
 
-  source_ami_id     = data.aws_ami.latest_amazon_linux.id
-  source_ami_region = data.aws_region.this.name
+  source_ami_id     = var.instance.ami_id != null ? var.instance.ami_id : data.aws_ami.deprecated_latest_amazon_linux.id
+  source_ami_region = var.instance.ami_id != null ? var.instance.ami_id : data.aws_region.this.name
 
   encrypted  = true
   kms_key_id = var.kms_key_arn

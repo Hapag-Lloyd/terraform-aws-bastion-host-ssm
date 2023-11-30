@@ -23,17 +23,17 @@ data "aws_iam_policy_document" "panic_button_on_assume_role" {
 
 data "aws_iam_policy_document" "panic_button_on" {
   statement {
-    sid="UpdateASG"
-    actions = ["autoscaling:UpdateAutoScalingGroup", "autoscaling:DeleteScheduledAction"]
+    sid       = "UpdateASG"
+    actions   = ["autoscaling:UpdateAutoScalingGroup", "autoscaling:DeleteScheduledAction"]
     resources = [local.auto_scaling_group.arn]
-    effect = "Allow"
+    effect    = "Allow"
   }
 
   statement {
-    sid="DescribeASG"
-    actions = ["autoscaling:DescribeScheduledActions"]
+    sid       = "DescribeASG"
+    actions   = ["autoscaling:DescribeScheduledActions"]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -81,9 +81,9 @@ resource "aws_lambda_function" "panic_button_on" {
 
   environment {
     variables = {
-      AUTO_SCALING_GROUP_NAME = local.auto_scaling_group.name
-      AUTO_SCALING_GROUP_MIN_SIZE = local.auto_scaling_group.min_size
-      AUTO_SCALING_GROUP_MAX_SIZE = local.auto_scaling_group.max_size
+      AUTO_SCALING_GROUP_NAME             = local.auto_scaling_group.name
+      AUTO_SCALING_GROUP_MIN_SIZE         = local.auto_scaling_group.min_size
+      AUTO_SCALING_GROUP_MAX_SIZE         = local.auto_scaling_group.max_size
       AUTO_SCALING_GROUP_DESIRED_CAPACITY = local.auto_scaling_group.desired_capacity
 
       LOG_LEVEL = "info"
