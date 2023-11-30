@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.4.1...2.5.0) (2023-11-30)
+
+
+### Features
+
+* add `var.ami_id` to fix the AMI used for the Bastion ([#199](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/199)) ([d86a898](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/d86a8985cc116d5ed24c5317f35baaed65d602bd))
+
 ## [2.4.1](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.4.0...2.4.1) (2023-05-08)
 
 
