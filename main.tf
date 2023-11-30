@@ -21,8 +21,8 @@ resource "aws_ami_copy" "latest_amazon_linux" {
   name        = var.resource_names["prefix"]
   description = "Copy of ${data.aws_ami.deprecated_latest_amazon_linux.name}"
 
-  source_ami_id     = var.instance.ami_id != null ? var.instance.ami_id : data.aws_ami.deprecated_latest_amazon_linux.id
-  source_ami_region = var.instance.ami_id != null ? var.instance.ami_id : data.aws_region.this.name
+  source_ami_id     = var.ami_id != null ? var.ami_id : data.aws_ami.deprecated_latest_amazon_linux.id
+  source_ami_region = data.aws_region.this.name
 
   encrypted  = true
   kms_key_id = var.kms_key_arn

@@ -26,8 +26,9 @@ module "bastion_host" {
     enable_monitoring = false
     enable_spot       = true
     profile_name      = ""
-    ami_id            = data.aws_ami.latest_amazon_linux.id
   }
+
+  ami_id            = data.aws_ami.latest_amazon_linux.id
 
   instances_distribution = {
     on_demand_base_capacity                  = 1

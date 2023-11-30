@@ -19,9 +19,7 @@ module "bastion_host" {
 
   iam_user_arns = [module.bastion_user.iam_user_arn]
 
-  instance = {
-    ami_id = data.aws_ami.latest_amazon_linux.id
-  }
+  ami_id = data.aws_ami.latest_amazon_linux.id
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets

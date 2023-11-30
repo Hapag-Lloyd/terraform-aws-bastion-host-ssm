@@ -32,9 +32,9 @@ module "bastion_host" {
     enable_monitoring = false
     enable_spot       = false
     profile_name      = "AmazonSSMRoleForInstancesQuickSetup"
-
-    ami_id = data.aws_ami.latest_amazon_linux.id
   }
+
+  ami_id = data.aws_ami.latest_amazon_linux.id
 
   resource_names = {
     prefix    = local.resource_prefix
