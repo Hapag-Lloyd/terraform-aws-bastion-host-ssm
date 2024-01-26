@@ -68,7 +68,7 @@ module "kms_key" {
 
 module "bastion_user" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-  version = "5.33.0"
+  version = "5.33.1"
 
   name = "${local.resource_prefix}-bastion"
 
