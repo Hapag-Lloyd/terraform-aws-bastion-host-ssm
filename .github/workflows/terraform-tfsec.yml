@@ -26,7 +26,7 @@ jobs:
           sarif_file: tfsec.sarif
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@8b6a45a6ecf57c282d068f1e7697de1f35afb8c9 # v2.24.2
+        uses: github/codeql-action/upload-sarif@4a8f20f6b9b5114f354129a1e2f391d75bfd640a # v2.24.3
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: tfsec.sarif
