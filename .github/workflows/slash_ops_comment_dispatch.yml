@@ -23,7 +23,7 @@ jobs:
             core.setOutput("branch_name", result.data.head.ref); 
             core.setOutput("pull_request_number", context.payload.issue.number);
       - name: Slash Command Dispatch
-        uses: peter-evans/slash-command-dispatch@a28ee6cd74d5200f99e247ebc7b365c03ae0ef3c # v3
+        uses: peter-evans/slash-command-dispatch@f996d7b7aae9059759ac55e978cff76d91853301 # v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-type: pull-request
