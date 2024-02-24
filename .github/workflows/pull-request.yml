@@ -17,7 +17,7 @@ jobs:
   lint-workflow:
     runs-on: ubuntu-latest
     container:
-      image: rhysd/actionlint:1.6.26
+      image: rhysd/actionlint:1.6.27
       options: --cpus 1 --user root
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
