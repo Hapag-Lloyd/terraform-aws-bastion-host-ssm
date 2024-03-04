@@ -55,7 +55,7 @@ module "bastion_host" {
 
 module "kms_key" {
   source  = "cloudposse/kms-key/aws"
-  version = "0.12.1"
+  version = "0.12.2"
 
   namespace               = "eg"
   stage                   = "test"
