@@ -96,6 +96,17 @@ data "aws_iam_policy_document" "access_bastion" {
   }
 
   statement {
+    sid    = "ManipulateSchedule"
+    effect = "Allow"
+    actions = [
+      "autoscaling:BatchDeleteScheduledAction"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+
+  statement {
     sid    = "SsmDescribeSSMConnection"
     effect = "Allow"
     actions = [
