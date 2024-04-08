@@ -1,5 +1,5 @@
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence.
-*        @Quotation-And-Contract-Management
+*        @hapag-lloyd/quotation-and-contract-management
 
-LICENSE  @Organization-Defaults
+LICENSE  @kayman-mk
