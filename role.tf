@@ -96,17 +96,6 @@ data "aws_iam_policy_document" "access_bastion" {
   }
 
   statement {
-    sid    = "ManipulateSchedule"
-    effect = "Allow"
-    actions = [
-      "autoscaling:BatchDeleteScheduledAction"
-    ]
-    resources = [
-      var.instance.enable_spot ? aws_autoscaling_group.on_spot.arn : aws_autoscaling_group.on_demand.arn
-    ]
-  }
-
-  statement {
     sid    = "SsmDescribeSSMConnection"
     effect = "Allow"
     actions = [
