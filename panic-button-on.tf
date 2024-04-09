@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "panic_button_on_assume_role" {
 data "aws_iam_policy_document" "panic_button_on" {
   statement {
     sid       = "UpdateASG"
-    actions   = ["autoscaling:UpdateAutoScalingGroup", "autoscaling:DeleteScheduledAction"]
+    actions   = ["autoscaling:UpdateAutoScalingGroup", "autoscaling:BatchDeleteScheduledAction"]
     resources = [local.auto_scaling_group.arn]
     effect    = "Allow"
   }
