@@ -9,6 +9,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@7bfa3a4717ef143a604ee0a99d859b8886a96d00 # v1.9.3
+        id: app-token
+        with:
+          app-id: ${{ vars.GET_TOKEN_APP_ID }}
+          private-key: ${{ secrets.GET_TOKEN_APP_PRIVATE_KEY }}
       - name: Release
         uses: google-github-actions/release-please-action@a37ac6e4f6449ce8b3f7607e4d97d0146028dc0b # v4.1.0
         with:
@@ -16,3 +21,4 @@ jobs:
           include-v-in-tag: false
           signoff: "Matthias Kay <matthias.kay@hlag.com>"
           bootstrap-sha: "5213931527b84359dbfe1725e803af318082443f"
+          token: ${{ steps.app-token.outputs.token }}
