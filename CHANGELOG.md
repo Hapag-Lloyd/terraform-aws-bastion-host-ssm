@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.1](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.5.0...v2.5.1) (2024-04-10)
+
+
+### Bug Fixes
+
+* allow panic lambdas to modify autoscaling schedule ([#284](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/284)) ([b48c5db](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/b48c5db9c0c2eed4cfacfc1e821b9c033e840290))
+* terminate the instances instead of stopping them ([#287](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/287)) ([fc2e708](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/fc2e7083d5d9d9adaccfa1e1b8d9319a5fcd9fe2))
+
 ## [2.5.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.4.1...2.5.0) (2023-11-30)
 
 

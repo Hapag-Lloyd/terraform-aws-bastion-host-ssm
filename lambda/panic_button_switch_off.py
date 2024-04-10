@@ -42,7 +42,7 @@ def kill_running_bastion_hosts(name):
                     instance_ids.append(i['InstanceId'])
 
             if instance_ids:
-                ec2.stop_instances(InstanceIds=instance_ids)
+                ec2.terminate_instances(InstanceIds=instance_ids)
 
                 logger.info("Bastion killed: %s", instance_ids)
     except ClientError as e:
