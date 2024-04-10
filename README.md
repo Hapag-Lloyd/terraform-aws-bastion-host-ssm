@@ -234,7 +234,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 5.32.0 |
+| <a name="module_instance_profile_role"></a> [instance\_profile\_role](#module\_instance\_profile\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role | 5.39.0 |
 
 ## Resources
 
@@ -269,7 +269,7 @@ way you can access the database, Redis cluster, ... directly from your localhost
 | [aws_security_group_rule.egress_ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [archive_file.panic_button_off_package](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/file) | data source |
 | [archive_file.panic_button_on_package](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/file) | data source |
-| [aws_ami.latest_amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.deprecated_latest_amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_caller_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy_document.access_bastion](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.panic_button_off](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -282,12 +282,13 @@ way you can access the database, Redis cluster, ... directly from your localhost
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_ami_name_filter"></a> [ami\_name\_filter](#input\_ami\_name\_filter) | The search filter string for the bastion AMI. | `string` | `"amzn2-ami-hvm-*-x86_64-ebs"` | no |
+| <a name="input_ami_id"></a> [ami\_id](#input\_ami\_id) | The AMI ID to use for the bastion host. If not set, the latest AMI matching the ami\_name\_filter will be used. | `string` | `null` | no |
+| <a name="input_ami_name_filter"></a> [ami\_name\_filter](#input\_ami\_name\_filter) | (Deprecated; set var.ami\_id instead; will be removed in v3.0.0) The search filter string for the bastion AMI. | `string` | `"amzn2-ami-hvm-*-x86_64-ebs"` | no |
 | <a name="input_bastion_access_tag_value"></a> [bastion\_access\_tag\_value](#input\_bastion\_access\_tag\_value) | Value added as tag 'bastion-access' of the launched EC2 instance to be used to restrict access to the machine vie IAM. | `string` | `"developer"` | no |
 | <a name="input_egress_open_tcp_ports"></a> [egress\_open\_tcp\_ports](#input\_egress\_open\_tcp\_ports) | The list of TCP ports to open for outgoing traffic. | `list(number)` | n/a | yes |
 | <a name="input_iam_role_path"></a> [iam\_role\_path](#input\_iam\_role\_path) | Role path for the created bastion instance profile. Must end with '/'. Not used if instance["profile\_name"] is set. | `string` | `"/"` | no |
 | <a name="input_iam_user_arns"></a> [iam\_user\_arns](#input\_iam\_user\_arns) | ARNs of the user who are allowed to assume the role giving access to the bastion host. Not used if instance["profile\_name"] is set. | `list(string)` | n/a | yes |
-| <a name="input_instance"></a> [instance](#input\_instance) | Defines the basic parameters for the EC2 instance used as Bastion host | <pre>object({<br>    type              = string # EC2 instance type<br>    desired_capacity  = number # number of EC2 instances to run<br>    root_volume_size  = number # in GB<br>    enable_monitoring = bool<br><br>    enable_spot = bool<br><br>    profile_name = string<br>  })</pre> | <pre>{<br>  "desired_capacity": 1,<br>  "enable_monitoring": false,<br>  "enable_spot": false,<br>  "profile_name": "",<br>  "root_volume_size": 8,<br>  "type": "t3.nano"<br>}</pre> | no |
+| <a name="input_instance"></a> [instance](#input\_instance) | Defines the basic parameters for the EC2 instance used as Bastion host | <pre>object({<br>    type              = string # EC2 instance type<br>    desired_capacity  = number # number of EC2 instances to run<br>    root_volume_size  = number # in GB<br>    enable_monitoring = bool<br>    enable_spot       = bool<br>    profile_name      = string<br>  })</pre> | <pre>{<br>  "desired_capacity": 1,<br>  "enable_monitoring": false,<br>  "enable_spot": false,<br>  "profile_name": "",<br>  "root_volume_size": 8,<br>  "type": "t3.nano"<br>}</pre> | no |
 | <a name="input_instances_distribution"></a> [instances\_distribution](#input\_instances\_distribution) | Defines the parameters for mixed instances policy auto scaling | <pre>object({<br>    on_demand_base_capacity                  = number # absolute minimum amount of on_demand instances<br>    on_demand_percentage_above_base_capacity = number # percentage split between on-demand and Spot instances<br>    spot_allocation_strategy                 = string<br>  })</pre> | <pre>{<br>  "on_demand_base_capacity": 0,<br>  "on_demand_percentage_above_base_capacity": 0,<br>  "spot_allocation_strategy": "lowest-price"<br>}</pre> | no |
 | <a name="input_kms_key_arn"></a> [kms\_key\_arn](#input\_kms\_key\_arn) | The ARN of the KMS key used to encrypt the resources. | `string` | `null` | no |
 | <a name="input_resource_names"></a> [resource\_names](#input\_resource\_names) | Settings for generating resource names. Set the prefix and the separator according to your company style guide. | <pre>object({<br>    prefix    = string<br>    separator = string<br>  })</pre> | <pre>{<br>  "prefix": "bastion",<br>  "separator": "-"<br>}</pre> | no |
