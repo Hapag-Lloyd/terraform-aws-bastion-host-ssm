@@ -44,7 +44,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout branch
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
         with:
           ref: "refs/pull/${{ github.event.client_payload.slash_command.args.named.pull_request_number }}/head"
       - run: |
@@ -58,13 +58,13 @@ jobs:
           git-commit-message: "docs: update Terraform docs"
           git-push: true
 
-      - uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36 # v3.0.0
+      - uses: hashicorp/setup-terraform@651471c36a6092792c552e8b1bef71e592b462d8 # v3.1.1
 
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -write=true -recursive
 
-      - uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d # v5
+      - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5
         with:
           commit_message: "chore: format Terraform code"
 
