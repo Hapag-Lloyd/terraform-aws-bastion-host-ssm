@@ -1,35 +1,14 @@
 ---
 name: PR commented
 
+# yamllint disable-line rule:truthy
 on:
   issue_comment:
     types:
       - created
 
 jobs:
-  slash-command-dispatch:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
-        id: vars
-        with:
-          script: |
-            result = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.issue.number
-            })
-            
-            core.setOutput("branch_name", result.data.head.ref); 
-            core.setOutput("pull_request_number", context.payload.issue.number);
-      - name: Slash Command Dispatch
-        uses: peter-evans/slash-command-dispatch@13bc09769d122a64f75aa5037256f6f2d78be8c4 # v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-type: pull-request
-          static-args: |
-            branch_name=${{ steps.vars.outputs.branch_name }}
-            pull_request_number=${{ steps.vars.outputs.pull_request_number }}
-          commands: |
-            help
-            finish
+  default:
+    # yamllint disable-line rule:line-length
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_slash_ops_comment_dispatch_callable.yml@40a65158591c1c4b7526d095f2ed58e1c512941f # 
+    secrets: inherit
