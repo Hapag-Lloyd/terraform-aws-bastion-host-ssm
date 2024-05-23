@@ -1,0 +1,13 @@
+---
+name: Release
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  default:
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_release_callable.yml@40a65158591c1c4b7526d095f2ed58e1c512941f # 
+    secrets: inherit
