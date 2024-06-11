@@ -12,8 +12,7 @@ no: please delete the whole paragraph
 
 # Verification
 
-Please mention the examples you have verified.
-Did you check the change in your environment?
+Please describe the test cases you used to verify your code. Did you check the change in your environment?
 
 # Checklist
 
