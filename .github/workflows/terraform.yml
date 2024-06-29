@@ -54,7 +54,7 @@ jobs:
       - name: install tflint
         run: |
           # renovate: datasource=github-tags depName=terraform-linters/tflint
-          tflint_version="v0.51.1"
+          tflint_version="v0.51.2"
           
           curl -o tflint.zip -L https://github.com/terraform-linters/tflint/releases/download/${tflint_version}/tflint_linux_amd64.zip
           unzip tflint.zip
