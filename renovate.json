@@ -1,3 +1,18 @@
 {
-  "extends": ["github>Hapag-Lloyd/Renovate-Global-Configuration"]
+  "extends": [
+    "github>Hapag-Lloyd/Renovate-Global-Configuration"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "*.tf"
+      ],
+      "matchStrings": [
+        ".*amiFilter=(?<packageName>.*?)\n(.*currentImageName=(?<currentDigest>.*?)\n)?(.*\n)?.*?(?<depName>[a-zA-Z0-9-_:]*)[ ]*?[:|=][ ]*?[\"|']?(?<currentValue>ami-[a-z0-9]{17})[\"|']?.*"
+      ],
+      "datasourceTemplate": "aws-machine-image",
+      "versioningTemplate": "aws-machine-image"
+    }
+  ]
 }

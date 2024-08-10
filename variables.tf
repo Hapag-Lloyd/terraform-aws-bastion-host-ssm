@@ -109,14 +109,8 @@ variable "tags" {
   default = {}
 }
 
-variable "ami_name_filter" {
-  type        = string
-  description = "(Deprecated; set var.ami_id instead; will be removed in v3.0.0) The search filter string for the bastion AMI."
-  default     = "amzn2-ami-hvm-*-x86_64-ebs"
-}
-
 variable "ami_id" {
   type        = string
-  description = "The AMI ID to use for the bastion host. If not set, the latest AMI matching the ami_name_filter will be used."
+  description = "The AMI ID to use for the bastion host. If not set a default AMI is used which is updated regularly"
   default     = null
 }
