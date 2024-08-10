@@ -1,11 +1,18 @@
 ---
-name: Lint files
+name: "Pull Request"
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+    branches-ignore:
+      - "release-please--branches--*"
 
 jobs:
   default:
-    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_linter_callable.yml@e08f390d968322fd66ff5ee4ea826015e23f04c6
+    # yamllint disable-line rule:line-length
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_pull_request_callable.yml@e08f390d968322fd66ff5ee4ea826015e23f04c6
     secrets: inherit
