@@ -1,9 +1,6 @@
 data "aws_region" "this" {
 }
 
-data "aws_caller_identity" "this" {
-}
-
 resource "aws_ami_copy" "latest_amazon_linux" {
   name        = var.resource_names["prefix"]
   description = "Copy of ${local.ami_id}"
