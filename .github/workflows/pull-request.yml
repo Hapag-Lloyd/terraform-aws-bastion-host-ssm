@@ -1,43 +1,18 @@
-name: CI Pull Request
+---
+name: "Pull Request"
 
+# yamllint disable-line rule:truthy
 on:
-  pull_request:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
     branches-ignore:
-      - 'release-please--branches--*'
+      - "release-please--branches--*"
 
 jobs:
-  shellcheck:
-    name: Check shell scripts
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
-      - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
-
-  lint-workflow:
-    runs-on: ubuntu-latest
-    container:
-      image: rhysd/actionlint:1.7.0
-      options: --cpus 1 --user root
-    steps:
-      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
-      - name: Validate Github workflows
-        run: |
-          mkdir .git
-          actionlint -color
-
-  lint-markdown:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
-      - name: Validate Markdown file
-        run: |
-          npm install -g markdownlint-cli
-          markdownlint -c .markdownlint.yml -i CHANGELOG.md "**/*.md"
-
-  verify-json:
-    name: Run JSON Lint
-    runs-on: ubuntu-latest
-    steps: 
-      - run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
-
+  default:
+    # yamllint disable-line rule:line-length
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_pull_request_callable.yml@e08f390d968322fd66ff5ee4ea826015e23f04c6
+    secrets: inherit

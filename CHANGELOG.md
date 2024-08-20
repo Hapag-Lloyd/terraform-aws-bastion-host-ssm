@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/v2.5.1...v3.0.0) (2024-08-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* update the default image via Renovate ([#336](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/336))
+
+### Miscellaneous Chores
+
+* update the default image via Renovate ([#336](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/issues/336)) ([3391bbb](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/commit/3391bbbc74d06053edaae888c1cc503c0d7f2ee7))
+
 ## [2.5.1](https://github.com/Hapag-Lloyd/terraform-aws-bastion-host-ssm/compare/2.5.0...v2.5.1) (2024-04-10)
 
 

@@ -1,27 +1,11 @@
 data "aws_region" "this" {
 }
 
-data "aws_caller_identity" "this" {
-}
-
-# find the latest Amazon Linux AMI and create a copy to be sure that it is present
-# to be removed with the next major update (3.0.0)
-data "aws_ami" "deprecated_latest_amazon_linux" {
-  most_recent = true
-
-  owners = ["amazon", data.aws_caller_identity.this.id]
-
-  filter {
-    name   = "name"
-    values = [var.ami_name_filter]
-  }
-}
-
 resource "aws_ami_copy" "latest_amazon_linux" {
   name        = var.resource_names["prefix"]
-  description = "Copy of ${data.aws_ami.deprecated_latest_amazon_linux.name}"
+  description = "Copy of ${local.ami_id}"
 
-  source_ami_id     = var.ami_id != null ? var.ami_id : data.aws_ami.deprecated_latest_amazon_linux.id
+  source_ami_id     = local.ami_id
   source_ami_region = data.aws_region.this.name
 
   encrypted  = true
@@ -69,7 +53,7 @@ resource "aws_security_group_rule" "egress_ssm" {
 
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "5.39.1"
+  version = "5.44.0"
 
   count = var.instance["profile_name"] != "" ? 0 : 1
 
