@@ -1,0 +1,15 @@
+---
+name: TfSec
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+  schedule:
+    # runs mondays at 3:47 UTC refreshing the vulnerabilities
+    - cron: "47 3 * * 1"
+
+jobs:
+  default:
+    # yamllint disable-line rule:line-length
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/terraform_module_terraform_tfsec_callable.yml@294dbac15dfa0391eea2aa6fd02a0cf9032683ad
+    secrets: inherit

@@ -1,0 +1,14 @@
+---
+name: Execute ChatOps command
+
+# yamllint disable-line rule:truthy
+on:
+  repository_dispatch:
+    types:
+      - help-command
+
+jobs:
+  default:
+    # yamllint disable-line rule:line-length
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_slash_ops_command_help_callable.yml@294dbac15dfa0391eea2aa6fd02a0cf9032683ad
+    secrets: inherit
