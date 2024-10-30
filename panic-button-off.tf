@@ -118,7 +118,7 @@ resource "aws_lambda_function" "panic_button_off" {
 
 resource "aws_cloudwatch_log_group" "panic_button_off" {
   name              = "/aws/lambda/${local.panic_button_switch_off_lambda_name}"
-  retention_in_days = 3
+  retention_in_days = var.log_group_retention_days
 
   kms_key_id = var.kms_key_arn
 
