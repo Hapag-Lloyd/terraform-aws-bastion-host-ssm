@@ -114,3 +114,9 @@ variable "ami_id" {
   description = "The AMI ID to use for the bastion host. If not set a default AMI is used which is updated regularly"
   default     = null
 }
+
+variable "log_group_retention_days" {
+  type        = number
+  description = "Number of days for the Cloudwatch Log-Group retention period"
+  default     = 5
+}
