@@ -27,7 +27,7 @@ locals {
 
   # amiFilter=[{"Name":"owner-id","Values":["137112412989"]},{"Name":"name","Values":["amzn2-ami-hvm-*-x86_64-ebs"]}]
   # currentImageName=unknown
-  default_ami_id = "ami-0d66eba48c4cd9889"
+  default_ami_id = "ami-0dffacdad8c0f8540"
 
   ami_id = var.ami_id != null ? var.ami_id : local.default_ami_id
 }
