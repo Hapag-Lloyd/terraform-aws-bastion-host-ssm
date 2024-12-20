@@ -25,7 +25,7 @@ repos:
       - id: tflint
         args:
           - "--module"
-          - "--config=.tflint.hcl"
+          - "--config=.config/tflint.hcl"
       - id: terraform-validate
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.64.0
