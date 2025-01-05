@@ -1,0 +1,14 @@
+---
+name: Prepare Release PR
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  default:
+    # yamllint disable-line rule:line-length
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/terraform_module_release_manual_callable.yml@9bd314f6b4e4ce78759173cb4aab29c476426e69 # 1.3.30
+    secrets: inherit
