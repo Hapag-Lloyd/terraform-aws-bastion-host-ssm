@@ -47,7 +47,7 @@ module "bastion_host" {
 
 module "bastion_user" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-  version = "5.52.1"
+  version = ">= 5.48.0"
 
   name = "${local.resource_prefix}-bastion"
 
