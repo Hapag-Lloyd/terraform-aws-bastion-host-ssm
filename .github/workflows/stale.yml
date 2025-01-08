@@ -9,5 +9,5 @@ on:
 jobs:
   default:
     # yamllint disable-line rule:line-length
-    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_stale_callable.yml@2326aab43eb2a7b9e42de364c6e5ad9b5c1d5693 # 1.6.0
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_stale_callable.yml@e8c1c3deb93315b82c4bcd4957b215fd5f94e1c2 # 1.6.3
     secrets: inherit
