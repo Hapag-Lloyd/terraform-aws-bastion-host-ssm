@@ -1,22 +1,5 @@
-resource "aws_iam_role" "access_bastion" {
-  name        = var.resource_names.prefix
-  description = "Role used to connect to the bastion instance."
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect    = "Allow",
-        Action    = "sts:AssumeRole",
-        Principal = { "AWS" : var.iam_user_arns }
-    }]
-  })
-
-  tags = var.tags
-}
-
 resource "aws_iam_role_policy_attachment" "access_bastion" {
-  role       = aws_iam_role.access_bastion.name
+  role       = var.connect_bastion_role_name
   policy_arn = aws_iam_policy.access_bastion.arn
 }
 

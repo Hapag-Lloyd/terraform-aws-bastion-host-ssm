@@ -14,19 +14,11 @@ resource "aws_ami_copy" "latest_amazon_linux" {
   tags = var.tags
 }
 
-resource "aws_security_group" "this" {
-  name        = var.resource_names["prefix"]
-  description = "Securing the bastion host"
-  vpc_id      = var.vpc_id
-
-  tags = var.tags
-}
-
 # allow outgoing traffic to the user defined ports
 resource "aws_security_group_rule" "egress_open_ports" {
   count = length(local.clean_egress_open_tcp_ports)
 
-  security_group_id = aws_security_group.this.id
+  security_group_id = var.security_group_id
   type              = "egress"
   description       = "User defined rule to open the port"
 
@@ -39,7 +31,7 @@ resource "aws_security_group_rule" "egress_open_ports" {
 
 # need for SSM connection
 resource "aws_security_group_rule" "egress_ssm" {
-  security_group_id = aws_security_group.this.id
+  security_group_id = var.security_group_id
   type              = "egress"
   description       = "allow HTTPS traffic"
 
@@ -82,7 +74,7 @@ resource "aws_launch_configuration" "this" {
   instance_type = var.instance.type
 
   iam_instance_profile = local.bastion_instance_profile_name
-  security_groups      = [aws_security_group.this.id]
+  security_groups      = [var.security_group_id]
 
   root_block_device {
     volume_size = var.instance.root_volume_size
@@ -113,7 +105,7 @@ resource "aws_launch_template" "manual_start" {
   image_id      = aws_ami_copy.latest_amazon_linux.id
   instance_type = var.instance.type
 
-  vpc_security_group_ids = [aws_security_group.this.id]
+  vpc_security_group_ids = [var.security_group_id]
 
   update_default_version = true
 

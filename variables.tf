@@ -1,8 +1,3 @@
-variable "vpc_id" {
-  type        = string
-  description = "The bastion host resides in this VPC."
-}
-
 variable "subnet_ids" {
   type        = list(string)
   description = "The subnets to place the bastion in."
@@ -13,11 +8,6 @@ variable "iam_role_path" {
   description = "Role path for the created bastion instance profile. Must end with '/'. Not used if instance[\"profile_name\"] is set."
 
   default = "/"
-}
-
-variable "iam_user_arns" {
-  type        = list(string)
-  description = "ARNs of the user who are allowed to assume the role giving access to the bastion host. Not used if instance[\"profile_name\"] is set."
 }
 
 variable "schedule" {
@@ -119,4 +109,14 @@ variable "log_group_retention_days" {
   type        = number
   description = "Number of days for the Cloudwatch Log-Group retention period"
   default     = 5
+}
+
+variable "security_group_id" {
+  type        = string
+  description = "The security group ID to use for the bastion host."
+}
+
+variable "connect_bastion_role_name" {
+  type        = string
+  description = "The name of the role to assume to connect to the bastion host."
 }
