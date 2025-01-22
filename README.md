@@ -42,14 +42,14 @@ module.bastion_host.aws_autoscaling_group.on_spot[0]
  module.bastion_host.aws_lambda_function.panic_button_on
  ├─ Requests                                                    Monthly cost depends on usage: $0.20 per 1M requests
  └─ Duration                                                    Monthly cost depends on usage: $0.0000166667 per GB-seconds
- 
+
  OVERALL TOTAL                                                                                                     $8.73
 ```
 
 ## Features
 
 - use autoscaling groups to replace dead instances
-- have a schedule to shutdown the instance at night
+- have a schedule to shut down the instance at night
 - Keepass support for AWS credentials
 - use spot instances to save some money
 - provide IAM role for easy access
@@ -70,7 +70,7 @@ In case you are not using SSO or similar techniques you have to store the creden
 connect to the bastion host somewhere. We provide a little helper script to handle this scenario in a secure way.
 
 Create a [Keepass](https://keepass.info/download.html) database and add the [KPScript plugin](https://keepass.info/extensions/v2/kpscript/KPScript-2.50.zip).
-The `scripts/export_aws_credentials_from_keypass.sh` will read and export the credentials from the Keepass database.
+The `scripts/export_aws_credentials_from_keepass.sh` will read and export the credentials from the Keepass database.
 
 ### Schedules
 
@@ -91,7 +91,7 @@ module "bastion" {
 The bastion host will automatically start at 9 and shuts down at 17 from monday to friday (Berlin time). Depending on
 the `instance_type` you will save more or less money. Do not forget to adjust the timezone.
 
-In case you have to start a bastin host outside the working hours use the launch template provided by the module and launch the
+In case you have to start a bastion host outside the working hours use the launch template provided by the module and launch the
 new instance from the AWS CLI or Console. Don't forget to shut it down if you are done.
 
 ### Encryption
