@@ -45,6 +45,7 @@ module "bastion_host" {
   instance = {
     type              = "t3.nano"
     desired_capacity  = 2
+    root_device_name  = "/dev/xvda"
     root_volume_size  = 8
     enable_monitoring = false
     enable_spot       = true
