@@ -10,12 +10,14 @@
     "javadocs",
     "jsonencode",
     "oidc",
+    "rebalance",
     "Repology",
     "sonatype",
     "tflint",
     "tfsec"
   ],
   "ignoreWords": [
+    "AWSX",
     "Buildx",
     "DOCKERHUB",
     "amannn",
@@ -53,6 +55,7 @@
     "signoff",
     "temurin",
     "tfstate",
-    "vuln"
+    "vuln",
+    "xvda"
   ]
 }
