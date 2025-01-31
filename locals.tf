@@ -23,8 +23,6 @@ locals {
   panic_button_switch_on_lambda_source           = "${path.module}/lambda/${local.panic_button_switch_on_lambda_source_file_name}"
   panic_button_switch_on_lambda_name             = "${var.resource_names.prefix}${var.resource_names.separator}panic-button-on"
 
-  auto_scaling_group = var.instance.enable_spot ? aws_autoscaling_group.on_spot[0] : aws_autoscaling_group.on_demand[0]
-
   # amiFilter=[{"Name":"owner-id","Values":["137112412989"]},{"Name":"name","Values":["amzn2-ami-hvm-*-x86_64-ebs"]}]
   # currentImageName=unknown
   default_ami_id = "ami-0dffacdad8c0f8540"

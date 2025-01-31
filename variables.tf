@@ -58,6 +58,7 @@ variable "instance" {
   type = object({
     type              = string # EC2 instance type
     desired_capacity  = number # number of EC2 instances to run
+    root_device_name  = string
     root_volume_size  = number # in GB
     enable_monitoring = bool
     enable_spot       = bool
@@ -69,6 +70,7 @@ variable "instance" {
   default = {
     type              = "t3.nano"
     desired_capacity  = 1
+    root_device_name  = "/dev/xvda"
     root_volume_size  = 8
     enable_monitoring = false
     enable_spot       = false

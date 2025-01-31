@@ -67,38 +67,7 @@ module "instance_profile_role" {
   tags = var.tags
 }
 
-resource "aws_launch_configuration" "this" {
-  name_prefix = var.resource_names["prefix"]
-
-  image_id      = aws_ami_copy.latest_amazon_linux.id
-  instance_type = var.instance.type
-
-  iam_instance_profile = local.bastion_instance_profile_name
-  security_groups      = [var.security_group_id]
-
-  root_block_device {
-    volume_size = var.instance.root_volume_size
-    volume_type = "gp3"
-
-    encrypted             = true
-    delete_on_termination = true
-  }
-
-  # use IMDSv2 to avoid warnings in Security Hub
-  metadata_options {
-    http_endpoint               = "enabled"
-    http_tokens                 = "required"
-    http_put_response_hop_limit = 1
-  }
-
-  enable_monitoring = var.instance.enable_monitoring
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_launch_template" "manual_start" {
+resource "aws_launch_template" "this" {
   name        = var.resource_names.prefix
   description = "Launches a bastion host"
 
@@ -114,8 +83,7 @@ resource "aws_launch_template" "manual_start" {
   }
 
   monitoring {
-    # no monitoring for manual instances
-    enabled = false
+    enabled = var.instance.enable_monitoring
   }
 
   # use IMDSv2 to avoid warnings in Security Hub
@@ -123,6 +91,18 @@ resource "aws_launch_template" "manual_start" {
     http_endpoint               = "enabled"
     http_tokens                 = "required"
     http_put_response_hop_limit = 1
+  }
+
+  block_device_mappings {
+    device_name = var.instance.root_device_name
+
+    ebs {
+      volume_size = var.instance.root_volume_size
+      volume_type = "gp3"
+      iops        = 3000
+      encrypted   = true
+      kms_key_id  = var.kms_key_arn
+    }
   }
 
   tag_specifications {

@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "panic_button_off" {
   statement {
     sid       = "UpdateASG"
     actions   = ["autoscaling:UpdateAutoScalingGroup"]
-    resources = [local.auto_scaling_group.arn]
+    resources = [aws_autoscaling_group.this.arn]
     effect    = "Allow"
   }
 }
@@ -99,7 +99,7 @@ resource "aws_lambda_function" "panic_button_off" {
 
   environment {
     variables = {
-      AUTO_SCALING_GROUP_NAME = local.auto_scaling_group.name
+      AUTO_SCALING_GROUP_NAME = aws_autoscaling_group.this.name
       BASTION_HOST_NAME       = local.bastion_host_name
 
       LOG_LEVEL = "info"
