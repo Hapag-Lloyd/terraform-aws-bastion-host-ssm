@@ -24,6 +24,8 @@ resource "aws_vpc_security_group_egress_rule" "user_defined_ports_ipv4" {
   from_port   = each.key
   to_port     = each.key
   cidr_ipv4   = "0.0.0.0/0"
+
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_egress_rule" "user_defined_ports_ipv6" {
@@ -36,6 +38,8 @@ resource "aws_vpc_security_group_egress_rule" "user_defined_ports_ipv6" {
   from_port   = each.key
   to_port     = each.key
   cidr_ipv6   = "::/0"
+
+  tags = var.tags
 }
 
 # need for SSM connection
@@ -48,6 +52,8 @@ resource "aws_vpc_security_group_egress_rule" "ssm" {
   to_port     = 443
   # TODO should be changed to the actual AWS CIDR block
   cidr_ipv4 = "0.0.0.0/0"
+
+  tags = var.tags
 }
 
 module "instance_profile_role" {
