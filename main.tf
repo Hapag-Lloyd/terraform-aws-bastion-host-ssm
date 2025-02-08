@@ -14,33 +14,40 @@ resource "aws_ami_copy" "latest_amazon_linux" {
   tags = var.tags
 }
 
-# allow outgoing traffic to the user defined ports
-resource "aws_security_group_rule" "egress_open_ports" {
-  count = length(local.clean_egress_open_tcp_ports)
+resource "aws_vpc_security_group_egress_rule" "user_defined_ports_ipv4" {
+  for_each = toset(local.clean_egress_open_tcp_ports)
 
   security_group_id = var.security_group_id
-  type              = "egress"
-  description       = "User defined rule to open the port"
+  description       = format("all IPv4 hosts on port %s", each.key)
 
-  from_port = local.clean_egress_open_tcp_ports[count.index]
-  to_port   = local.clean_egress_open_tcp_ports[count.index]
-  protocol  = "tcp"
-  # tfsec:ignore:aws-vpc-no-public-egress-sgr
-  cidr_blocks = ["0.0.0.0/0"]
+  ip_protocol = "tcp"
+  from_port   = each.key
+  to_port     = each.key
+  cidr_ipv4   = "0.0.0.0/0"
+}
+
+resource "aws_vpc_security_group_egress_rule" "user_defined_ports_ipv6" {
+  for_each = toset(local.clean_egress_open_tcp_ports)
+
+  security_group_id = var.security_group_id
+  description       = format("all IPv6 hosts on port %s", each.key)
+
+  ip_protocol = "tcp"
+  from_port   = each.key
+  to_port     = each.key
+  cidr_ipv6   = "::/0"
 }
 
 # need for SSM connection
-resource "aws_security_group_rule" "egress_ssm" {
+resource "aws_vpc_security_group_egress_rule" "ssm" {
   security_group_id = var.security_group_id
-  type              = "egress"
-  description       = "allow HTTPS traffic"
+  description       = "all IPv4 hosts on port 443"
 
-  from_port = 443
-  to_port   = 443
-  protocol  = "tcp"
-  # bastion host should be able to connect to all HTTPS sites
-  # tfsec:ignore:aws-vpc-no-public-egress-sgr
-  cidr_blocks = ["0.0.0.0/0"]
+  ip_protocol = "tcp"
+  from_port   = 443
+  to_port     = 443
+  # TODO should be changed to the actual AWS CIDR block
+  cidr_ipv4 = "0.0.0.0/0"
 }
 
 module "instance_profile_role" {
