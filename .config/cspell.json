@@ -1,6 +1,7 @@
 {
   "version": "0.2",
   "language": "en",
+  "ignorePaths": [".git/", ".idea/", ".config/dictionaries/"],
   "words": [
     "cpus",
     "Hapag",
