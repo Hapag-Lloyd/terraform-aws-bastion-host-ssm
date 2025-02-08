@@ -1,6 +1,5 @@
 CODEOWNERS
 Hapag
 kayma
-nullglob
 tflint
 tfsec
