@@ -1,3 +1,5 @@
+<!--- yamllint disable rule:single-title/single-h1 -->
+
 # Description
 
 What is the overall goal of your PR? Which problem does it solve? Please also include relevant motivation and context.

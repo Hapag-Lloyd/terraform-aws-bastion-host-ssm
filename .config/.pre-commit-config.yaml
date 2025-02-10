@@ -21,11 +21,11 @@ repos:
       - id: prettier
         files: \.(json|yaml|yml)$ # do not process markdown. Conflicts with the terraform_docs hook
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.17
+    rev: v0.1.25
     hooks:
       - id: tflint
         args:
-          - "--module"
+          - "--call-module-type=all"
           - "--config=.config/tflint.hcl"
       - id: terraform-validate
   - repo: https://github.com/antonbabenko/pre-commit-terraform
