@@ -1,7 +1,14 @@
 {
   "version": "0.2",
   "language": "en",
-  "ignorePaths": [".git/", ".idea/", ".config/dictionaries/"],
+  "ignorePaths": [
+    ".git/",
+    ".idea/",
+    ".config/dictionaries/",
+    "**/.infracost/**",
+    "**/.terraform/**",
+    "**/*.tfstate.*"
+  ],
   "dictionaries": [
     "workflow",
     "maven",

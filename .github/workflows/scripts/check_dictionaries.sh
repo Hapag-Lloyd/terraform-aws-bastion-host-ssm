@@ -17,7 +17,9 @@ mv "$CSPELL_CONFIGURATION_FILE" "${CSPELL_CONFIGURATION_FILE}.temp"
 
 # renovate: datasource=github-releases depName=streetsidesoftware/cspell
 cspell_version="v8.17.1"
-npx cspell@${cspell_version:1} . --dot --no-progress --no-summary --unique --words-only --no-exit-code --exclude ".git/**" --exclude ".idea/**" --exclude "$DICTIONARIES_PATH/**" | sort --ignore-case --unique > "$MISSPELLED_WORDS_PATH"
+npx cspell@${cspell_version:1} . --dot --no-progress --no-summary --unique --words-only --no-exit-code \
+  --exclude "**/.infracost/**" --exclude "**/.terraform/**" --exclude ".git/**" --exclude ".idea/**" --exclude "*.tfstate.*" \
+  --exclude "$DICTIONARIES_PATH/**" | sort --ignore-case --unique > "$MISSPELLED_WORDS_PATH"
 
 # Check the custom dictionaries
 ONE_OR_MORE_FAILURES=0
