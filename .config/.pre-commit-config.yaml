@@ -19,19 +19,3 @@ repos:
     rev: v2.6.0
     hooks:
       - id: prettier
-        files: \.(json|yaml|yml)$ # do not process markdown. Conflicts with the terraform_docs hook
-  - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.17
-    hooks:
-      - id: tflint
-        args:
-          - "--module"
-          - "--config=.config/tflint.hcl"
-      - id: terraform-validate
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.64.0
-    hooks:
-      - id: terraform_docs
-      - id: terraform_fmt
-        args:
-          - "--args=-recursive"
