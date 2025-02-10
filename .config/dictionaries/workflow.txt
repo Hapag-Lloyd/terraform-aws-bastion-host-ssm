@@ -1,3 +1,5 @@
-CODEOWNERS
-Hapag
+codeowners
+hapag
 tflint
+infracost
+tfstate
