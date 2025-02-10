@@ -4,8 +4,10 @@ botocore
 cloudposse
 deve
 hostnames
+infracost
 kdbx
 keepass
 keygen
+tfstate
 venv
 xvda
