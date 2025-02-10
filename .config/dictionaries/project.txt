@@ -1,6 +1,4 @@
 awsx
-boto
-botocore
 cloudposse
 deve
 hostnames
