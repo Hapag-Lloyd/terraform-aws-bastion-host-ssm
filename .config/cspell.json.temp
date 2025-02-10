@@ -1,5 +1,5 @@
 {
-  "import": ["@cspell/dict-cspell-bundle/cspell-ext.json"],
+ "import": ["@cspell/dict-cspell-bundle/cspell-ext.json"],
   "version": "0.2",
   "language": "en",
   "ignorePaths": [

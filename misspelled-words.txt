@@ -1,0 +1,15 @@
+AWSX
+cloudposse
+CODEOWNERS
+deve
+hapag
+hostnames
+infracost
+kdbx
+Keepass
+keygen
+tflint
+tfsec
+tfstate
+venv
+xvda
