@@ -1,0 +1,11 @@
+awsx
+boto
+botocore
+cloudposse
+deve
+hostnames
+kdbx
+keepass
+keygen
+venv
+xvda
