@@ -1,61 +1,54 @@
 {
+  "import": ["@cspell/dict-cspell-bundle/cspell-ext.json"],
   "version": "0.2",
   "language": "en",
-  "words": [
-    "cpus",
-    "Hapag",
-    "hostnames",
-    "Infracost",
-    "javadoc",
-    "javadocs",
-    "jsonencode",
-    "oidc",
-    "rebalance",
-    "Repology",
-    "sonatype",
-    "tflint",
-    "tfsec"
+  "ignorePaths": [
+    ".git/",
+    ".idea/",
+    ".config/dictionaries/",
+    "**/.infracost/**",
+    "**/.terraform/**",
+    "**/*.tfstate.*",
+    "**/node_modules/**"
   ],
-  "ignoreWords": [
-    "AWSX",
-    "Buildx",
-    "DOCKERHUB",
-    "amannn",
-    "aquasecurity",
-    "automerge",
-    "automerged",
-    "buildcache",
-    "buildx",
-    "cloudposse",
-    "codeowners",
-    "codeql",
-    "conventionalcommits",
-    "datasource",
-    "dorny",
-    "hadolint",
-    "hlag",
-    "hmarr",
-    "ibiqlik",
-    "kayman",
-    "kdbx",
-    "Keepass",
-    "ludeeus",
-    "markdownlint",
-    "mktemp",
-    "nullglob",
-    "ossrh",
-    "pascalfrenz",
-    "releaserc",
-    "rhysd",
-    "ruleset",
-    "sarif",
-    "shellcheck",
-    "shuf",
-    "shunsuke",
-    "signoff",
-    "temurin",
-    "tfstate",
-    "vuln",
-    "xvda"
+  "dictionaries": [
+    "workflow",
+    "maven",
+    "python",
+    "docker",
+    "simple",
+    "terraform-module",
+    "project"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "workflow",
+      "path": "dictionaries/workflow.txt"
+    },
+    {
+      "name": "maven",
+      "path": "dictionaries/maven.txt"
+    },
+    {
+      "name": "python",
+      "path": "dictionaries/python.txt"
+    },
+    {
+      "name": "docker",
+      "path": "dictionaries/docker.txt"
+    },
+    {
+      "name": "simple",
+      "path": "dictionaries/simple.txt"
+    },
+    {
+      "name": "terraform-module",
+      "path": "dictionaries/terraform-module.txt"
+    },
+    {
+      "name": "project",
+      "path": "dictionaries/project.txt",
+      "addWords": true
+    }
   ]
 }
