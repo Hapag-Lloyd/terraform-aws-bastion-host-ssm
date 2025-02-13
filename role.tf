@@ -50,7 +50,8 @@ data "aws_iam_policy_document" "access_bastion" {
       "ssm:StartSession"
     ]
     resources = [
-      "arn:aws:ssm:${data.aws_region.this.name}::document/AWS-StartSSHSession"
+      "arn:aws:ssm:${data.aws_region.this.name}::document/AWS-StartSSHSession",
+      "arn:aws:ssm:${data.aws_region.this.name}::document/AWS-StartPortForwardingSessionToRemoteHost"
     ]
   }
 
