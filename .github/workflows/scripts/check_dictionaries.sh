@@ -15,16 +15,15 @@ export LC_ALL='C'
 
 # Make a list of every misspelled word without any custom dictionaries and configuration file
 cp "$CSPELL_CONFIGURATION_FILE" "${CSPELL_CONFIGURATION_FILE}.temp"
-jq 'del(.dictionaryDefinitions)' "${CSPELL_CONFIGURATION_FILE}.temp" | \
-  jq 'del(.dictionaries)' > "$CSPELL_CONFIGURATION_FILE"
+jq 'del(.dictionaries)' "${CSPELL_CONFIGURATION_FILE}.temp" > "$CSPELL_CONFIGURATION_FILE"
 
 # renovate: datasource=npm depName=@cspell/dict-cspell-bundle
-cspell_dict_version="v1.0.29"
-npm i -D @cspell/dict-cspell-bundle@${cspell_dict_version:1}
+cspell_dict_version="v1.0.30"
+npm i -D @cspell/dict-cspell-bundle@${cspell_dict_version}
 
 # renovate: datasource=npm depName=cspell
-cspell_version="v8.17.1"
-npx cspell@${cspell_version:1} . -c "$CSPELL_CONFIGURATION_FILE" --dot --no-progress --no-summary --unique --words-only \
+cspell_version="8.17.3"
+npx cspell@${cspell_version} . -c "$CSPELL_CONFIGURATION_FILE" --dot --no-progress --no-summary --unique --words-only \
   --no-exit-code --exclude "$DICTIONARIES_PATH/**" | sort --ignore-case --unique > "$MISSPELLED_WORDS_PATH"
 
 # Check the custom dictionaries
@@ -53,5 +52,10 @@ if [ $ONE_OR_MORE_FAILURES -ne "0" ]; then
   echo "Dictionary check failed."
   exit 1
 fi
+
+# check all dictionaries for duplicates
+echo "Checking all dictionaries for duplicates..."
+
+cat "${DICTIONARY_FILES_TO_CHECK[@]}" | sort --ignore-case | sort --unique --check
 
 echo "All dictionaries are valid."

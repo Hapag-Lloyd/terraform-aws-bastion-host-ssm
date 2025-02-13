@@ -1,10 +1,19 @@
-.terraform/
 .idea/
-.infracost/
-node_modules/
-venv/
 
+# Terraform
+.terraform/
 .terraform.lock.hcl
 *.tfstate*
 
+.infracost/
+
+# Node.js
+node_modules/
+package.json
+package-lock.json
+
+# Python
+venv/
+
+# local build output
 builds/
