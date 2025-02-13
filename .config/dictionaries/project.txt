@@ -1,6 +1,7 @@
 awsx
 boto
 botocore
+cloudposse
 deve
 hostnames
 infracost
