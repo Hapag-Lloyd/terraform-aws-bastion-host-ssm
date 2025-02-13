@@ -2,4 +2,5 @@ codeowners
 hapag
 infracost
 tflint
+tfsec
 tfstate

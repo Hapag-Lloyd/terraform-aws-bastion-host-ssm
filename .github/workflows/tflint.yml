@@ -3,7 +3,7 @@ name: Terraform
 
 # yamllint disable-line rule:truthy
 on:
-  pull_request:
+  pull_request_target:
 
 permissions:
   id-token: write
@@ -12,5 +12,5 @@ permissions:
 jobs:
   default:
     # yamllint disable-line rule:line-length
-    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/terraform_module_terraform_callable.yml@af570c8a513f17b518399ad4aef3c95952b71902 # 1.15.0
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/terraform_module_tflint_callable.yml@af570c8a513f17b518399ad4aef3c95952b71902 # 1.15.0
     secrets: inherit
