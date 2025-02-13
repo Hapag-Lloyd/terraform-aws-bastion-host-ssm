@@ -8,6 +8,5 @@ infracost
 kdbx
 keepass
 keygen
-tfstate
 venv
 xvda
