@@ -64,6 +64,8 @@ hosts are deactivated. The second lambda function disables the bastion host imme
 As both functions are destructive (they modify the autoscaling group), you have to re-apply this module as soon as
 possible to restore the auto scaling setting (especially the schedules).
 
+If your bastion host runs 24/7, you can disable the panic switch by setting `enable_panic_switches = false`.
+
 ### Keepass Support For IAM User Credentials
 
 In case you are not using SSO or similar techniques you have to store the credentials for the user able to
