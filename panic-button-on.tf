@@ -1,5 +1,5 @@
 resource "aws_iam_role" "panic_button_on_execution" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   name                  = "${var.resource_names.prefix}${var.resource_names.separator}panic-button-on"
   description           = "Role for executing the bastion panic button switch off"
@@ -10,7 +10,7 @@ resource "aws_iam_role" "panic_button_on_execution" {
 }
 
 data "aws_iam_policy_document" "panic_button_on_assume_role" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   statement {
     actions = [
@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "panic_button_on_assume_role" {
 }
 
 data "aws_iam_policy_document" "panic_button_on" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   statement {
     sid       = "UpdateASG"
@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "panic_button_on" {
 }
 
 resource "aws_iam_policy" "panic_button_on" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   name   = "${var.resource_names.prefix}${var.resource_names.separator}switch-on"
   policy = data.aws_iam_policy_document.panic_button_on[0].json
@@ -53,28 +53,28 @@ resource "aws_iam_policy" "panic_button_on" {
 }
 
 resource "aws_iam_role_policy_attachment" "panic_button_on" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   role       = aws_iam_role.panic_button_on_execution[0].name
   policy_arn = aws_iam_policy.panic_button_on[0].arn
 }
 
 resource "aws_iam_role_policy_attachment" "panic_button_on_basic_execution" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   role       = aws_iam_role.panic_button_on_execution[0].id
 }
 
 resource "aws_iam_role_policy_attachment" "panic_button_on_x_ray" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
   role       = aws_iam_role.panic_button_on_execution[0].id
 }
 
 data "archive_file" "panic_button_on_package" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   type        = "zip"
   source_file = local.panic_button_switch_on_lambda_source
@@ -82,7 +82,7 @@ data "archive_file" "panic_button_on_package" {
 }
 
 resource "aws_lambda_function" "panic_button_on" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   architectures    = ["arm64"]
   description      = "Start all bastion hosts immediately"
@@ -119,7 +119,7 @@ resource "aws_lambda_function" "panic_button_on" {
 }
 
 resource "aws_cloudwatch_log_group" "panic_button_on" {
-  count = var.create_panic_switches ? 1 : 0
+  count = var.enable_panic_switches ? 1 : 0
 
   name              = "/aws/lambda/${local.panic_button_switch_on_lambda_name}"
   retention_in_days = var.log_group_retention_days

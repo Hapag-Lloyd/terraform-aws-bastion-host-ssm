@@ -123,7 +123,7 @@ variable "connect_bastion_role_name" {
   description = "The name of the role to assume to connect to the bastion host."
 }
 
-variable "create_panic_switches" {
+variable "enable_panic_switches" {
   type        = bool
   description = "If true, create the panic button Lambda switches to turn on/off the bastion host immediately."
   default     = true
