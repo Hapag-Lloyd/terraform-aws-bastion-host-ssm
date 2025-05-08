@@ -22,10 +22,4 @@ locals {
   panic_button_switch_on_lambda_source_file_name = "panic_button_switch_on.py"
   panic_button_switch_on_lambda_source           = "${path.module}/lambda/${local.panic_button_switch_on_lambda_source_file_name}"
   panic_button_switch_on_lambda_name             = "${var.resource_names.prefix}${var.resource_names.separator}panic-button-on"
-
-  # amiFilter=[{"Name":"owner-id","Values":["137112412989"]},{"Name":"name","Values":["amzn2-ami-hvm-*-x86_64-ebs"]}]
-  # currentImageName=unknown
-  default_ami_id = "ami-0dffacdad8c0f8540"
-
-  ami_id = var.ami_id != null ? var.ami_id : local.default_ami_id
 }
