@@ -3,9 +3,9 @@ data "aws_region" "this" {
 
 resource "aws_ami_copy" "latest_amazon_linux" {
   name        = var.resource_names["prefix"]
-  description = "Copy of ${local.ami_id}"
+  description = "Copy of ${var.ami_id}"
 
-  source_ami_id     = local.ami_id
+  source_ami_id     = var.ami_id
   source_ami_region = data.aws_region.this.name
 
   encrypted  = true
