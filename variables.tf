@@ -104,9 +104,10 @@ variable "tags" {
 variable "ami_id" {
   type        = string
   description = "The AMI ID to use for the bastion host. If not set a default AMI is used which is updated regularly"
+
   # renovate: amiFilter=[{"Name":"owner-id","Values":["137112412989"]},{"Name":"name","Values":["amzn2-ami-hvm-*-x86_64-ebs"]},{"region":"eu-central-1"}]
   # currentImageName=amzn2-ami-hvm-2.0.20250428.0-x86_64-ebs
-  default_ami_id = "ami-0f6f47ec74a449428"
+  default = "ami-0f6f47ec74a449428"
 }
 
 variable "log_group_retention_days" {
