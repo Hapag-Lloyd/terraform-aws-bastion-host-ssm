@@ -1,5 +1,6 @@
-data "aws_region" "this" {
-}
+data "aws_region" "this" {}
+
+data "aws_default_tags" "this" {}
 
 resource "aws_ami_copy" "latest_amazon_linux" {
   name        = var.resource_names["prefix"]
