@@ -124,5 +124,28 @@ resource "aws_launch_template" "this" {
     tags = local.bastion_runtime_tags
   }
 
+  tag_specifications {
+    resource_type = "volume"
+
+    tags = local.bastion_runtime_tags
+  }
+
+  tag_specifications {
+    resource_type = "network-interface"
+
+    tags = local.bastion_runtime_tags
+  }
+
+  dynamic "tag_specifications" {
+    # ASG fails tagging if there are no spot instances created
+    for_each = var.instance.enable_spot && var.instances_distribution.on_demand_base_capacity == 0 && var.instances_distribution.on_demand_percentage_above_base_capacity == 0 ? [1] : []
+
+    content {
+      resource_type = "spot-instances-request"
+
+      tags = local.bastion_runtime_tags
+    }
+  }
+
   tags = var.tags
 }
