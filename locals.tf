@@ -4,6 +4,7 @@ locals {
   resource_prefix_with_separator = "${var.resource_names["prefix"]}${var.resource_names["separator"]}"
 
   bastion_runtime_tags = merge(
+    data.aws_default_tags.this.tags,
     var.tags,
     {
       "Name"                          = local.bastion_host_name
