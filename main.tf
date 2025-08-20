@@ -63,9 +63,10 @@ module "instance_profile_role" {
 
   count = var.instance["profile_name"] != "" ? 0 : 1
 
-  name        = "${var.resource_names["prefix"]}${var.resource_names.separator}profile"
-  description = "Instance profile for the bastion host to be able to connect to the machine"
-  path        = var.iam_role_path
+  name            = "${var.resource_names["prefix"]}${var.resource_names.separator}profile"
+  description     = "Instance profile for the bastion host to be able to connect to the machine"
+  path            = var.iam_role_path
+  use_name_prefix = false
 
   create                  = true
   create_instance_profile = true
