@@ -29,7 +29,7 @@ resource "aws_iam_role" "access_bastion" {
       {
         Effect    = "Allow",
         Action    = "sts:AssumeRole",
-        Principal = { "AWS" : module.bastion_user.iam_user_arn }
+        Principal = { "AWS" : module.bastion_user.arn }
     }]
   })
 }
