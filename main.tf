@@ -63,20 +63,29 @@ module "instance_profile_role" {
 
   count = var.instance["profile_name"] != "" ? 0 : 1
 
-  role_name        = "${var.resource_names["prefix"]}${var.resource_names.separator}profile"
-  role_description = "Instance profile for the bastion host to be able to connect to the machine"
-  role_path        = var.iam_role_path
+  name        = "${var.resource_names["prefix"]}${var.resource_names.separator}profile"
+  description = "Instance profile for the bastion host to be able to connect to the machine"
+  path        = var.iam_role_path
 
-  create_role             = true
+  create                  = true
   create_instance_profile = true
-  # MFA makes no sense here. It's used for EC2 instances.
-  role_requires_mfa = false
 
-  trusted_role_services = ["ec2.amazonaws.com"]
-  custom_role_policy_arns = [
-    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-    "arn:aws:iam::aws:policy/EC2InstanceConnect",
-  ]
+  trust_policy_permissions = {
+    "ec2" = {
+      actions = ["sts:AssumeRole"]
+      principals = [
+        {
+          "type" : "Service"
+          "identifiers" : ["ec2.amazonaws.com"]
+      }]
+      effect = "Allow"
+    }
+  }
+
+  policies = {
+    "AmazonSSMManagedInstanceCore" : "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+    "EC2InstanceConnect" : "arn:aws:iam::aws:policy/EC2InstanceConnect",
+  }
 
   tags = var.tags
 }
