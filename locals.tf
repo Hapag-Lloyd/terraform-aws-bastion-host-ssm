@@ -14,7 +14,7 @@ locals {
   bastion_host_name       = var.resource_names["prefix"]
   bastion_access_tag_name = "bastion-access"
 
-  bastion_instance_profile_name = var.instance["profile_name"] != "" ? var.instance["profile_name"] : module.instance_profile_role[0].iam_role_name
+  bastion_instance_profile_name = var.instance["profile_name"] != "" ? var.instance["profile_name"] : module.instance_profile_role[0].name
 
   panic_button_switch_off_lambda_source_file_name = "panic_button_switch_off.py"
   panic_button_switch_off_lambda_source           = "${path.module}/lambda/${local.panic_button_switch_off_lambda_source_file_name}"
