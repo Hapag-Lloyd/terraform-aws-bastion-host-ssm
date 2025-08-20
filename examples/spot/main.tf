@@ -29,7 +29,7 @@ resource "aws_iam_role" "access_bastion" {
       {
         Effect    = "Allow",
         Action    = "sts:AssumeRole",
-        Principal = { "AWS" : module.bastion_user.iam_user_arn }
+        Principal = { "AWS" : module.bastion_user.arn }
     }]
   })
 }
@@ -45,6 +45,7 @@ module "bastion_host" {
   instance = {
     type              = "t3.nano"
     desired_capacity  = 2
+    root_device_name  = "/dev/xvda"
     root_volume_size  = 8
     enable_monitoring = false
     enable_spot       = true
@@ -69,11 +70,11 @@ module "bastion_host" {
 
 module "bastion_user" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
-  version = ">= 5.48.0"
+  version = ">= 6.0.0"
 
   name = "${local.resource_prefix}-bastion"
 
-  password_reset_required       = false
-  create_iam_user_login_profile = false
-  force_destroy                 = true
+  password_reset_required = false
+  create_login_profile    = false
+  force_destroy           = true
 }
