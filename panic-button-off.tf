@@ -113,7 +113,7 @@ resource "aws_lambda_function" "panic_button_off" {
   #package_type     = "Zip"
   publish = true
   role    = aws_iam_role.panic_button_off_execution[0].arn
-  runtime = "python3.9"
+  runtime = "python3.13"
 
   environment {
     variables = {
