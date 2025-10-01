@@ -12,7 +12,7 @@ permissions:
 jobs:
   default:
     # yamllint disable-line rule:line-length
-    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/terraform_module_terraform_callable.yml@126a662035f3e07a33e58fd6835ee1d760be19d8 # 1.18.0
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/terraform_module_terraform_callable.yml@74aedc6f0651de48799b15e3e039a8215033090e # 1.22.14
     secrets: inherit
     with:
       minimum-terraform-version: "1.5.7"
