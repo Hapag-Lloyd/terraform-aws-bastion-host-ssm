@@ -59,7 +59,7 @@ resource "aws_vpc_security_group_egress_rule" "ssm" {
 
 module "instance_profile_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "6.2.1"
+  version = "6.2.2"
 
   count = var.instance["profile_name"] != "" ? 0 : 1
 
