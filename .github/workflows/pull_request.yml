@@ -14,5 +14,5 @@ on:
 jobs:
   default:
     # yamllint disable-line rule:line-length
-    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_pull_request_callable.yml@590c56856a43c909afcc719f44ca96e3c2569b17 # 1.22.53
+    uses: Hapag-Lloyd/Workflow-Templates/.github/workflows/default_pull_request_callable.yml@7ca369a7b39026826ce13e86443b1bee7766f4f4 # 1.22.54
     secrets: inherit
